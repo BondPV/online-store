@@ -1,0 +1,85 @@
+* {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: $text-color;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $bcg-color;
+}
+.container {
+  position: relative;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.header {
+  &__wrap {
+    display: flex;
+    align-items: center;
+    height: 100px;
+    border: 3px dotted $invalid-color;
+  }
+}
+
+.main {
+  flex-grow: 1;
+  &__wrap {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+  }
+}
+
+.side-bar {
+  grid-column: 1;
+  border: 3px dotted $invalid-color;
+}
+
+.catalog {
+  grid-column: 2;
+  border: 3px dotted $invalid-color;
+}
+
+.footer {
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 3px dotted $invalid-color;
+  }
+
+  &__logo {
+    height: auto;
+    width: 80px;
+    opacity: 0.5;
+    &:hover {
+      opacity: 1;
+      transition: 0.3s all;
+    }
+  }
+
+  &__github {
+    text-decoration: none;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+      transition: 0.3s all;
+    }
+
+    &:before {
+      content: '©';
+    }
+  }
+}
+
+@media (max-width: 1400px) {
+  .container {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+}
