@@ -1,3 +1,5 @@
+import App from './components/app/app';
 import './style.scss';
 
-console.log('Online store');
+const app = new App();
+app.start();
