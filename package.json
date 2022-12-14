@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
-  "name": "new-js",
+  "name": "online-store",
   "scripts": {
     "start": "webpack serve --env development",
     "build": "webpack",
@@ -14,8 +14,8 @@
     "url": ""
   },
   "keywords": [],
-  "author": "Aleh Serhiyenia",
-  "license": "ISC",
+  "author": "Alesia-V175 & BondPV",
+  "license": "",
   "homepage": "",
 
   "devDependencies": {
