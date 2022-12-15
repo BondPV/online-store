@@ -1,28 +1,68 @@
-* {
+.body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $bcg-color;
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   color: $text-color;
 }
-.body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: $bcg-color;
-}
+
 .container {
   position: relative;
-  max-width: 1400px;
+  width: 1400px;
   margin: 0 auto;
 }
 
 .header {
+  &__contacts {
+    background-color: $bcg-black-color;
+    color: $text-color-white;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
   &__wrap {
     display: flex;
-    align-items: center;
-    height: 100px;
-    border: 3px dotted $invalid-color;
+    justify-content: space-between;
+
+    &_text {
+      color: $light-text-color;
+    }
+
+    &_link {
+      color: $text-color-white;
+      padding-left: 5px;
+    }
+
+    &_communication {
+      display: flex;
+      align-items: center;
+      box-sizing: content-box;
+      width: content-box;
+
+      .header__wrap_link::before {
+        content: "Call Us:";
+        padding-right: 5px;
+      }
+
+      .header__wrap_link {
+        text-decoration: none;
+        padding-right: 3px;
+      }
+    }
+
+    .messenger-link {
+      padding-left: 13px;
+      &:hover {
+        transform: scale(1.2);
+      }
+      &_icon {
+        display: block;
+      }
+    }
   }
 }
 
