@@ -8,7 +8,6 @@
     "build": "webpack",
     "lint": "eslint . --ext .ts"
   },
-
   "repository": {
     "type": "git",
     "url": ""
@@ -17,7 +16,6 @@
   "author": "Aleh Serhiyenia",
   "license": "ISC",
   "homepage": "",
-
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.45.1",
     "@typescript-eslint/parser": "^5.45.1",
@@ -26,6 +24,7 @@
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.7",
     "eslint": "^8.29.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
