@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .ts",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
-    "test": "webpack serve --env development"
+    "test": ["eslint", "lint-staged"]
   },
   "repository": {
     "type": "git",
