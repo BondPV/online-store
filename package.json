@@ -8,8 +8,7 @@
     "build": "webpack",
     "lint": "eslint . --ext .ts",
     "prepare": "husky install",
-    "pre-commit": "lint-staged",
-    "test": ["eslint", "lint-staged"]
+    "pre-commit": "lint"
   },
   "repository": {
     "type": "git",
@@ -44,8 +43,5 @@
     "webpack-cli": "^4.9.0",
     "webpack-dev-server": "^4.3.1",
     "webpack-remove-empty-scripts": "^0.7.1"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": "eslint"
   }
 }
