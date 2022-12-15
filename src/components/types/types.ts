@@ -1,19 +1,23 @@
 export interface IProduct {
-  id: string;
+  id: number;
   title: string;
-  brand: string;
   description: string;
-  category: string;
   price: number;
+  discountPercentage: number;
+  rating: number;
   stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
   images: string[];
-  discountPercentage: number | null;
-  rating: number | null;
-  thumbnail: string | null;
 }
 
+//JSON database structure
 export interface IProducts {
   products: IProduct[];
+  limit: number;
+  skip: number;
+  total: number;
 }
 
 export type CallBackType<T> = (data: T) => void;

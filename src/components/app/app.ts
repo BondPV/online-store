@@ -1,6 +1,15 @@
+import ProductsList from '../view/productsList/productsList';
+
 class App {
+  private productsList = new ProductsList();
+
   public start() {
-    alert('start task');
+    return `
+      <h1>Online Store</h1>
+      <div>
+        ${this.productsList.render()}
+      </div>
+      `;
   }
 }
 
