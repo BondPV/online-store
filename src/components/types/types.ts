@@ -12,7 +12,7 @@ export interface IProduct {
   images: string[];
 }
 
-//JSON database structure
+//  JSON database structure
 export interface IProducts {
   products: IProduct[];
   limit: number;

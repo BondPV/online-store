@@ -6,9 +6,7 @@
   "scripts": {
     "start": "webpack serve --env development",
     "build": "webpack",
-    "lint": "eslint . --ext .ts",
-    "prepare": "husky install",
-    "pre-commit": "lint"
+    "lint": "eslint . --ext .ts"
   },
   "repository": {
     "type": "git",
