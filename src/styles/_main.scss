@@ -1,28 +1,184 @@
-* {
+.body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: $color-white;
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   color: $text-color;
 }
-.body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: $bcg-color;
-}
+
 .container {
   position: relative;
-  max-width: 1400px;
+  width: 1400px;
   margin: 0 auto;
 }
 
 .header {
+  border-bottom: solid 1px $text-color-grey;
+
+  .nav__wrap {
+    padding: 25px 0;
+    box-sizing: border-box;
+  }
+
+  &__contacts {
+    background-color: $bg-color-black;
+    color: $color-white;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
   &__wrap {
     display: flex;
-    align-items: center;
-    height: 100px;
-    border: 3px dotted $invalid-color;
+    justify-content: space-between;
+
+    &_text {
+      color: $text-color-light;
+    }
+
+    &_link {
+      color: $color-white;
+      padding-left: 5px;
+      transition: 0.3s;
+      &:hover {
+        opacity: 0.6;
+        transition: 0.3s;
+      }
+    }
+
+    &_communication {
+      display: flex;
+      align-items: center;
+      box-sizing: content-box;
+      width: content-box;
+
+      .header__wrap_link::before {
+        content: "Call Us:";
+        padding-right: 5px;
+      }
+
+      .header__wrap_link {
+        text-decoration: none;
+        padding-right: 3px;
+      }
+    }
+
+    .messenger-link {
+      padding-left: 13px;
+      &_icon {
+        display: block;
+        transition: 0.3s;
+        &:hover {
+          transform: scale(1.15);
+          opacity: 0.6;
+          transition: 0.3s;
+        }
+      }
+    }
+
+    .header__logo {
+      display: block;
+      padding: 0 10px;
+      transition: 0.3s;
+      &:hover {
+        opacity: 0.9;
+        transform: scale(1.15);
+        transition: 0.3s;
+      }
+    }
+
+    .header__nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: auto;
+      &_list {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        height: auto;
+      }
+      &_item {
+        display: flex;
+        text-decoration: none;
+        justify-content: center;
+        align-items: center;
+
+        .item_link {
+          flex: 1;
+          text-decoration: none;
+          padding: 10px;
+          color: $text-color;
+          text-align: center;
+          transition: 0.3s;
+          &:hover {
+            text-decoration: underline $main-color 2px;
+          }
+        }
+      }
+    }
+
+    .header__button {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      border: 2px solid $main-color;
+      color: $main-color;
+      border-radius: 50px;
+      background: transparent;
+      padding: 8px 26px;
+      box-sizing: border-box;
+      transition: 0.3s;
+
+      &:hover {
+        -webkit-box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+        -moz-box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+        box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+        transition: 0.3s;
+        transform: scale(1.05);
+      }
+    }
+
+    .header__actions {
+      display: flex;
+      justify-content: space-between;
+
+      .header__search,
+      .header__basket,
+      .header__user {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 36px;
+        margin: 0 8px;
+        transition: 0.3s;
+
+        &:hover {
+          transform: scale(1.15);
+          transition: 0.3s;
+        }
+      }
+
+      .header__basket {
+        position: relative;
+        &_counter {
+          text-align: center;
+          width: 17px;
+          height: 17px;
+          border-radius: 50%;
+          background: $main-color;
+          position: absolute;
+          top: 0px;
+          right: -3px;
+          color: $color-white;
+          font-size: 12px;
+          line-height: 15px;
+        }
+      }
+    }
   }
 }
 
