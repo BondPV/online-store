@@ -1,4 +1,4 @@
-//product catalog implementation
+//  product catalog implementation
 
 import productsModel from '../../model/productsModel';
 import ProductItem from '../productItem/productItem';
@@ -12,19 +12,18 @@ class ProductsList {
     this.initProducts();
   }
 
-  //product database initialization
+  //  product database initialization
   initProducts() {
     this.products = productsModel.getProducts();
   }
 
   render() {
-    return `
-      <p>Products List</p>
-      ${this.products
-        .map((product) => new ProductItem(product))
-        .map((product) => product.render())
-        .join('')}
-      `;
+    const products: string = this.products
+      .map((product) => new ProductItem(product))
+      .map((product) => product.render())
+      .join('');
+    return `<p>Products List</p>
+      ${products}`;
   }
 }
 

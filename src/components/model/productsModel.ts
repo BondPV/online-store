@@ -3,6 +3,7 @@ import { IProducts } from '../types/types';
 
 class ProductsModel {
   jsonDB: IProducts;
+
   constructor(jsonDB: IProducts) {
     this.jsonDB = jsonDB;
   }
@@ -12,7 +13,7 @@ class ProductsModel {
   }
 }
 
-//get array all products from the database productJSON
+//  get array all products from the database productJSON
 const productsModel = new ProductsModel(productJSON);
 
 export default productsModel;
