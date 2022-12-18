@@ -19,5 +19,3 @@ export interface IProducts {
   skip: number;
   total: number;
 }
-
-export type CallBackType<T> = (data: T) => void;

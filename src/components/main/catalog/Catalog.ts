@@ -1,11 +1,11 @@
 //  product catalog implementation
 
-import productsModel from '../../model/productsModel';
-import ProductItem from '../productItem/productItem';
-import { IProduct } from '../../types/types';
-import './productsList.scss';
+import productsDB from '../../../database/ProductsDB';
+import Product from './product/Product';
+import { IProduct } from '../../../types/interfaces';
+import './catalog.scss';
 
-class ProductsList {
+class Catalog {
   private products: IProduct[] = [];
 
   constructor() {
@@ -14,12 +14,12 @@ class ProductsList {
 
   //  product database initialization
   initProducts() {
-    this.products = productsModel.getProducts();
+    this.products = productsDB.getProducts();
   }
 
   render() {
     const products: string = this.products
-      .map((product) => new ProductItem(product))
+      .map((product) => new Product(product))
       .map((product) => product.render())
       .join('');
     return `<p>Products List</p>
@@ -27,4 +27,4 @@ class ProductsList {
   }
 }
 
-export default ProductsList;
+export default Catalog;

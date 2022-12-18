@@ -1,4 +1,4 @@
-import App from './components/app/app';
+import App from './components/app';
 import './style.scss';
 
 const main = document.querySelector('.main__wrap');

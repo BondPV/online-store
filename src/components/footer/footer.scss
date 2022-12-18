@@ -1,0 +1,35 @@
+.footer {
+  background-color: $bg-color-black;
+  padding: 10px 0;
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    height: auto;
+    width: 80px;
+    opacity: 0.4;
+    
+    &:hover {
+      opacity: 1;
+      transition: 0.3s all;
+    }
+  }
+
+  &__github {
+    color: #ffffff;
+    text-decoration: none;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+      transition: 0.3s all;
+    }
+
+    &:before {
+      content: '©';
+    }
+  }
+}

@@ -8,6 +8,7 @@ const devServer = (isDev) => !isDev ? {} : {
   devServer: {
     open: true,
     port: 'auto',
+    watchFiles: path.join(__dirname, 'src'),
   },
 };
 

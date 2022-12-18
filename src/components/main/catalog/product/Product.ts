@@ -1,7 +1,7 @@
-import './productItem.scss';
-import { IProduct } from '../../types/types';
+import './product.scss';
+import { IProduct } from '../../../../types/interfaces';
 
-class ProductItem {
+class Product {
   constructor(private product: IProduct) {}
 
   render() {
@@ -13,4 +13,4 @@ class ProductItem {
   }
 }
 
-export default ProductItem;
+export default Product;
