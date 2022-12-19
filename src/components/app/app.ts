@@ -1,13 +1,13 @@
-import ProductsList from '../view/productsList/productsList';
+import Catalog from 'components/main/catalog/Catalog';
 
 class App {
-  private productsList = new ProductsList();
+  private catalog = new Catalog();
 
   public start() {
     return `
       <h1>Online Store</h1>
       <div>
-        ${this.productsList.render()}
+        ${this.catalog.render()}
       </div>
       `;
   }

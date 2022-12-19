@@ -1,0 +1,77 @@
+.header {
+  border-bottom: solid 1px $text-color-grey;
+
+  &__wrap {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 0;
+    box-sizing: border-box;
+  }
+
+  &__logo {
+    display: block;
+    padding: 0 10px;
+    transition: 0.3s;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    border: 2px solid $main-color;
+    color: $main-color;
+    border-radius: 50px;
+    background: transparent;
+    padding: 8px 26px;
+    box-sizing: border-box;
+    transition: 0.3s;
+
+    &:hover {
+      -webkit-box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+      -moz-box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+      box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+      transition: 0.3s;
+      transform: scale(1.05);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__search,
+  &__basket,
+  &__user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    margin: 0 8px;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.15);
+      transition: 0.3s;
+    }
+  }
+
+  &__basket {
+    position: relative;
+  }
+
+  &__basket-counter {
+    text-align: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: $main-color;
+    position: absolute;
+    top: 0px;
+    right: -3px;
+    color: $color-white;
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+

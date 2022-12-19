@@ -1,0 +1,18 @@
+.product {
+  display: flex;
+  flex-direction: column;
+  width: 234px;
+  height: 346px;
+  border: 1px solid black;
+
+  &__img-wrap {
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+  }
+
+  &__img {
+    height: 100%;
+    width: auto;
+  }
+}

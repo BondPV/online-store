@@ -8,6 +8,7 @@ const devServer = (isDev) => !isDev ? {} : {
   devServer: {
     open: true,
     port: 'auto',
+    watchFiles: path.join(__dirname, 'src'),
   },
 };
 
@@ -30,10 +31,6 @@ module.exports = ({ development }) => ({
       },
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|svg|webp)$/i,
-        type: 'asset/resource',
-      },
-      {
-        test: /\.(?:mp3|wav|ogg|mp4)$/i,
         type: 'asset/resource',
       },
       {
@@ -63,7 +60,6 @@ module.exports = ({ development }) => ({
               '**/*.js',
               '**/*.ts',
               '**/*.scss',
-              '**/*.sass',
               '**/*.html',
               '**/*.json',
             ],
@@ -77,6 +73,11 @@ module.exports = ({ development }) => ({
   ],
   resolve: {
     extensions: ['.js', '.ts'],
+    alias: {
+      components: path.resolve(__dirname, 'src/components/'),
+      database: path.resolve(__dirname, 'src/database/'),
+      types: path.resolve(__dirname, 'src/types/'),
+    },
   },
   ...devServer(development)
 });
