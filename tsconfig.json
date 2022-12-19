@@ -20,6 +20,7 @@
       "components/*": ["src/components/*"],
       "database/*": ["src/database/*"],
       "types/*": ["src/types/*"],
+      "helpers/*": ["src/types/*"],
     }
   },
   "include": ["src/**/*", "modules.d.ts"],

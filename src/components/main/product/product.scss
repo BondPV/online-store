@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   width: 234px;
-  height: 346px;
-  padding: 7px 25px 0;
+  height: 360px;
+  padding: 7px 25px;
   box-sizing: border-box;
   font-family: "Roboto-light", Arial, sans-serif;
   font-size: 14px;
@@ -39,6 +39,7 @@
   }
 
   &__title {
+    flex: 1;
     font-family: "Roboto-regular", Arial, sans-serif;
     font-size: 16px;
     padding-bottom: 5px;
@@ -62,5 +63,48 @@
   &__price_discount {
     font-family: "Roboto-bold", Arial, sans-serif;
     font-size: 16px;
+
+  }
+
+  &__rating-wrap {
+    display: flex;
+    font-size: 12px;
+    color: #ACACAC;
+    align-items: baseline;
+    padding-bottom: 8px;
+  }
+
+  &__rating {
+    width: 80px;
+    height: 14px;
+    box-sizing: content-box;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-right: 8px;
+  }
+
+  .rating-star {
+    font-size: 14px;
+    color: #E9A426;
+  }
+
+  &__footer-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+  }
+
+  &__add-to-cart {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    background: url("../../../assets/icons/add-to-cart.svg") no-repeat center / cover;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
   }
 }
