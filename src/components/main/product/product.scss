@@ -3,16 +3,64 @@
   flex-direction: column;
   width: 234px;
   height: 346px;
-  border: 1px solid black;
+  padding: 7px 25px 0;
+  box-sizing: border-box;
+  font-family: "Roboto-light", Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+
+  &:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.14);
+  }
+
+  &__stock {
+    color: #78A962;
+    font-size: 10px;
+    line-height: 21px;
+
+    &::before {
+      content: url("../../../assets/icons/stock.svg");
+      position: relative;
+      top: 2px;
+      padding-right: 3px;
+    }
+  }
 
   &__img-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 7px 0 10px;
+  }
+
+  &__img {
     height: 150px;
     width: 150px;
     overflow: hidden;
   }
 
-  &__img {
-    height: 100%;
-    width: auto;
+  &__title {
+    font-family: "Roboto-regular", Arial, sans-serif;
+    font-size: 16px;
+    padding-bottom: 5px;
+  }
+
+  &__description {
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+  }
+
+  &__price {
+    padding-top: 10px;
+    text-decoration: line-through;
+    color: #ACACAC;
+  }
+
+  &__price_discount {
+    font-family: "Roboto-bold", Arial, sans-serif;
+    font-size: 16px;
   }
 }
