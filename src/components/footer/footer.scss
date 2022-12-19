@@ -1,6 +1,7 @@
 .footer {
   background-color: $bg-color-black;
   padding: 10px 0;
+  
   &__wrap {
     display: flex;
     justify-content: space-between;
@@ -11,10 +12,10 @@
     height: auto;
     width: 80px;
     opacity: 0.4;
+    transition: 0.3s all;
     
     &:hover {
       opacity: 1;
-      transition: 0.3s all;
     }
   }
 
@@ -22,10 +23,10 @@
     color: #ffffff;
     text-decoration: none;
     opacity: 0.5;
+    transition: 0.3s all;
 
     &:hover {
       opacity: 1;
-      transition: 0.3s all;
     }
 
     &:before {

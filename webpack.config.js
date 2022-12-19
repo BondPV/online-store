@@ -73,6 +73,11 @@ module.exports = ({ development }) => ({
   ],
   resolve: {
     extensions: ['.js', '.ts'],
+    alias: {
+      components: path.resolve(__dirname, 'src/components/'),
+      database: path.resolve(__dirname, 'src/database/'),
+      types: path.resolve(__dirname, 'src/types/'),
+    },
   },
   ...devServer(development)
 });

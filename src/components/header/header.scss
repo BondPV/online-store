@@ -12,12 +12,6 @@
     display: block;
     padding: 0 10px;
     transition: 0.3s;
-  
-    &:hover {
-      opacity: 0.9;
-      transform: scale(1.15);
-      transition: 0.3s;
-    }
   }
 
   &__button {

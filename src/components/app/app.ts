@@ -1,4 +1,4 @@
-import Catalog from './main/catalog/Catalog';
+import Catalog from 'components/main/catalog/Catalog';
 
 class App {
   private catalog = new Catalog();

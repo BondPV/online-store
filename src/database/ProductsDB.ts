@@ -1,19 +1,14 @@
+import { IProducts } from 'types/interfaces';
 import productJSON from './database.json';
-import { IProducts } from '../types/interfaces';
 
 class ProductsDB {
-  jsonDB: IProducts;
-
-  constructor(jsonDB: IProducts) {
+  constructor(private jsonDB: IProducts) {
     this.jsonDB = jsonDB;
   }
 
-  getProducts() {
-    return this.jsonDB.products;
+  static getProducts() {
+    return productJSON.products;
   }
 }
 
-//  get array all products from the database productJSON
-const productsDB = new ProductsDB(productJSON);
-
-export default productsDB;
+export default ProductsDB;

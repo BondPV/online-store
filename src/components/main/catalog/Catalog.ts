@@ -1,8 +1,8 @@
 //  product catalog implementation
 
-import productsDB from '../../../database/ProductsDB';
-import Product from './product/Product';
-import { IProduct } from '../../../types/interfaces';
+import ProductsDB from 'database/ProductsDB';
+import Product from 'components/main/product/Product';
+import { IProduct } from 'types/interfaces';
 import './catalog.scss';
 
 class Catalog {
@@ -14,7 +14,7 @@ class Catalog {
 
   //  product database initialization
   initProducts() {
-    this.products = productsDB.getProducts();
+    this.products = ProductsDB.getProducts();
   }
 
   render() {
@@ -22,8 +22,8 @@ class Catalog {
       .map((product) => new Product(product))
       .map((product) => product.render())
       .join('');
-    return `<p>Products List</p>
-      ${products}`;
+    return `<div class="catalog">
+    ${products}</div>`;
   }
 }
 
