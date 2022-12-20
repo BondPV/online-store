@@ -12,7 +12,7 @@
 
 .container {
   position: relative;
-  width: 1400px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
@@ -20,7 +20,7 @@
   flex-grow: 1;
   &__wrap {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 1fr 2fr;
   }
 }
 
@@ -30,8 +30,7 @@
 }
 
 .catalog {
-  grid-column: 2;
-  border: 3px dotted $invalid-color;
+  display: grid;
 }
 
 @media (max-width: 1400px) {
@@ -39,4 +38,5 @@
     max-width: 100%;
     padding: 0 10px;
   }
+
 }
