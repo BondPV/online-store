@@ -1,0 +1,16 @@
+.value-filters {
+  &__list-element {
+    color: blue;
+    cursor: pointer;
+    &_active {
+      color: red;
+    }
+  } 
+}
+
+.value-filters__list {
+  background-color: rgb(237, 243, 184);
+  display: block;
+  height: 300px;
+  overflow: overlay;
+}
