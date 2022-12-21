@@ -20,7 +20,8 @@
       "components/*": ["src/components/*"],
       "database/*": ["src/database/*"],
       "types/*": ["src/types/*"],
-      "helpers/*": ["src/types/*"],
+      "constants/*": ["src/constants/*"],
+      "helpers/*": ["src/helpers/*"],
     }
   },
   "include": ["src/**/*", "modules.d.ts"],

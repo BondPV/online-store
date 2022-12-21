@@ -1,11 +1,12 @@
 //  product catalog implementation
+import { IdMap } from 'constants/htmlConstants';
 import Product from 'components/main/product/Product';
 import { IProduct } from 'types/interfaces';
 import './catalog.scss';
 
 class Catalog {
   static render(catalog: IProduct[]) {
-    const parentElement = document.querySelector('#catalog');
+    const parentElement = document.querySelector(IdMap.catalog);
     const products: string = catalog
       .map((product) => new Product(product))
       .map((product) => product.render())

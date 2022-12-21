@@ -1,4 +1,4 @@
-export enum FiltersNameEnum {
+export enum FiltersName {
   Category = 'category',
   Brand = 'brand',
   Price = 'price',

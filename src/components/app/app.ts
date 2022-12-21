@@ -1,7 +1,8 @@
+import { IdMap } from 'constants/htmlConstants';
 import ProductsDB from 'database/ProductsDB';
 import Catalog from 'components/main/catalog/Catalog';
 import Filters from 'components/main/sortBar/filters/Filters';
-import { FiltersNameEnum } from 'types/enums';
+import { FiltersName } from 'types/enums';
 
 class App {
   public start() {
@@ -9,12 +10,12 @@ class App {
 
     Catalog.render(catalogDataBase);
 
-    const filtersContainer = document.querySelector('#value-filters');
+    const filtersContainer = document.querySelector(IdMap.valueFilters);
     if (filtersContainer instanceof HTMLElement) {
-      const filterCategory = new Filters(FiltersNameEnum.Category);
+      const filterCategory = new Filters(FiltersName.Category);
       filterCategory.appendFilterList(filtersContainer);
 
-      const filterBrand = new Filters(FiltersNameEnum.Brand);
+      const filterBrand = new Filters(FiltersName.Brand);
       filterBrand.appendFilterList(filtersContainer);
     }
   }

@@ -1,14 +1,13 @@
 .value-filters {
+  &__list {
+    display: block;
+    height: 300px;
+    overflow: overlay;
+  }
   &__list-element {
     cursor: pointer;
     &_active {
       color: red;
     }
   } 
-}
-
-.value-filters__list {
-  display: block;
-  height: 300px;
-  overflow: overlay;
 }
