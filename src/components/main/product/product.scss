@@ -5,12 +5,13 @@
   height: 360px;
   padding: 7px 25px;
   box-sizing: border-box;
-  font-family: "Roboto-light", Arial, sans-serif;
+  font-weight: 300;
   font-size: 14px;
   line-height: 20px;
 
   &:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
   }
 
   &__stock {
@@ -40,7 +41,7 @@
 
   &__title {
     flex: 1;
-    font-family: "Roboto-regular", Arial, sans-serif;
+    font-weight: 400;
     font-size: 16px;
     padding-bottom: 5px;
   }
@@ -61,9 +62,8 @@
   }
 
   &__price_discount {
-    font-family: "Roboto-bold", Arial, sans-serif;
+    font-weight: 700;
     font-size: 16px;
-
   }
 
   &__rating-wrap {
@@ -107,4 +107,9 @@
       cursor: pointer;
     }
   }
+}
+
+.product_list {
+  flex-direction: row;
+  width: 100%;
 }
