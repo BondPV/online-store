@@ -8,7 +8,9 @@ import { FiltersName } from 'types/enums';
 
 class Filters {
   static currentCatalog: IProduct[];
+
   private filterName: FiltersValueType | FiltersRangeType;
+
   private readonly products: IProduct[];
 
   constructor(filterName: FiltersValueType | FiltersRangeType) {
@@ -134,8 +136,29 @@ class Filters {
 
   valueFilterRange(char: string): HTMLDivElement {
     const element = document.createElement('div');
-    element.classList.add('range-filters');
-    new RangeSliderControl(element, 0, 100, char);
+    element.classList.add('range-filters__filter');
+
+    if (this.filterName === FiltersName.Price) {
+      const priceValue: number[] = [];
+
+      this.products.forEach((el) => priceValue.push(el.price));
+
+      const minValue = Math.floor(Math.min(...priceValue));
+      const maxValue = Math.ceil(Math.max(...priceValue));
+
+      new RangeSliderControl(element, minValue, maxValue, char);
+    }
+
+    if (this.filterName === FiltersName.Stock) {
+      const stockValue: number[] = [];
+
+      this.products.forEach((el) => stockValue.push(el.stock));
+
+      const minValue = Math.floor(Math.min(...stockValue));
+      const maxValue = Math.ceil(Math.max(...stockValue));
+
+      new RangeSliderControl(element, minValue, maxValue, char);
+    }
 
     return element;
   }

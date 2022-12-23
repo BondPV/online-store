@@ -2,16 +2,27 @@ import './rangeSliderControl.scss';
 
 class RangeSliderControl {
   parentElement: HTMLElement;
+
   min: number;
+
   max: number;
+
   char: string;
-  colorBg: string;
-  colorLine: string;
+
+  colorLineBg: string;
+
+  colorLineActive: string;
+
   sliderControl: HTMLDivElement;
+
   fromSlider: HTMLInputElement;
+
   toSlider: HTMLInputElement;
+
   formControl: HTMLDivElement;
+
   formValueLeft: HTMLDivElement;
+
   formValueRight: HTMLDivElement;
 
   constructor(parentElement: HTMLElement, min: number, max: number, char: string) {
@@ -20,8 +31,8 @@ class RangeSliderControl {
     this.max = max;
     this.char = char;
 
-    this.colorBg = '#ACACAC';
-    this.colorLine = '#0156FF';
+    this.colorLineBg = '#ACACAC';
+    this.colorLineActive = '#0156FF';
 
     this.sliderControl = document.createElement('div');
     this.fromSlider = document.createElement('input');
@@ -34,15 +45,9 @@ class RangeSliderControl {
 
     this.setToggleAccessible(this.toSlider);
 
-    this.fillSlider(this.fromSlider, this.toSlider, this.colorBg, this.colorLine);
+    this.fillSlider(this.fromSlider, this.toSlider, this.colorLineBg, this.colorLineActive);
 
-    this.fromSlider.addEventListener('input', () => {
-      this.controlFromSlider(this.fromSlider, this.toSlider, this.formValueLeft);
-    });
-
-    this.toSlider.addEventListener('input', () => {
-      this.controlToSlider(this.fromSlider, this.toSlider, this.formValueRight);
-    });
+    this.addEventListener();
   }
 
   appendRangeSliderControl() {
@@ -77,7 +82,8 @@ class RangeSliderControl {
   // Left controller
   controlFromSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement, formValueLeft: HTMLDivElement) {
     const [from, to] = this.getParsed(fromSlider, toSlider);
-    this.fillSlider(fromSlider, toSlider, this.colorBg, this.colorLine);
+    this.fillSlider(fromSlider, toSlider, this.colorLineBg, this.colorLineActive);
+
     if (from > to) {
       fromSlider.value = `${to}`;
       formValueLeft.innerText = `${this.char} ${to}`;
@@ -89,8 +95,9 @@ class RangeSliderControl {
   // Right controller
   controlToSlider(fromSlider: HTMLInputElement, toSlider: HTMLInputElement, formValueRight: HTMLDivElement) {
     const [from, to] = this.getParsed(fromSlider, toSlider);
-    this.fillSlider(fromSlider, toSlider, this.colorBg, this.colorLine);
+    this.fillSlider(fromSlider, toSlider, this.colorLineBg, this.colorLineActive);
     this.setToggleAccessible(toSlider);
+
     if (from <= to) {
       toSlider.value = `${to}`;
       formValueRight.innerText = `${this.char} ${to}`;
@@ -126,6 +133,16 @@ class RangeSliderControl {
     } else {
       this.toSlider.style.zIndex = '0';
     }
+  }
+
+  addEventListener() {
+    this.fromSlider.addEventListener('input', () => {
+      this.controlFromSlider(this.fromSlider, this.toSlider, this.formValueLeft);
+    });
+
+    this.toSlider.addEventListener('input', () => {
+      this.controlToSlider(this.fromSlider, this.toSlider, this.formValueRight);
+    });
   }
 }
 

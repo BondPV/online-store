@@ -1,6 +1,17 @@
 .value-filters {
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__title {
+    margin: 0 auto;
+  }
+
   &__list {
     display: block;
+    padding-left: 0;
+    list-style-type: none;
     height: 300px;
     overflow: overlay;
   }
@@ -9,16 +20,18 @@
     cursor: pointer;
 
     &_active {
-      color: red;
+      color: #0156FF;
     }
   } 
 }
 
 .range-filters {
-  &__container {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin: 10px auto;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__title {
+    margin: 0 auto;
   }
 }

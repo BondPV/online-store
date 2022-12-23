@@ -72,7 +72,7 @@ module.exports = ({ development }) => ({
     new CleanWebpackPlugin(),
   ],
   resolve: {
-    extensions: ['.js', '.ts'],
+    extensions: ['.js', '.ts', '.scss'],
     alias: {
       components: path.resolve(__dirname, 'src/components/'),
       database: path.resolve(__dirname, 'src/database/'),
