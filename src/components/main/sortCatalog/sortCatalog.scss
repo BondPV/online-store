@@ -1,0 +1,20 @@
+.catalog-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.catalog__header {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+  color: #CACDD8;
+}
+
+.catalog__view {
+  width: 32px;
+  height: 32px;
+  padding: 10px;
+  font-size: 32px;
+}
