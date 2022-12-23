@@ -1,22 +1,26 @@
 import './filters.scss';
-import { FiltersValueType, FiltersValueDataType, FiltersRangeType, FiltersDataType } from 'types/types';
+import {
+  FiltersValueType,
+  FiltersValueDataType,
+  FiltersRangeType,
+  FiltersRangeDataType,
+  FiltersDataType,
+} from 'types/types';
 import { IProduct } from 'types/interfaces';
 import Catalog from 'components/main/catalog/Catalog';
 import ProductsDB from 'database/ProductsDB';
-import RangeSliderControl from 'helpers/rangeSliderControl/RangeSliderControl';
+import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderControl/RangeSliderControl';
 import { FiltersName } from 'types/enums';
+import LocalStorage from 'helpers/localStorage/LocalStarage';
 
 class Filters {
   static currentCatalog: IProduct[];
 
   private filterName: FiltersValueType | FiltersRangeType;
 
-  private readonly products: IProduct[];
-
   constructor(filterName: FiltersValueType | FiltersRangeType) {
     Filters.currentCatalog = [];
     this.filterName = filterName;
-    this.products = ProductsDB.getProducts();
     this.initialFilter();
   }
 
@@ -38,7 +42,7 @@ class Filters {
 
     const setElements: Set<string> = new Set();
 
-    this.products.forEach((el) => {
+    ProductsDB.products.forEach((el) => {
       if (this.filterName === FiltersName.Category) {
         setElements.add(el.category);
       }
@@ -61,53 +65,35 @@ class Filters {
 
     element.addEventListener('click', () => {
       element.classList.toggle('value-filters__list-element_active');
-      this.controlLocalStorageFilter(this.filterName as FiltersValueType, elementValue);
-      this.filterProducts();
+      LocalStorage.controlFilter(this.filterName as FiltersValueType, elementValue);
+      Filters.filterProducts();
     });
     return element;
   }
 
   initialFilter(): void {
     if (!localStorage.getItem('filters')) {
-      localStorage.setItem(
-        'filters',
-        JSON.stringify(<FiltersDataType>{
-          filtersValue: { brand: [], category: [] },
-          filtersRange: { price: [], stock: [] },
-        })
-      );
+      LocalStorage.setItems();
     } else {
-      this.filterProducts();
+      Filters.filterProducts();
     }
   }
 
   //* render Catalog
-  filterProducts(): void {
+  static filterProducts(): void {
     const savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
     const filterValue: FiltersValueDataType = savedFilters.filtersValue;
+    const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
 
-    const filteredCatalog: IProduct[] = this.filterValueProducts(this.products.slice(), filterValue);
+    let filteredCatalog: IProduct[] = this.filterValueProducts(ProductsDB.products.slice(), filterValue);
+    filteredCatalog = this.filterRangeProducts(filteredCatalog, filterRange);
 
     Filters.currentCatalog = filteredCatalog;
     Catalog.render(filteredCatalog);
   }
 
-  //* update local storage filters
-  controlLocalStorageFilter(filterName: FiltersValueType, elementValue: string): void {
-    const savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
-    let filteredCatalog = savedFilters.filtersValue[filterName];
-
-    if (filteredCatalog.includes(elementValue)) {
-      filteredCatalog = filteredCatalog.filter((el: string) => el !== elementValue);
-    } else {
-      filteredCatalog.push(elementValue);
-    }
-    savedFilters.filtersValue[filterName] = filteredCatalog;
-    localStorage.setItem('filters', JSON.stringify(savedFilters));
-  }
-
   //* Value filter
-  filterValueProducts(filteredProducts: IProduct[], filterValue: FiltersValueDataType): IProduct[] {
+  static filterValueProducts(filteredProducts: IProduct[], filterValue: FiltersValueDataType): IProduct[] {
     let newProducts: IProduct[] = filteredProducts;
     let isEmptyFilters = true;
 
@@ -117,10 +103,10 @@ class Filters {
         isEmptyFilters = false;
       }
     }
-    return isEmptyFilters ? this.products.slice() : newProducts;
+    return isEmptyFilters ? ProductsDB.products.slice() : newProducts;
   }
 
-  filterByValue(filterValues: string[], items: IProduct[], filterName: FiltersValueType): IProduct[] {
+  static filterByValue(filterValues: string[], items: IProduct[], filterName: FiltersValueType): IProduct[] {
     return items.filter((item) => filterValues.find((filterValue) => item[filterName] === filterValue));
   }
 
@@ -141,26 +127,52 @@ class Filters {
     if (this.filterName === FiltersName.Price) {
       const priceValue: number[] = [];
 
-      this.products.forEach((el) => priceValue.push(el.price));
+      ProductsDB.products.forEach((el) => priceValue.push(el.price));
 
       const minValue = Math.floor(Math.min(...priceValue));
       const maxValue = Math.ceil(Math.max(...priceValue));
 
-      new RangeSliderControl(element, minValue, maxValue, char);
+      const priceRange = new RangeSliderControl(element, minValue, maxValue, char);
+
+      priceRange.eventListener(this.filterName);
     }
 
     if (this.filterName === FiltersName.Stock) {
       const stockValue: number[] = [];
 
-      this.products.forEach((el) => stockValue.push(el.stock));
+      ProductsDB.products.forEach((el) => stockValue.push(el.stock));
 
       const minValue = Math.floor(Math.min(...stockValue));
       const maxValue = Math.ceil(Math.max(...stockValue));
 
-      new RangeSliderControl(element, minValue, maxValue, char);
+      const stockRange = new RangeSliderControl(element, minValue, maxValue, char);
+
+      stockRange.eventListener(this.filterName);
+      Filters.filterProducts();
     }
 
     return element;
+  }
+
+  static filterRangeProducts(filteredProducts: IProduct[], filterRange: FiltersRangeDataType): IProduct[] {
+    let newProducts: IProduct[] = filteredProducts;
+    let isEmptyFilters = true;
+
+    for (const key in filterRange) {
+      if (filterRange[key as FiltersRangeType]?.length) {
+        newProducts = this.filterByRangeFilter(
+          filterRange[key as FiltersRangeType],
+          newProducts,
+          key as FiltersRangeType
+        );
+        isEmptyFilters = false;
+      }
+    }
+    return isEmptyFilters ? filteredProducts : newProducts;
+  }
+
+  static filterByRangeFilter(filterRange: number[], items: IProduct[], filterName: FiltersRangeType): IProduct[] {
+    return items.filter((item) => item[filterName] >= filterRange[0] && item[filterName] <= filterRange[1]);
   }
 }
 

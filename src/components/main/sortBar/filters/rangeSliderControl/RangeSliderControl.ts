@@ -1,4 +1,8 @@
 import './rangeSliderControl.scss';
+import Filters from 'components/main/sortBar/filters/Filters';
+import LocalStorage from 'helpers/localStorage/LocalStarage';
+
+import { FiltersRangeType } from 'types/types';
 
 class RangeSliderControl {
   parentElement: HTMLElement;
@@ -8,6 +12,10 @@ class RangeSliderControl {
   max: number;
 
   char: string;
+
+  minCurrentValue: number;
+
+  maxCurrentValue: number;
 
   colorLineBg: string;
 
@@ -30,6 +38,8 @@ class RangeSliderControl {
     this.min = min;
     this.max = max;
     this.char = char;
+    this.minCurrentValue = min;
+    this.maxCurrentValue = max;
 
     this.colorLineBg = '#ACACAC';
     this.colorLineActive = '#0156FF';
@@ -46,8 +56,6 @@ class RangeSliderControl {
     this.setToggleAccessible(this.toSlider);
 
     this.fillSlider(this.fromSlider, this.toSlider, this.colorLineBg, this.colorLineActive);
-
-    this.addEventListener();
   }
 
   appendRangeSliderControl() {
@@ -87,8 +95,10 @@ class RangeSliderControl {
     if (from > to) {
       fromSlider.value = `${to}`;
       formValueLeft.innerText = `${this.char} ${to}`;
+      this.minCurrentValue = to;
     } else {
       formValueLeft.innerText = `${this.char} ${from}`;
+      this.minCurrentValue = from;
     }
   }
 
@@ -101,8 +111,10 @@ class RangeSliderControl {
     if (from <= to) {
       toSlider.value = `${to}`;
       formValueRight.innerText = `${this.char} ${to}`;
+      this.maxCurrentValue = to;
     } else {
       formValueRight.innerText = `${this.char} ${from}`;
+      this.maxCurrentValue = from;
       toSlider.value = `${from}`;
     }
   }
@@ -135,13 +147,19 @@ class RangeSliderControl {
     }
   }
 
-  addEventListener() {
+  eventListener(filterName: FiltersRangeType) {
     this.fromSlider.addEventListener('input', () => {
       this.controlFromSlider(this.fromSlider, this.toSlider, this.formValueLeft);
+
+      LocalStorage.controlSlider(filterName, [this.minCurrentValue, this.maxCurrentValue]);
+      Filters.filterProducts();
     });
 
     this.toSlider.addEventListener('input', () => {
       this.controlToSlider(this.fromSlider, this.toSlider, this.formValueRight);
+
+      LocalStorage.controlSlider(filterName, [this.minCurrentValue, this.maxCurrentValue]);
+      Filters.filterProducts();
     });
   }
 }
