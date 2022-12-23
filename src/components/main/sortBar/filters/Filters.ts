@@ -1,18 +1,18 @@
 import './filters.scss';
-import { FiltersValueType, FiltersValueDataType, FiltersDataType } from 'types/types';
-
+import { FiltersValueType, FiltersValueDataType, FiltersRangeType, FiltersDataType } from 'types/types';
 import { IProduct } from 'types/interfaces';
-
 import Catalog from 'components/main/catalog/Catalog';
-
 import ProductsDB from 'database/ProductsDB';
+import RangeSliderControl from 'helpers/rangeSliderControl/RangeSliderControl';
+import { FiltersName } from 'types/enums';
 
 class Filters {
   static currentCatalog: IProduct[];
-  private filterName: FiltersValueType;
+  private filterName: FiltersValueType | FiltersRangeType;
   private readonly products: IProduct[];
 
-  constructor(filterName: FiltersValueType) {
+  constructor(filterName: FiltersValueType | FiltersRangeType) {
+    Filters.currentCatalog = [];
     this.filterName = filterName;
     this.products = ProductsDB.getProducts();
     this.initialFilter();
@@ -35,14 +35,16 @@ class Filters {
     valueFilterList.classList.add('value-filters__list');
 
     const setElements: Set<string> = new Set();
+
     this.products.forEach((el) => {
-      if (this.filterName === 'category') {
+      if (this.filterName === FiltersName.Category) {
         setElements.add(el.category);
       }
-      if (this.filterName === 'brand') {
+      if (this.filterName === FiltersName.Brand) {
         setElements.add(el.brand);
       }
     });
+
     setElements.forEach((el) => {
       const elementValue = this.valueFilterListElement(el);
       valueFilterList.append(elementValue);
@@ -57,19 +59,19 @@ class Filters {
 
     element.addEventListener('click', () => {
       element.classList.toggle('value-filters__list-element_active');
-      this.controlLocalStorageFilter(this.filterName, elementValue);
+      this.controlLocalStorageFilter(this.filterName as FiltersValueType, elementValue);
       this.filterProducts();
     });
     return element;
   }
 
-  //* initial Filters
   initialFilter(): void {
     if (!localStorage.getItem('filters')) {
       localStorage.setItem(
         'filters',
         JSON.stringify(<FiltersDataType>{
           filtersValue: { brand: [], category: [] },
+          filtersRange: { price: [], stock: [] },
         })
       );
     } else {
@@ -106,6 +108,7 @@ class Filters {
   filterValueProducts(filteredProducts: IProduct[], filterValue: FiltersValueDataType): IProduct[] {
     let newProducts: IProduct[] = filteredProducts;
     let isEmptyFilters = true;
+
     for (const key in filterValue) {
       if (filterValue[key as FiltersValueType]?.length) {
         newProducts = this.filterByValue(filterValue[key as FiltersValueType], newProducts, key as FiltersValueType);
@@ -115,16 +118,26 @@ class Filters {
     return isEmptyFilters ? this.products.slice() : newProducts;
   }
 
-  filterByValue(
-    filterValues: string[],
-    items: IProduct[],
-    filterName: FiltersValueType // brand, categotry
-  ): IProduct[] {
-    let filteredProducts: IProduct[] = items;
-    filteredProducts = filteredProducts.filter((item) =>
-      filterValues.find((filterValue) => item[filterName] === filterValue)
-    );
-    return filteredProducts;
+  filterByValue(filterValues: string[], items: IProduct[], filterName: FiltersValueType): IProduct[] {
+    return items.filter((item) => filterValues.find((filterValue) => item[filterName] === filterValue));
+  }
+
+  //* Range filters
+  appendFilterRange(parentElement: HTMLElement, char: string): void {
+    const filterTitle: HTMLParagraphElement = document.createElement('p');
+    filterTitle.classList.add('range-filters__title');
+    filterTitle.textContent = `${this.filterName[0].toUpperCase() + this.filterName.slice(1)}`;
+
+    parentElement.append(filterTitle, this.valueFilterRange(char));
+    this.initialFilter();
+  }
+
+  valueFilterRange(char: string): HTMLDivElement {
+    const element = document.createElement('div');
+    element.classList.add('range-filters');
+    new RangeSliderControl(element, 0, 100, char);
+
+    return element;
   }
 }
 

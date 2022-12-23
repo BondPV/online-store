@@ -11,11 +11,9 @@ class Catalog {
       .map((product) => new Product(product))
       .map((product) => product.render())
       .join('');
+
     if (parentElement instanceof HTMLElement) {
-      parentElement.innerHTML = products;
-      if (products.length === 0) {
-        parentElement.innerHTML = 'No products found';
-      }
+      parentElement.innerHTML = products.length ? products : 'No products found';
     }
   }
 }

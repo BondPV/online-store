@@ -11,12 +11,23 @@ class App {
     Catalog.render(catalogDataBase);
 
     const filtersContainer = document.querySelector(IdMap.valueFilters);
+
     if (filtersContainer instanceof HTMLElement) {
       const filterCategory = new Filters(FiltersName.Category);
       filterCategory.appendFilterList(filtersContainer);
 
       const filterBrand = new Filters(FiltersName.Brand);
       filterBrand.appendFilterList(filtersContainer);
+    }
+
+    const filtersRangeContainer = document.querySelector(IdMap.rangeFilters);
+
+    if (filtersRangeContainer instanceof HTMLElement) {
+      const filterPrice = new Filters(FiltersName.Price);
+      filterPrice.appendFilterRange(filtersRangeContainer, '$');
+
+      const filterStock = new Filters(FiltersName.Stock);
+      filterStock.appendFilterRange(filtersRangeContainer, '');
     }
   }
 }

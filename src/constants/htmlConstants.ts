@@ -1,4 +1,5 @@
 export const IdMap = {
-  valueFilters: '#value-filters',
   catalog: '#catalog',
+  valueFilters: '#value-filters',
+  rangeFilters: '#range-filters',
 };
