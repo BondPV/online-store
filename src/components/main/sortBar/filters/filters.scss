@@ -1,0 +1,37 @@
+.value-filters {
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__title {
+    margin: 0 auto;
+  }
+
+  &__list {
+    display: block;
+    padding-left: 0;
+    list-style-type: none;
+    height: 200px;
+    overflow: overlay;
+  }
+
+  &__list-element {
+    cursor: pointer;
+
+    &_active {
+      color: #0156FF;
+    }
+  } 
+}
+
+.range-filters {
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__title {
+    margin: 0 auto;
+  }
+}

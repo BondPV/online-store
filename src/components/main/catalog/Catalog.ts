@@ -1,29 +1,20 @@
 //  product catalog implementation
-
-import ProductsDB from 'database/ProductsDB';
+import { IdMap } from 'constants/htmlConstants';
 import Product from 'components/main/product/Product';
 import { IProduct } from 'types/interfaces';
 import './catalog.scss';
 
 class Catalog {
-  private products: IProduct[] = [];
-
-  constructor() {
-    this.initProducts();
-  }
-
-  //  product database initialization
-  initProducts() {
-    this.products = ProductsDB.getProducts();
-  }
-
-  render() {
-    const products: string = this.products
+  static render(catalog: IProduct[]) {
+    const parentElement = document.querySelector(IdMap.catalog);
+    const products: string = catalog
       .map((product) => new Product(product))
       .map((product) => product.render())
       .join('');
-    return `<div class="catalog">
-    ${products}</div>`;
+
+    if (parentElement instanceof HTMLElement) {
+      parentElement.innerHTML = products.length ? products : 'No products found';
+    }
   }
 }
 

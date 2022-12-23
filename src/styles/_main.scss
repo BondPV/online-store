@@ -18,15 +18,15 @@
 
 .main {
   flex-grow: 1;
+
   &__wrap {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 200px 1fr;
   }
 }
 
 .sort-bar {
   grid-column: 1;
-  border: 3px dotted $invalid-color;
 }
 
 .catalog {

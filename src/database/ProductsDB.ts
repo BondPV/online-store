@@ -1,4 +1,4 @@
-import { IProducts } from 'types/interfaces';
+import { IProducts, IProduct } from 'types/interfaces';
 import productJSON from './database.json';
 
 class ProductsDB {
@@ -9,6 +9,8 @@ class ProductsDB {
   static getProducts() {
     return productJSON.products;
   }
+
+  static products: IProduct[] = this.getProducts();
 }
 
 export default ProductsDB;

@@ -55,7 +55,7 @@ class Product {
             <div class="product__price_discount">${this.product.price}$</div>
           </div>
           <div class="product__add-to-cart"></div>
-         </div>
+          </div>
       </div>
       `;
   }
