@@ -2,20 +2,20 @@ import Catalog from 'components/main/catalog/Catalog';
 import './sortCatalog.scss';
 import { IProduct } from 'types/interfaces';
 import { SortOption } from 'types/types';
-import { SortOptionMap, optionNames } from 'constants/htmlConstants';
+import { SortOptionMap, optionNames, ClassMap, valueOptionAsc, ClassListName } from 'constants/htmlConstants';
 
 class SortCatalog {
   constructor(private readonly catalog: Catalog) {}
 
   render(): void {
-    const catalogHeader = document.querySelector('.catalog__header');
+    const catalogHeader = document.querySelector(ClassMap.catalogHeader);
 
     if (!catalogHeader) {
       return;
     }
 
     const selectSortButton: HTMLSelectElement = document.createElement('select');
-    selectSortButton.classList.add('sort-catalog');
+    selectSortButton.classList.add(ClassListName.selectSort);
     catalogHeader.append(selectSortButton);
 
     optionNames.forEach((item) => {
@@ -26,7 +26,7 @@ class SortCatalog {
   }
 
   selectOrder(): void {
-    const selectSortButton: HTMLSelectElement | null = document.querySelector('.sort-catalog');
+    const selectSortButton: HTMLSelectElement | null = document.querySelector(ClassMap.selectSort);
     if (!selectSortButton) {
       return;
     }
@@ -41,7 +41,8 @@ class SortCatalog {
 
     this.sortCatalog(currentField, currentOrder);
 
-    const oldCatalog = document.querySelector('.catalog');
+    const oldCatalog = document.querySelector(ClassMap.catalog);
+
     if (!oldCatalog) {
       return;
     }
@@ -53,7 +54,7 @@ class SortCatalog {
   sortCatalog(field: string, order: string): void {
     const typedField = field as keyof IProduct;
     const products: IProduct[] = this.catalog.products.sort((a, b) => {
-      if (order === 'ASC') {
+      if (order === valueOptionAsc) {
         return a[typedField] < b[typedField] ? -1 : 1;
       }
       return a[typedField] > b[typedField] ? -1 : 1;

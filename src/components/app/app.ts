@@ -16,8 +16,8 @@ class App {
   private grid = new Grid();
 
   public start() {
-    this.grid.render();
     this.sortCatalog.render();
+    this.grid.render();
     this.filterCatalog.render();
   }
 }
