@@ -1,18 +1,20 @@
 import { FiltersValueType, FiltersRangeType, FiltersDataType } from 'types/types';
 
 class LocalStorage {
+  static savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
+
   //* update local storage filters
   static controlFilter(filterName: FiltersValueType, elementValue: string): void {
-    const savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
-    let filteredCatalog = savedFilters.filtersValue[filterName];
+    this.savedFilters = JSON.parse(localStorage.getItem('filters') as string);
+    let filteredCatalog = this.savedFilters.filtersValue[filterName];
 
     if (filteredCatalog.includes(elementValue)) {
       filteredCatalog = filteredCatalog.filter((el: string) => el !== elementValue);
     } else {
       filteredCatalog.push(elementValue);
     }
-    savedFilters.filtersValue[filterName] = filteredCatalog;
-    localStorage.setItem('filters', JSON.stringify(savedFilters));
+    this.savedFilters.filtersValue[filterName] = filteredCatalog;
+    localStorage.setItem('filters', JSON.stringify(this.savedFilters));
   }
 
   static controlSlider(filterName: FiltersRangeType, rangeValue: number[]): void {
@@ -28,6 +30,10 @@ class LocalStorage {
     });
     localStorage.setItem('filters', value);
   }
+
+  static clear() {
+    localStorage.clear();
+}
 }
 
 export default LocalStorage;

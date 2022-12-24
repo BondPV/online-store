@@ -70,6 +70,8 @@ class Filters {
     element.classList.add('value-filters__list-element');
     element.append(elementValue);
 
+    this.checkActiveElement(elementValue, element);
+
     element.addEventListener('click', () => {
       element.classList.toggle('value-filters__list-element_active');
       LocalStorage.controlFilter(this.filterName as FiltersValueType, elementValue);
@@ -182,6 +184,15 @@ class Filters {
 
   private filterByRangeFilter(filterRange: number[], items: IProduct[], filterName: FiltersRangeType): IProduct[] {
     return items.filter((item) => item[filterName] >= filterRange[0] && item[filterName] <= filterRange[1]);
+  }
+
+  // check for activity on saved from Local Storage
+  checkActiveElement(elementValue: string, element: HTMLElement): void {
+    const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
+
+    if (filteredCatalog.includes(elementValue)) {
+      element.classList.add('value-filters__list-element_active');
+    }
   }
 }
 
