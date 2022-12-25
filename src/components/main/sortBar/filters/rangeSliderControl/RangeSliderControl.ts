@@ -1,8 +1,6 @@
 import './rangeSliderControl.scss';
 import Filters from 'components/main/sortBar/filters/Filters';
-import LocalStorage from 'helpers/localStorage/LocalStarage';
-
-import { FiltersRangeType } from 'types/types';
+import { IValueRange } from 'types/interfaces';
 
 class RangeSliderControl {
   parentElement: HTMLElement;
@@ -33,13 +31,13 @@ class RangeSliderControl {
 
   formValueRight: HTMLDivElement;
 
-  constructor(parentElement: HTMLElement, min: number, max: number, char: string, private filters: Filters) {
+  constructor(parentElement: HTMLElement, valueData: IValueRange, char: string, private filters: Filters) {
     this.parentElement = parentElement;
-    this.min = min;
-    this.max = max;
+    this.min = valueData.min;
+    this.max = valueData.max;
+    this.minCurrentValue = valueData.minCurrent;
+    this.maxCurrentValue = valueData.maxCurrent;
     this.char = char;
-    this.minCurrentValue = min;
-    this.maxCurrentValue = max;
 
     this.colorLineBg = '#ACACAC';
     this.colorLineActive = '#0156FF';
@@ -65,25 +63,25 @@ class RangeSliderControl {
     this.fromSlider.setAttribute('type', 'range');
     this.fromSlider.setAttribute('min', `${this.min}`);
     this.fromSlider.setAttribute('max', `${this.max}`);
-    this.fromSlider.setAttribute('value', `${this.min}`);
+    this.fromSlider.setAttribute('value', `${this.minCurrentValue}`);
     this.fromSlider.id = 'from-slider';
     this.sliderControl.append(this.fromSlider);
 
     this.toSlider.setAttribute('type', 'range');
     this.toSlider.setAttribute('min', `${this.min}`);
     this.toSlider.setAttribute('max', `${this.max}`);
-    this.toSlider.setAttribute('value', `${this.max}`);
+    this.toSlider.setAttribute('value', `${this.maxCurrentValue}`);
     this.sliderControl.append(this.toSlider);
 
     this.formControl.classList.add('form-control');
     this.parentElement.append(this.formControl);
 
     this.formValueLeft.classList.add('form-control__value');
-    this.formValueLeft.innerText = `${this.char} ${this.min}`;
+    this.formValueLeft.innerText = `${this.char} ${this.minCurrentValue}`;
     this.formControl.append(this.formValueLeft);
 
     this.formValueRight.classList.add('form-control__value');
-    this.formValueRight.innerText = `${this.char} ${this.max}`;
+    this.formValueRight.innerText = `${this.char} ${this.maxCurrentValue}`;
     this.formControl.append(this.formValueRight);
   }
 
@@ -145,22 +143,6 @@ class RangeSliderControl {
     } else {
       this.toSlider.style.zIndex = '0';
     }
-  }
-
-  eventListener(filterName: FiltersRangeType) {
-    this.fromSlider.addEventListener('input', () => {
-      this.controlFromSlider(this.fromSlider, this.toSlider, this.formValueLeft);
-
-      LocalStorage.controlSlider(filterName, [this.minCurrentValue, this.maxCurrentValue]);
-      this.filters.filterProducts();
-    });
-
-    this.toSlider.addEventListener('input', () => {
-      this.controlToSlider(this.fromSlider, this.toSlider, this.formValueRight);
-
-      LocalStorage.controlSlider(filterName, [this.minCurrentValue, this.maxCurrentValue]);
-      this.filters.filterProducts();
-    });
   }
 }
 

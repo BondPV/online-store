@@ -24,3 +24,10 @@ export interface IQuantity {
   current: number;
   total: number;
 }
+
+export interface IValueRange {
+  min: number;
+  max: number;
+  minCurrent: number;
+  maxCurrent: number;
+}

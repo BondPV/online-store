@@ -14,26 +14,31 @@ class FilterCatalog {
     private productsDB: ProductsDB,
   ) {}
 
+  resetButtonContainer = document.querySelector(IdMap.resetButton) as HTMLElement;
+
+  filtersContainer = document.querySelector(IdMap.valueFilters) as HTMLElement;
+
+  filtersRangeContainer = document.querySelector(IdMap.rangeFilters) as HTMLElement;
+
   render() {
-    const filtersContainer = document.querySelector(IdMap.valueFilters);
+    const filterCategory = new Filters(FiltersName.Category, this.catalog, this.sortCatalog, this.productsDB);
+    filterCategory.appendFilterList(this.filtersContainer);
+    filterCategory.resetFiltersSettings();
 
-    if (filtersContainer instanceof HTMLElement) {
-      const filterCategory = new Filters(FiltersName.Category, this.catalog, this.sortCatalog, this.productsDB);
-      filterCategory.appendFilterList(filtersContainer);
+    const filterBrand = new Filters(FiltersName.Brand, this.catalog, this.sortCatalog, this.productsDB);
+    filterBrand.appendFilterList(this.filtersContainer);
 
-      const filterBrand = new Filters(FiltersName.Brand, this.catalog, this.sortCatalog, this.productsDB);
-      filterBrand.appendFilterList(filtersContainer);
-    }
+    const filterPrice = new Filters(FiltersName.Price, this.catalog, this.sortCatalog, this.productsDB);
+    filterPrice.appendFilterRange(this.filtersRangeContainer, '$');
 
-    const filtersRangeContainer = document.querySelector(IdMap.rangeFilters);
+    const filterStock = new Filters(FiltersName.Stock, this.catalog, this.sortCatalog, this.productsDB);
+    filterStock.appendFilterRange(this.filtersRangeContainer, '');
+  }
 
-    if (filtersRangeContainer instanceof HTMLElement) {
-      const filterPrice = new Filters(FiltersName.Price, this.catalog, this.sortCatalog, this.productsDB);
-      filterPrice.appendFilterRange(filtersRangeContainer, '$');
-
-      const filterStock = new Filters(FiltersName.Stock, this.catalog, this.sortCatalog, this.productsDB);
-      filterStock.appendFilterRange(filtersRangeContainer, '');
-    }
+  clear() {
+    this.resetButtonContainer.innerHTML = '';
+    this.filtersContainer.innerHTML = '';
+    this.filtersRangeContainer.innerHTML = '';
   }
 }
 
