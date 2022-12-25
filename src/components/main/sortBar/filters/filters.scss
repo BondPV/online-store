@@ -17,16 +17,17 @@
   }
 
   &__list-element {
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
 
-    &_active {
-      color: #0156FF;
-    }
+  &__element-input {
+    margin-right: 5px;
+  }
 
-    &_inactive {
-      color: #ACACAC;
-    }
-  } 
+  &__count-all {
+    margin-right: 20px;
+  }
 }
 
 .range-filters {

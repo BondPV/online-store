@@ -33,7 +33,7 @@ class LocalStorage {
 
   static clear() {
     localStorage.clear();
-}
+  }
 }
 
 export default LocalStorage;

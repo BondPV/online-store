@@ -19,3 +19,8 @@ export interface IProducts {
   skip: number;
   total: number;
 }
+
+export interface IQuantity {
+  current: number;
+  total: number;
+}
