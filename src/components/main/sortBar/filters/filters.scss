@@ -23,7 +23,9 @@
   
   &__element-input {
     margin-right: 5px;
-    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+  }
   }
 
   &__element-label {

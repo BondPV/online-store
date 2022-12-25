@@ -43,7 +43,7 @@ class Filters {
     parentElement.append(filterTitle, this.valueFilterList());
   }
 
-  valueFilterList(): HTMLElement {
+  private valueFilterList(): HTMLElement {
     const valueFilterList = document.createElement('div');
     valueFilterList.classList.add('value-filters__list');
 
@@ -71,7 +71,7 @@ class Filters {
     return valueFilterList;
   }
 
-  valueFilterListElement(elementValue: string, elementQuantity: IQuantity): HTMLElement {
+  private valueFilterListElement(elementValue: string, elementQuantity: IQuantity): HTMLElement {
     const element = document.createElement('div');
     element.classList.add('value-filters__list-element');
 
