@@ -6,7 +6,7 @@ import {
   FiltersRangeDataType,
   FiltersDataType,
 } from 'types/types';
-import { IProduct } from 'types/interfaces';
+import { IProduct, IQuantity } from 'types/interfaces';
 import Catalog from 'components/main/catalog/Catalog';
 import ProductsDB from 'database/ProductsDB';
 import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderControl/RangeSliderControl';
@@ -43,8 +43,8 @@ class Filters {
     this.initialFilter();
   }
 
-  private valueFilterList(): HTMLUListElement {
-    const valueFilterList = document.createElement('ul');
+  private valueFilterList(): HTMLElement {
+    const valueFilterList = document.createElement('div');
     valueFilterList.classList.add('value-filters__list');
 
     const setElements: Set<string> = new Set();
@@ -59,21 +59,35 @@ class Filters {
     });
 
     setElements.forEach((el) => {
-      const elementValue = this.valueFilterListElement(el);
+      const elQuantity = this.getProductsQuantity(el);
+      const elementValue = this.valueFilterListElement(el, elQuantity);
       valueFilterList.append(elementValue);
     });
     return valueFilterList;
   }
 
-  private valueFilterListElement(elementValue: string): HTMLLIElement {
-    const element = document.createElement('li');
+  private valueFilterListElement(elementValue: string, elementQuantity: IQuantity): HTMLElement {
+    const element = document.createElement('div');
     element.classList.add('value-filters__list-element');
-    element.append(elementValue);
 
-    this.checkActiveElement(elementValue, element);
+    const elementLabel = document.createElement('label');
+    elementLabel.classList.add('value-filters__element-label');
+    element.append(elementLabel);
 
-    element.addEventListener('click', () => {
-      element.classList.toggle('value-filters__list-element_active');
+    const elementInput = document.createElement('input');
+    elementInput.classList.add('value-filters__element-input');
+    elementLabel.innerText = elementValue;
+    elementInput.setAttribute('type', 'checkbox');
+    elementLabel.prepend(elementInput);
+
+    const elementCountAll = document.createElement('span');
+    elementCountAll.classList.add('value-filters__count-all');
+    elementCountAll.innerText = `${elementQuantity.current}/${elementQuantity.total}`;
+    element.append(elementCountAll);
+
+    this.checkActiveElement(elementValue, elementInput);
+
+    elementInput.addEventListener('click', () => {
       LocalStorage.controlFilter(this.filterName as FiltersValueType, elementValue);
       this.filterProducts();
     });
@@ -187,12 +201,39 @@ class Filters {
   }
 
   // check for activity on saved from Local Storage
-  checkActiveElement(elementValue: string, element: HTMLElement): void {
+  checkActiveElement(elementValue: string, element: HTMLInputElement): void {
     const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
 
     if (filteredCatalog.includes(elementValue)) {
-      element.classList.add('value-filters__list-element_active');
+      element.checked = true;
     }
+  }
+
+  getProductsQuantity(elementValue: string): IQuantity {
+    const productsAll = this.productsDB.getProducts();
+    const productsCurrent = this.currentCatalog;
+    let total = 0;
+    let current = 0;
+
+    productsAll.forEach((elem) => {
+      for (const key in elem) {
+        if (elem[key as FiltersValueType] === elementValue) {
+          total += 1;
+        }
+      }
+    });
+
+    productsCurrent.forEach((elem) => {
+      for (const key in elem) {
+        if (elem[key as FiltersValueType] === elementValue) {
+          current += 1;
+        }
+      }
+    });
+
+    const quantity: IQuantity = { current, total };
+
+    return quantity;
   }
 }
 
