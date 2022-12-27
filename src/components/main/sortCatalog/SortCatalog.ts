@@ -25,7 +25,7 @@ class SortCatalog {
     selectSortButton.addEventListener('change', () => this.selectOrder());
   }
 
-  selectOrder(): void {
+  public selectOrder(): void {
     const selectSortButton: HTMLSelectElement | null = document.querySelector(ClassMap.selectSort);
     if (!selectSortButton) {
       return;
@@ -35,9 +35,9 @@ class SortCatalog {
     currentOption.selected = true;
     const currentOptionValue: string = currentOption.value;
 
-    const splitedOptionValue = currentOptionValue.split(' ');
-    const currentField = SortOptionMap[splitedOptionValue[0] as keyof SortOption];
-    const currentOrder = splitedOptionValue[1];
+    const [firstValue, secondValue] = currentOptionValue.split(' ');
+    const currentField = SortOptionMap[firstValue as keyof SortOption];
+    const currentOrder = secondValue;
 
     this.sortCatalog(currentField, currentOrder);
 
@@ -51,7 +51,7 @@ class SortCatalog {
     this.catalog.render();
   }
 
-  sortCatalog(field: string, order: string): void {
+  private sortCatalog(field: string, order: string): void {
     const typedField = field as keyof IProduct;
     const products: IProduct[] = this.catalog.products.sort((a, b) => {
       if (order === valueOptionAsc) {
@@ -62,7 +62,7 @@ class SortCatalog {
     this.catalog.products = products;
   }
 
-  createOptionsSort(optionName: string, parentElem: HTMLSelectElement): void {
+  private createOptionsSort(optionName: string, parentElem: HTMLSelectElement): void {
     const optionSort: HTMLOptionElement = document.createElement('option');
     optionSort.textContent = optionName;
     optionSort.value = optionName;

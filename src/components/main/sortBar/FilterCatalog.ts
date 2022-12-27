@@ -6,7 +6,13 @@ import ProductsDB from 'database/ProductsDB';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
 
 class FilterCatalog {
-  constructor(private catalog: Catalog, private sortCatalog: SortCatalog, private productsDB: ProductsDB) {}
+  constructor(
+    private catalog: Catalog,
+
+    private sortCatalog: SortCatalog,
+
+    private productsDB: ProductsDB,
+  ) {}
 
   render() {
     const filtersContainer = document.querySelector(IdMap.valueFilters);

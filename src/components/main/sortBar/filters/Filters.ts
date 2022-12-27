@@ -15,21 +15,24 @@ import LocalStorage from 'helpers/localStorage/LocalStarage';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
 
 class Filters {
-  static currentCatalog: IProduct[];
+  private currentCatalog: IProduct[];
 
   constructor(
     private readonly filterName: FiltersValueType | FiltersRangeType,
+
     private readonly catalog: Catalog,
+
     private readonly sortCatalog: SortCatalog,
+
     private readonly productsDB: ProductsDB,
   ) {
-    Filters.currentCatalog = [];
+    this.currentCatalog = [];
     this.filterName = filterName;
     this.initialFilter();
   }
 
   //* append HTML elements to the parentElement
-  appendFilterList(parentElement: HTMLElement): void {
+  public appendFilterList(parentElement: HTMLElement): void {
     const filterTitle: HTMLParagraphElement = document.createElement('p');
 
     filterTitle.classList.add('value-filters__title');
@@ -40,7 +43,7 @@ class Filters {
     this.initialFilter();
   }
 
-  valueFilterList(): HTMLUListElement {
+  private valueFilterList(): HTMLUListElement {
     const valueFilterList = document.createElement('ul');
     valueFilterList.classList.add('value-filters__list');
 
@@ -62,7 +65,7 @@ class Filters {
     return valueFilterList;
   }
 
-  valueFilterListElement(elementValue: string): HTMLLIElement {
+  private valueFilterListElement(elementValue: string): HTMLLIElement {
     const element = document.createElement('li');
     element.classList.add('value-filters__list-element');
     element.append(elementValue);
@@ -75,7 +78,7 @@ class Filters {
     return element;
   }
 
-  initialFilter(): void {
+  private initialFilter(): void {
     if (!localStorage.getItem('filters')) {
       LocalStorage.setItems();
     } else {
@@ -84,7 +87,7 @@ class Filters {
   }
 
   //* render Catalog
-  filterProducts(): void {
+  public filterProducts(): void {
     const savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
     const filterValue: FiltersValueDataType = savedFilters.filtersValue;
     const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
@@ -92,14 +95,14 @@ class Filters {
     let filteredCatalog: IProduct[] = this.filterValueProducts(this.productsDB.getProducts().slice(), filterValue);
     filteredCatalog = this.filterRangeProducts(filteredCatalog, filterRange);
 
-    Filters.currentCatalog = filteredCatalog;
+    this.currentCatalog = filteredCatalog;
     this.catalog.products = filteredCatalog;
     this.sortCatalog.selectOrder();
     this.catalog.render();
   }
 
   //* Value filter
-  filterValueProducts(filteredProducts: IProduct[], filterValue: FiltersValueDataType): IProduct[] {
+  private filterValueProducts(filteredProducts: IProduct[], filterValue: FiltersValueDataType): IProduct[] {
     let newProducts: IProduct[] = filteredProducts;
     let isEmptyFilters = true;
 
@@ -112,12 +115,12 @@ class Filters {
     return isEmptyFilters ? this.productsDB.getProducts().slice() : newProducts;
   }
 
-  filterByValue(filterValues: string[], items: IProduct[], filterName: FiltersValueType): IProduct[] {
+  private filterByValue(filterValues: string[], items: IProduct[], filterName: FiltersValueType): IProduct[] {
     return items.filter((item) => filterValues.find((filterValue) => item[filterName] === filterValue));
   }
 
   //* Range filters
-  appendFilterRange(parentElement: HTMLElement, char: string): void {
+  public appendFilterRange(parentElement: HTMLElement, char: string): void {
     const filterTitle: HTMLParagraphElement = document.createElement('p');
     filterTitle.classList.add('range-filters__title');
     filterTitle.textContent = `${this.filterName[0].toUpperCase() + this.filterName.slice(1)}`;
@@ -126,7 +129,7 @@ class Filters {
     this.initialFilter();
   }
 
-  valueFilterRange(char: string): HTMLDivElement {
+  private valueFilterRange(char: string): HTMLDivElement {
     const element = document.createElement('div');
     element.classList.add('range-filters__filter');
 
@@ -160,7 +163,7 @@ class Filters {
     return element;
   }
 
-  filterRangeProducts(filteredProducts: IProduct[], filterRange: FiltersRangeDataType): IProduct[] {
+  private filterRangeProducts(filteredProducts: IProduct[], filterRange: FiltersRangeDataType): IProduct[] {
     let newProducts: IProduct[] = filteredProducts;
     let isEmptyFilters = true;
 
@@ -177,7 +180,7 @@ class Filters {
     return isEmptyFilters ? filteredProducts : newProducts;
   }
 
-  filterByRangeFilter(filterRange: number[], items: IProduct[], filterName: FiltersRangeType): IProduct[] {
+  private filterByRangeFilter(filterRange: number[], items: IProduct[], filterName: FiltersRangeType): IProduct[] {
     return items.filter((item) => item[filterName] >= filterRange[0] && item[filterName] <= filterRange[1]);
   }
 }

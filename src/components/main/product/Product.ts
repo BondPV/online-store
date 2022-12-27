@@ -36,7 +36,7 @@ class Product {
     const discount: number = 1 + this.product.discountPercentage / 100;
     const initialPrice: number = Math.round(this.product.price * discount);
     const ratingStars: string = this.fillRating();
-    // .ячейки .product
+
     return `
       <div class="product">
         <div class="product__stock">stock: ${this.product.stock}</div>
