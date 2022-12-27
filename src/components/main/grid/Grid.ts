@@ -4,17 +4,25 @@ import { ClassListName, ClassMap } from 'constants/htmlConstants';
 class Grid {
   public changeGridList(): void {
     const catalogView = document.querySelector(ClassMap.catalog);
+    const catalogListIcon = document.querySelector(ClassMap.catalogViewList);
+    const catalogTableIcon = document.querySelector(ClassMap.catalogViewTable);
 
-    if (catalogView) {
+    if (catalogView && catalogListIcon && catalogTableIcon) {
       catalogView.classList.add(ClassListName.catalogListView);
+      catalogTableIcon.classList.remove(ClassListName.catalogViewActive);
+      catalogListIcon.classList.add(ClassListName.catalogViewActive);
     }
   }
 
   public changeGridTable(): void {
     const catalogView = document.querySelector(ClassMap.catalog);
+    const catalogListIcon = document.querySelector(ClassMap.catalogViewList);
+    const catalogTableIcon = document.querySelector(ClassMap.catalogViewTable);
 
-    if (catalogView) {
+    if (catalogView && catalogListIcon && catalogTableIcon) {
       catalogView.classList.remove(ClassListName.catalogListView);
+      catalogListIcon.classList.remove(ClassListName.catalogViewActive);
+      catalogTableIcon.classList.add(ClassListName.catalogViewActive);
     }
   }
 
@@ -26,20 +34,16 @@ class Grid {
     }
 
     const viewButtonTable: HTMLDivElement = document.createElement('div');
-    viewButtonTable.classList.add(ClassListName.catalogView, ClassListName.catalogViewTable);
+    viewButtonTable.classList.add(
+      ClassListName.catalogView,
+      ClassListName.catalogViewTable,
+      ClassListName.catalogViewActive,
+    );
     catalogHeader.append(viewButtonTable);
-
-    const iconButtonTable: HTMLElement = document.createElement('i');
-    iconButtonTable.classList.add(ClassListName.iconFontSolid, ClassListName.iconFontTable);
-    viewButtonTable.append(iconButtonTable);
 
     const viewButtonList: HTMLDivElement = document.createElement('div');
     viewButtonList.classList.add(ClassListName.catalogView, ClassListName.catalogViewList);
     catalogHeader.append(viewButtonList);
-
-    const iconButtonList: HTMLElement = document.createElement('i');
-    iconButtonList.classList.add(ClassListName.iconFontSolid, ClassListName.iconFontList);
-    viewButtonList.append(iconButtonList);
 
     viewButtonList.addEventListener('click', () => this.changeGridList());
     viewButtonTable.addEventListener('click', () => this.changeGridTable());

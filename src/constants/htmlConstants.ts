@@ -12,19 +12,19 @@ export const ClassMap = {
   catalog: '.catalog',
   catalogListView: '.catalog_list',
   catalogView: '.catalog__view',
-  catalogViewTable: '.catalog__view-table',
-  catalogViewList: '.catalog__view-list',
+  catalogViewActive: '.catalog__view_active',
+  catalogViewTable: '.catalog__view_table',
+  catalogViewList: '.catalog__view_list',
 };
 
 export const ClassListName = {
   selectSort: 'catalog__selectSort',
   catalogListView: 'catalog_list',
   catalogView: 'catalog__view',
-  catalogViewTable: 'catalog__view-table',
-  catalogViewList: 'catalog__view-list',
-  iconFontSolid: 'fa-solid',
-  iconFontTable: 'fa-table-cells',
-  iconFontList: 'fa-list',
+  catalogViewActive: 'catalog__view_active',
+  catalogViewTable: 'catalog__view_table',
+  catalogViewList: 'catalog__view_list',
+  catalogLabelText: 'label-text',
 };
 
 export const SortOptionMap: SortOption = {

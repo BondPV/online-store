@@ -14,8 +14,14 @@ class SortCatalog {
       return;
     }
 
+    const labelTextSelect: HTMLLabelElement = document.createElement('label');
+    labelTextSelect.classList.add(ClassListName.catalogLabelText);
+    labelTextSelect.textContent = 'Sort by:';
+    catalogHeader.prepend(labelTextSelect);
+
     const selectSortButton: HTMLSelectElement = document.createElement('select');
     selectSortButton.classList.add(ClassListName.selectSort);
+    selectSortButton.textContent = 'Sort by:';
     catalogHeader.append(selectSortButton);
 
     optionNames.forEach((item) => {

@@ -14,6 +14,10 @@
     cursor: pointer;
   }
 
+  &__body {
+    flex: 1;
+  }
+
   &__stock {
     color: #78A962;
     font-size: 10px;
@@ -47,6 +51,7 @@
   }
 
   &__description {
+    width: 100%;
     height: 40px;
     overflow: hidden;
     display: -webkit-box;
@@ -111,5 +116,6 @@
 
 .catalog_list .product {
   flex-direction: row;
+  height: 250px;
   width: 100%;
 }
