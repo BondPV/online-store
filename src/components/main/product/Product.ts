@@ -39,27 +39,25 @@ class Product {
 
     return `
       <div class="product">
-        <div>
-          <div class="product__stock">stock: ${this.product.stock}</div>
-          <div class="product__img-wrap">
+        <div class="product__stock">stock: ${this.product.stock}</div>
+        <div class="product__img-wrap">
+          <a href="#product-details/${this.product.id}">
             <div class="product__img" style="background: url('${this.product.images[0]}') no-repeat center / contain;"></div>
-          </div>
-          <div class="product__rating-wrap">
-            <div class="product__rating">${ratingStars}</div>
-            <span class="product__rating-text">${this.product.rating}</span>
-          </div>
+          </a>
         </div>
-        <div class="product__body">
-          <div class="product__title">${this.product.title}</div>
-          <div class="product__description">${this.product.description}</div>
-          <div class="product__footer-wrap">
-            <div class="product__price-wrap">
-              <div class="product__price">${initialPrice}$</div>
-              <div class="product__price_discount">${this.product.price}$</div>
-            </div>
-            <div class="product__add-to-cart"></div>
-           </div>
+        <div class="product__rating-wrap">
+          <div class="product__rating">${ratingStars}</div>
+          <span class="product__rating-text">${this.product.rating}</span>
         </div>
+        <div class="product__title">${this.product.title}</div>
+        <div class="product__description">${this.product.description}</div>
+        <div class="product__footer-wrap">
+          <div class="product__price-wrap">
+            <div class="product__price">${initialPrice}$</div>
+            <div class="product__price_discount">${this.product.price}$</div>
+          </div>
+          <div class="product__add-to-cart"></div>
+          </div>
       </div>
       `;
   }

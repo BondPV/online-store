@@ -1,5 +1,8 @@
 import { SortOption } from 'types/types';
 
+export const Body = document.querySelector('body') as HTMLElement;
+export const Container = document.querySelector('#main-container') as HTMLElement;
+
 export const IdMap = {
   catalog: '#catalog',
   resetButton: '#reset-button',

@@ -1,24 +1,8 @@
-import ProductsDB from 'database/ProductsDB';
-import Catalog from 'components/main/catalog/Catalog';
-import SortCatalog from 'components/main/sortCatalog/SortCatalog';
-import Grid from 'components/main/grid/Grid';
-import FilterCatalog from 'components/main/sortBar/FilterCatalog';
+import Router from 'helpers/router/Router';
 
 class App {
-  private productsDB = new ProductsDB();
-
-  private catalog = new Catalog(this.productsDB.getProducts());
-
-  private sortCatalog = new SortCatalog(this.catalog);
-
-  private filterCatalog = new FilterCatalog(this.catalog, this.sortCatalog, this.productsDB);
-
-  private grid = new Grid();
-
   public start() {
-    this.sortCatalog.render();
-    this.grid.render();
-    this.filterCatalog.render();
+    new Router();
   }
 }
 
