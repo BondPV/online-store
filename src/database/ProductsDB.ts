@@ -1,16 +1,10 @@
-import { IProducts, IProduct } from 'types/interfaces';
+import { IProduct } from 'types/interfaces';
 import productJSON from './database.json';
 
 class ProductsDB {
-  constructor(private jsonDB: IProducts) {
-    this.jsonDB = jsonDB;
-  }
-
-  static getProducts() {
+  public getProducts(): IProduct[] {
     return productJSON.products;
   }
-
-  static products: IProduct[] = this.getProducts();
 }
 
 export default ProductsDB;

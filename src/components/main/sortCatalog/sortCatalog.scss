@@ -1,0 +1,19 @@
+.catalog__selectSort {
+  width: 100px;
+  border: 2px solid #CACDD8;
+  border-left: none;
+  cursor: pointer;
+  margin-right: 10px;
+  box-sizing: border-box;
+}
+
+.label-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  text-align: center;
+  padding: 10px;
+  border: 2px solid #CACDD8;
+  border-right: none;
+}

@@ -25,12 +25,23 @@
   }
 }
 
-.sort-bar {
-  grid-column: 1;
+.catalog-wrap {
+  display: flex;
+  flex-direction: column;
 }
 
-.catalog {
-  display: grid;
+.catalog__header {
+  display: flex;
+  justify-content: end;
+  align-items: stretch;
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+  color: $icon-color;
+}
+
+.filter-bar {
+  grid-column: 1;
 }
 
 @media (max-width: 1400px) {

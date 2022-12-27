@@ -22,13 +22,11 @@ class LocalStorage {
   }
 
   static setItems() {
-    localStorage.setItem(
-      'filters',
-      JSON.stringify(<FiltersDataType>{
-        filtersValue: { brand: [], category: [] },
-        filtersRange: { price: [], stock: [] },
-      })
-    );
+    const value = JSON.stringify(<FiltersDataType>{
+      filtersValue: { brand: [], category: [] },
+      filtersRange: { price: [], stock: [] },
+    });
+    localStorage.setItem('filters', value);
   }
 }
 

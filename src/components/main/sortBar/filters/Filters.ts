@@ -12,20 +12,27 @@ import ProductsDB from 'database/ProductsDB';
 import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderControl/RangeSliderControl';
 import { FiltersName } from 'types/enums';
 import LocalStorage from 'helpers/localStorage/LocalStarage';
+import SortCatalog from 'components/main/sortCatalog/SortCatalog';
 
 class Filters {
-  static currentCatalog: IProduct[];
+  private currentCatalog: IProduct[];
 
-  private filterName: FiltersValueType | FiltersRangeType;
+  constructor(
+    private readonly filterName: FiltersValueType | FiltersRangeType,
 
-  constructor(filterName: FiltersValueType | FiltersRangeType) {
-    Filters.currentCatalog = [];
+    private readonly catalog: Catalog,
+
+    private readonly sortCatalog: SortCatalog,
+
+    private readonly productsDB: ProductsDB,
+  ) {
+    this.currentCatalog = [];
     this.filterName = filterName;
     this.initialFilter();
   }
 
   //* append HTML elements to the parentElement
-  appendFilterList(parentElement: HTMLElement): void {
+  public appendFilterList(parentElement: HTMLElement): void {
     const filterTitle: HTMLParagraphElement = document.createElement('p');
 
     filterTitle.classList.add('value-filters__title');
@@ -36,13 +43,13 @@ class Filters {
     this.initialFilter();
   }
 
-  valueFilterList(): HTMLUListElement {
+  private valueFilterList(): HTMLUListElement {
     const valueFilterList = document.createElement('ul');
     valueFilterList.classList.add('value-filters__list');
 
     const setElements: Set<string> = new Set();
 
-    ProductsDB.products.forEach((el) => {
+    this.productsDB.getProducts().forEach((el) => {
       if (this.filterName === FiltersName.Category) {
         setElements.add(el.category);
       }
@@ -58,7 +65,7 @@ class Filters {
     return valueFilterList;
   }
 
-  valueFilterListElement(elementValue: string): HTMLLIElement {
+  private valueFilterListElement(elementValue: string): HTMLLIElement {
     const element = document.createElement('li');
     element.classList.add('value-filters__list-element');
     element.append(elementValue);
@@ -66,34 +73,36 @@ class Filters {
     element.addEventListener('click', () => {
       element.classList.toggle('value-filters__list-element_active');
       LocalStorage.controlFilter(this.filterName as FiltersValueType, elementValue);
-      Filters.filterProducts();
+      this.filterProducts();
     });
     return element;
   }
 
-  initialFilter(): void {
+  private initialFilter(): void {
     if (!localStorage.getItem('filters')) {
       LocalStorage.setItems();
     } else {
-      Filters.filterProducts();
+      this.filterProducts();
     }
   }
 
   //* render Catalog
-  static filterProducts(): void {
+  public filterProducts(): void {
     const savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
     const filterValue: FiltersValueDataType = savedFilters.filtersValue;
     const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
 
-    let filteredCatalog: IProduct[] = this.filterValueProducts(ProductsDB.products.slice(), filterValue);
+    let filteredCatalog: IProduct[] = this.filterValueProducts(this.productsDB.getProducts().slice(), filterValue);
     filteredCatalog = this.filterRangeProducts(filteredCatalog, filterRange);
 
-    Filters.currentCatalog = filteredCatalog;
-    Catalog.render(filteredCatalog);
+    this.currentCatalog = filteredCatalog;
+    this.catalog.products = filteredCatalog;
+    this.sortCatalog.selectOrder();
+    this.catalog.render();
   }
 
   //* Value filter
-  static filterValueProducts(filteredProducts: IProduct[], filterValue: FiltersValueDataType): IProduct[] {
+  private filterValueProducts(filteredProducts: IProduct[], filterValue: FiltersValueDataType): IProduct[] {
     let newProducts: IProduct[] = filteredProducts;
     let isEmptyFilters = true;
 
@@ -103,15 +112,15 @@ class Filters {
         isEmptyFilters = false;
       }
     }
-    return isEmptyFilters ? ProductsDB.products.slice() : newProducts;
+    return isEmptyFilters ? this.productsDB.getProducts().slice() : newProducts;
   }
 
-  static filterByValue(filterValues: string[], items: IProduct[], filterName: FiltersValueType): IProduct[] {
+  private filterByValue(filterValues: string[], items: IProduct[], filterName: FiltersValueType): IProduct[] {
     return items.filter((item) => filterValues.find((filterValue) => item[filterName] === filterValue));
   }
 
   //* Range filters
-  appendFilterRange(parentElement: HTMLElement, char: string): void {
+  public appendFilterRange(parentElement: HTMLElement, char: string): void {
     const filterTitle: HTMLParagraphElement = document.createElement('p');
     filterTitle.classList.add('range-filters__title');
     filterTitle.textContent = `${this.filterName[0].toUpperCase() + this.filterName.slice(1)}`;
@@ -120,19 +129,19 @@ class Filters {
     this.initialFilter();
   }
 
-  valueFilterRange(char: string): HTMLDivElement {
+  private valueFilterRange(char: string): HTMLDivElement {
     const element = document.createElement('div');
     element.classList.add('range-filters__filter');
 
     if (this.filterName === FiltersName.Price) {
       const priceValue: number[] = [];
 
-      ProductsDB.products.forEach((el) => priceValue.push(el.price));
+      this.productsDB.getProducts().forEach((el) => priceValue.push(el.price));
 
       const minValue = Math.floor(Math.min(...priceValue));
       const maxValue = Math.ceil(Math.max(...priceValue));
 
-      const priceRange = new RangeSliderControl(element, minValue, maxValue, char);
+      const priceRange = new RangeSliderControl(element, minValue, maxValue, char, this);
 
       priceRange.eventListener(this.filterName);
     }
@@ -140,21 +149,21 @@ class Filters {
     if (this.filterName === FiltersName.Stock) {
       const stockValue: number[] = [];
 
-      ProductsDB.products.forEach((el) => stockValue.push(el.stock));
+      this.productsDB.getProducts().forEach((el) => stockValue.push(el.stock));
 
       const minValue = Math.floor(Math.min(...stockValue));
       const maxValue = Math.ceil(Math.max(...stockValue));
 
-      const stockRange = new RangeSliderControl(element, minValue, maxValue, char);
+      const stockRange = new RangeSliderControl(element, minValue, maxValue, char, this);
 
       stockRange.eventListener(this.filterName);
-      Filters.filterProducts();
+      this.filterProducts();
     }
 
     return element;
   }
 
-  static filterRangeProducts(filteredProducts: IProduct[], filterRange: FiltersRangeDataType): IProduct[] {
+  private filterRangeProducts(filteredProducts: IProduct[], filterRange: FiltersRangeDataType): IProduct[] {
     let newProducts: IProduct[] = filteredProducts;
     let isEmptyFilters = true;
 
@@ -163,7 +172,7 @@ class Filters {
         newProducts = this.filterByRangeFilter(
           filterRange[key as FiltersRangeType],
           newProducts,
-          key as FiltersRangeType
+          key as FiltersRangeType,
         );
         isEmptyFilters = false;
       }
@@ -171,7 +180,7 @@ class Filters {
     return isEmptyFilters ? filteredProducts : newProducts;
   }
 
-  static filterByRangeFilter(filterRange: number[], items: IProduct[], filterName: FiltersRangeType): IProduct[] {
+  private filterByRangeFilter(filterRange: number[], items: IProduct[], filterName: FiltersRangeType): IProduct[] {
     return items.filter((item) => item[filterName] >= filterRange[0] && item[filterName] <= filterRange[1]);
   }
 }

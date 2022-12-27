@@ -8,3 +8,9 @@ export type FiltersDataType = {
   filtersValue: FiltersValueDataType;
   filtersRange: FiltersRangeDataType;
 };
+
+export type SortOption = {
+  Name: string;
+  Price: string;
+  Rating: string;
+};

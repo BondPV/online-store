@@ -1,34 +1,24 @@
-import { IdMap } from 'constants/htmlConstants';
 import ProductsDB from 'database/ProductsDB';
 import Catalog from 'components/main/catalog/Catalog';
-import Filters from 'components/main/sortBar/filters/Filters';
-import { FiltersName } from 'types/enums';
+import SortCatalog from 'components/main/sortCatalog/SortCatalog';
+import Grid from 'components/main/grid/Grid';
+import FilterCatalog from 'components/main/sortBar/FilterCatalog';
 
 class App {
+  private productsDB = new ProductsDB();
+
+  private catalog = new Catalog(this.productsDB.getProducts());
+
+  private sortCatalog = new SortCatalog(this.catalog);
+
+  private filterCatalog = new FilterCatalog(this.catalog, this.sortCatalog, this.productsDB);
+
+  private grid = new Grid();
+
   public start() {
-    const catalogDataBase = ProductsDB.getProducts();
-
-    Catalog.render(catalogDataBase);
-
-    const filtersContainer = document.querySelector(IdMap.valueFilters);
-
-    if (filtersContainer instanceof HTMLElement) {
-      const filterCategory = new Filters(FiltersName.Category);
-      filterCategory.appendFilterList(filtersContainer);
-
-      const filterBrand = new Filters(FiltersName.Brand);
-      filterBrand.appendFilterList(filtersContainer);
-    }
-
-    const filtersRangeContainer = document.querySelector(IdMap.rangeFilters);
-
-    if (filtersRangeContainer instanceof HTMLElement) {
-      const filterPrice = new Filters(FiltersName.Price);
-      filterPrice.appendFilterRange(filtersRangeContainer, '$');
-
-      const filterStock = new Filters(FiltersName.Stock);
-      filterStock.appendFilterRange(filtersRangeContainer, '');
-    }
+    this.sortCatalog.render();
+    this.grid.render();
+    this.filterCatalog.render();
   }
 }
 

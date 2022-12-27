@@ -33,7 +33,7 @@ class RangeSliderControl {
 
   formValueRight: HTMLDivElement;
 
-  constructor(parentElement: HTMLElement, min: number, max: number, char: string) {
+  constructor(parentElement: HTMLElement, min: number, max: number, char: string, private filters: Filters) {
     this.parentElement = parentElement;
     this.min = min;
     this.max = max;
@@ -152,14 +152,14 @@ class RangeSliderControl {
       this.controlFromSlider(this.fromSlider, this.toSlider, this.formValueLeft);
 
       LocalStorage.controlSlider(filterName, [this.minCurrentValue, this.maxCurrentValue]);
-      Filters.filterProducts();
+      this.filters.filterProducts();
     });
 
     this.toSlider.addEventListener('input', () => {
       this.controlToSlider(this.fromSlider, this.toSlider, this.formValueRight);
 
       LocalStorage.controlSlider(filterName, [this.minCurrentValue, this.maxCurrentValue]);
-      Filters.filterProducts();
+      this.filters.filterProducts();
     });
   }
 }
