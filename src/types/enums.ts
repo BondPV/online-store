@@ -4,3 +4,10 @@ export enum FiltersName {
   Price = 'price',
   Stock = 'stock',
 }
+
+export enum Pages {
+  Main = 'main',
+  ProductDetails = 'product-details',
+  Price = 'price',
+  Cart = 'cart',
+}

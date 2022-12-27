@@ -13,6 +13,7 @@ import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderContr
 import { FiltersName } from 'types/enums';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
+import { ClassMap } from 'constants/htmlConstants';
 
 import FilterCatalog from '../FilterCatalog';
 
@@ -98,6 +99,7 @@ class Filters {
       this.reRenderFilters();
       this.appendTotalFoundQuantity();
     });
+
     return element;
   }
 
@@ -224,10 +226,12 @@ class Filters {
 
   // check for activity on saved from Local Storage
   checkActiveElement(elementValue: string, element: HTMLInputElement): void {
-    const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
+    if (LocalStorage.savedFilters) {
+      const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
 
-    if (filteredCatalog.includes(elementValue)) {
-      element.checked = true;
+      if (filteredCatalog.includes(elementValue)) {
+        element.checked = true;
+      }
     }
   }
 
@@ -246,7 +250,7 @@ class Filters {
   }
 
   private appendTotalFoundQuantity() {
-    const totalFound = document.querySelector('.catalog__quantity');
+    const totalFound = document.querySelector(ClassMap.catalogQuantity);
 
     if (totalFound instanceof HTMLElement) {
       totalFound.innerHTML = '';
@@ -260,6 +264,7 @@ class Filters {
     newSortCatalog.render();
   }
 
+  // TODO rewrite this code
   resetFiltersSettings(): void {
     const parentElement = document.querySelector('#reset-button') as HTMLElement;
     const resetButton: HTMLButtonElement = document.createElement('button');
