@@ -2,6 +2,7 @@ import { SortOption } from 'types/types';
 
 export const IdMap = {
   catalog: '#catalog',
+  resetButton: '#reset-button',
   valueFilters: '#value-filters',
   rangeFilters: '#range-filters',
 };
