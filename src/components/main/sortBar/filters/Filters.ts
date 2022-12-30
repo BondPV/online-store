@@ -13,6 +13,7 @@ import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderContr
 import { FiltersName } from 'types/enums';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
+import { ClassMap } from 'constants/htmlConstants';
 
 import FilterCatalog from '../FilterCatalog';
 
@@ -249,7 +250,7 @@ class Filters {
   }
 
   private appendTotalFoundQuantity() {
-    const totalFound = document.querySelector('.catalog__quantity');
+    const totalFound = document.querySelector(ClassMap.catalogQuantity);
 
     if (totalFound instanceof HTMLElement) {
       totalFound.innerHTML = '';
