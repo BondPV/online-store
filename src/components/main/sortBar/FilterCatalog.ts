@@ -14,7 +14,7 @@ class FilterCatalog {
     private productsDB: ProductsDB,
   ) {}
 
-  render() {
+  public render(): void {
     const filtersContainer = document.querySelector(IdMap.valueFilters) as HTMLElement;
     const filtersRangeContainer = document.querySelector(IdMap.rangeFilters) as HTMLElement;
 
@@ -32,7 +32,7 @@ class FilterCatalog {
     filterStock.appendFilterRange(filtersRangeContainer, '');
   }
 
-  clear() {
+  public clear(): void {
     const resetButtonContainer = document.querySelector(IdMap.resetButton) as HTMLElement;
     const filtersContainer = document.querySelector(IdMap.valueFilters) as HTMLElement;
     const filtersRangeContainer = document.querySelector(IdMap.rangeFilters) as HTMLElement;

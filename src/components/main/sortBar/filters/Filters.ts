@@ -228,10 +228,7 @@ class Filters {
   checkActiveElement(elementValue: string, element: HTMLInputElement): void {
     if (LocalStorage.savedFilters) {
       const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
-
-      if (filteredCatalog.includes(elementValue)) {
-        element.checked = true;
-      }
+      element.checked = filteredCatalog.includes(elementValue);
     }
   }
 

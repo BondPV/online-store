@@ -5,19 +5,16 @@ import Grid from 'components/main/grid/Grid';
 import FilterCatalog from 'components/main/sortBar/FilterCatalog';
 
 class MainPage {
-  private productsDB = new ProductsDB();
-
-  private catalog = new Catalog(this.productsDB.getProducts());
-
-  private sortCatalog = new SortCatalog(this.catalog);
-
-  private filterCatalog = new FilterCatalog(this.catalog, this.sortCatalog, this.productsDB);
-
-  private grid = new Grid();
-
   container: HTMLElement;
 
-  constructor(container: HTMLElement) {
+  constructor(
+    container: HTMLElement,
+    private productsDB = new ProductsDB(),
+    private catalog = new Catalog(productsDB.getProducts()),
+    private sortCatalog = new SortCatalog(catalog),
+    private filterCatalog = new FilterCatalog(catalog, sortCatalog, productsDB),
+    private grid = new Grid(),
+  ) {
     this.container = container;
     this.renderPage();
     this.sortCatalog.render();
@@ -25,15 +22,14 @@ class MainPage {
     this.filterCatalog.render();
   }
 
-  renderPage() {
+  public renderPage(): void {
     const filtersBar: HTMLElement = document.createElement('section');
     filtersBar.classList.add('filter-bar');
     this.container.append(filtersBar);
 
-    const filtersBarTitle: HTMLElement = document.createElement('h2');
-    filtersBarTitle.classList.add('filter-bar__titel');
-    filtersBarTitle.innerText = 'Filters';
-    filtersBar.prepend(filtersBarTitle);
+    const catalogQuantity: HTMLDivElement = document.createElement('div');
+    catalogQuantity.classList.add('filter-quantity');
+    filtersBar.prepend(catalogQuantity);
 
     const resetBtn: HTMLElement = document.createElement('div');
     resetBtn.classList.add('reset-btn');
@@ -62,13 +58,9 @@ class MainPage {
     catalogBody.classList.add('catalog');
     catalogBody.id = 'catalog';
     catalog.append(catalogBody);
-
-    const catalogQuantity: HTMLDivElement = document.createElement('div');
-    catalogQuantity.classList.add('catalog__quantity');
-    catalogHeader.append(catalogQuantity);
   }
 
-  removePage() {
+  public removePage(): void {
     this.container.innerHTML = '';
   }
 }

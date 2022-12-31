@@ -6,11 +6,11 @@ class CartPage {
     this.renderPage();
   }
 
-  renderPage() {
+  public renderPage(): void {
     this.container.innerHTML = 'loading CartPage';
   }
 
-  removePage() {
+  public removePage(): void {
     this.container.innerHTML = '';
   }
 }

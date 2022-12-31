@@ -4,17 +4,15 @@ import { IProduct } from 'types/interfaces';
 class ProductDetailsPage {
   container: HTMLElement;
 
-  private productsDB = new ProductsDB();
-
   hash: string;
 
-  constructor(container: HTMLElement, hash: string) {
+  constructor(container: HTMLElement, hash: string, private productsDB = new ProductsDB()) {
     this.container = container;
     this.hash = hash;
     this.renderPage(this.hash);
   }
 
-  renderPage(hash: string) {
+  public renderPage(hash: string): void {
     const hashId = Number(hash.split('/').at(-1));
     const products: IProduct[] = this.productsDB.getProducts();
     const productItem = products.find((elem) => elem.id === hashId);
@@ -26,7 +24,7 @@ class ProductDetailsPage {
     }
   }
 
-  removePage() {
+  public removePage(): void {
     this.container.innerHTML = '';
   }
 }

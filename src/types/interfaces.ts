@@ -1,7 +1,8 @@
 export interface IProduct {
   id: number;
+  titleDatail: string;
   title: string;
-  description: string;
+  description: string[];
   price: number;
   discountPercentage: number;
   rating: number;

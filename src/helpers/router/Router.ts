@@ -17,7 +17,10 @@ class Router {
 
   private hashChange() {
     window.addEventListener('hashchange', () => {
-      if (this.currentPage) this.currentPage.removePage();
+      if (this.currentPage) {
+        this.currentPage.removePage();
+      }
+
       this.setPage(this.location.hash.slice(1));
     });
   }

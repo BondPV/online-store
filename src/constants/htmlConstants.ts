@@ -19,7 +19,7 @@ export const ClassMap = {
   catalogViewActive: '.catalog__view_active',
   catalogViewTable: '.catalog__view_table',
   catalogViewList: '.catalog__view_list',
-  catalogQuantity: '.catalog__quantity',
+  catalogQuantity: '.filter-quantity',
 };
 
 export const ClassListName = {
