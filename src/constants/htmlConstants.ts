@@ -1,5 +1,8 @@
 import { SortOption } from 'types/types';
 
+export const Body = document.querySelector('body') as HTMLElement;
+export const Container = document.querySelector('#main-container') as HTMLElement;
+
 export const IdMap = {
   catalog: '#catalog',
   resetButton: '#reset-button',
@@ -16,6 +19,7 @@ export const ClassMap = {
   catalogViewActive: '.catalog__view_active',
   catalogViewTable: '.catalog__view_table',
   catalogViewList: '.catalog__view_list',
+  catalogQuantity: '.filter-quantity',
 };
 
 export const ClassListName = {

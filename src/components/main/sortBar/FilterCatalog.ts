@@ -14,31 +14,32 @@ class FilterCatalog {
     private productsDB: ProductsDB,
   ) {}
 
-  resetButtonContainer = document.querySelector(IdMap.resetButton) as HTMLElement;
+  public render(): void {
+    const filtersContainer = document.querySelector(IdMap.valueFilters) as HTMLElement;
+    const filtersRangeContainer = document.querySelector(IdMap.rangeFilters) as HTMLElement;
 
-  filtersContainer = document.querySelector(IdMap.valueFilters) as HTMLElement;
-
-  filtersRangeContainer = document.querySelector(IdMap.rangeFilters) as HTMLElement;
-
-  render() {
     const filterCategory = new Filters(FiltersName.Category, this.catalog, this.sortCatalog, this.productsDB);
-    filterCategory.appendFilterList(this.filtersContainer);
+    filterCategory.appendFilterList(filtersContainer);
     filterCategory.resetFiltersSettings();
 
     const filterBrand = new Filters(FiltersName.Brand, this.catalog, this.sortCatalog, this.productsDB);
-    filterBrand.appendFilterList(this.filtersContainer);
+    filterBrand.appendFilterList(filtersContainer);
 
     const filterPrice = new Filters(FiltersName.Price, this.catalog, this.sortCatalog, this.productsDB);
-    filterPrice.appendFilterRange(this.filtersRangeContainer, '$');
+    filterPrice.appendFilterRange(filtersRangeContainer, '$');
 
     const filterStock = new Filters(FiltersName.Stock, this.catalog, this.sortCatalog, this.productsDB);
-    filterStock.appendFilterRange(this.filtersRangeContainer, '');
+    filterStock.appendFilterRange(filtersRangeContainer, '');
   }
 
-  clear() {
-    this.resetButtonContainer.innerHTML = '';
-    this.filtersContainer.innerHTML = '';
-    this.filtersRangeContainer.innerHTML = '';
+  public clear(): void {
+    const resetButtonContainer = document.querySelector(IdMap.resetButton) as HTMLElement;
+    const filtersContainer = document.querySelector(IdMap.valueFilters) as HTMLElement;
+    const filtersRangeContainer = document.querySelector(IdMap.rangeFilters) as HTMLElement;
+
+    resetButtonContainer.innerHTML = '';
+    filtersContainer.innerHTML = '';
+    filtersRangeContainer.innerHTML = '';
   }
 }
 

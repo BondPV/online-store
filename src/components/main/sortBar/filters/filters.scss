@@ -1,3 +1,8 @@
+.filter-quantity {
+  margin: 20px 0;
+  font-weight: 700;
+}
+
 .value-filters {
   margin: 10px auto;
   display: flex;
@@ -5,14 +10,16 @@
   gap: 10px;
 
   &__title {
-    margin: 0 auto;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 5px;
   }
 
   &__list {
     display: block;
     padding-left: 0;
     list-style-type: none;
-    height: 200px;
+    height: auto;
     overflow: overlay;
   }
 
@@ -28,10 +35,6 @@
 
   &__element-label {
     cursor: pointer;
-  }
-
-  &__count-all {
-    margin-right: 20px;
   }
 }
 

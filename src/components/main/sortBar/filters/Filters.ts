@@ -13,6 +13,7 @@ import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderContr
 import { FiltersName } from 'types/enums';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
+import { ClassMap } from 'constants/htmlConstants';
 
 import FilterCatalog from '../FilterCatalog';
 
@@ -43,7 +44,7 @@ class Filters {
     parentElement.append(filterTitle, this.valueFilterList());
   }
 
-  valueFilterList(): HTMLElement {
+  private valueFilterList(): HTMLElement {
     const valueFilterList = document.createElement('div');
     valueFilterList.classList.add('value-filters__list');
 
@@ -71,7 +72,7 @@ class Filters {
     return valueFilterList;
   }
 
-  valueFilterListElement(elementValue: string, elementQuantity: IQuantity): HTMLElement {
+  private valueFilterListElement(elementValue: string, elementQuantity: IQuantity): HTMLElement {
     const element = document.createElement('div');
     element.classList.add('value-filters__list-element');
 
@@ -98,6 +99,7 @@ class Filters {
       this.reRenderFilters();
       this.appendTotalFoundQuantity();
     });
+
     return element;
   }
 
@@ -224,10 +226,9 @@ class Filters {
 
   // check for activity on saved from Local Storage
   checkActiveElement(elementValue: string, element: HTMLInputElement): void {
-    const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
-
-    if (filteredCatalog.includes(elementValue)) {
-      element.checked = true;
+    if (LocalStorage.savedFilters) {
+      const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
+      element.checked = filteredCatalog.includes(elementValue);
     }
   }
 
@@ -246,7 +247,7 @@ class Filters {
   }
 
   private appendTotalFoundQuantity() {
-    const totalFound = document.querySelector('.catalog__quantity');
+    const totalFound = document.querySelector(ClassMap.catalogQuantity);
 
     if (totalFound instanceof HTMLElement) {
       totalFound.innerHTML = '';
@@ -260,6 +261,7 @@ class Filters {
     newSortCatalog.render();
   }
 
+  // TODO rewrite this code
   resetFiltersSettings(): void {
     const parentElement = document.querySelector('#reset-button') as HTMLElement;
     const resetButton: HTMLButtonElement = document.createElement('button');
