@@ -23,9 +23,13 @@ class MainPage {
   }
 
   public renderPage(): void {
+    const mainContainer: HTMLElement = document.createElement('div');
+    mainContainer.classList.add('main__wrap');
+    this.container.append(mainContainer);
+
     const filtersBar: HTMLElement = document.createElement('section');
     filtersBar.classList.add('filter-bar');
-    this.container.append(filtersBar);
+    mainContainer.append(filtersBar);
 
     const catalogQuantity: HTMLDivElement = document.createElement('div');
     catalogQuantity.classList.add('filter-quantity');
@@ -48,7 +52,7 @@ class MainPage {
 
     const catalog: HTMLElement = document.createElement('section');
     catalog.classList.add('catalog-wrap');
-    this.container.append(catalog);
+    mainContainer.append(catalog);
 
     const catalogHeader: HTMLDivElement = document.createElement('div');
     catalogHeader.classList.add('catalog__header');

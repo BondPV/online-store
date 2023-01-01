@@ -1,11 +1,10 @@
 .header {
-  border-bottom: solid 1px $text-color-grey;
-
   &__wrap {
     display: flex;
     justify-content: space-between;
     padding: 25px 0;
     box-sizing: border-box;
+    border-bottom: solid 1px $text-color-grey;
   }
 
   &__logo {
