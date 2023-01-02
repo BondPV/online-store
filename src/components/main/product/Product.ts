@@ -39,22 +39,22 @@ class Product {
     return initialPrice;
   }
 
-  public addProductToCart(buttonAdd: HTMLElement) {
-    buttonAdd.addEventListener('click', () => {
-      const cartIcon = document.querySelector('.header__basket-counter');
+  public static addProductToCart(buttonAdd: HTMLElement, currentClass: string) {
+    const cartIcon = document.querySelector('.header__basket-counter');
 
-      if (cartIcon) {
-        const counter: string = cartIcon.innerHTML;
-        let counterNum = 0;
-        if (buttonAdd.classList.length == 1) {
-          counterNum = Number(counter) + 1;
-        } else {
-          counterNum = Number(counter) - 1;
-        }
-        cartIcon.textContent = `${counterNum}`;
-        buttonAdd.classList.toggle('product__remove-from-cart');
+    if (cartIcon) {
+      const counter: string = cartIcon.innerHTML;
+      let counterNum = 0;
+
+      if (buttonAdd.classList.length == 1) {
+        counterNum = Number(counter) + 1;
+      } else {
+        counterNum = Number(counter) - 1;
       }
-    });
+
+      cartIcon.textContent = `${counterNum}`;
+      buttonAdd.classList.toggle(currentClass);
+    }
   }
 
   private convertFromStringToHTML(htmlString: string): HTMLElement {
@@ -84,7 +84,7 @@ class Product {
         <div class="product__footer-wrap">
           <div class="product__price-wrap">
             <div class="product__price">${initialPrice}$</div>
-            <div class="product__price_discount">${this.product.price}$</div>
+            <div class="product__price_discount">${Math.round(this.product.price)}$</div>
           </div>
           
         </div>
@@ -95,7 +95,9 @@ class Product {
 
     const addButton: HTMLDivElement = document.createElement('div');
     addButton.classList.add('product__add-to-cart');
-    this.addProductToCart(addButton);
+    addButton.addEventListener('click', () => {
+      Product.addProductToCart(addButton, 'product__remove-from-cart');
+    });
 
     const productFooter: HTMLElement | null = product.querySelector('.product__footer-wrap');
 

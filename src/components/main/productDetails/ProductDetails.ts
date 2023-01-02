@@ -37,7 +37,7 @@ class ProductDetails extends Product {
 
     const buttonAddToCart: HTMLElement = document.createElement('button');
     buttonAddToCart.classList.add('product-details__button');
-    buttonAddToCart.innerText = 'ADD TO CARD';
+    buttonAddToCart.textContent = 'ADD TO CART';
     buttons.append(buttonAddToCart);
 
     const buttonBuyNow: HTMLElement = document.createElement('button');
@@ -46,7 +46,12 @@ class ProductDetails extends Product {
     buttons.append(buttonBuyNow);
 
     buttonAddToCart.addEventListener('click', () => {
-      alert('click Add to cart');
+      if (buttonAddToCart.classList.length === 1) {
+        buttonAddToCart.textContent = 'REMOVE FROM CART';
+      } else {
+        buttonAddToCart.textContent = 'ADD TO CART';
+      }
+      Product.addProductToCart(buttonAddToCart, 'product-details__button_remove');
     });
 
     buttonBuyNow.addEventListener('click', () => {
