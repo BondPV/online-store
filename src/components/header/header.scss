@@ -61,16 +61,16 @@
 
   &__basket-counter {
     text-align: center;
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
     background: $main-color;
     position: absolute;
-    top: 0;
+    top: -6px;
     right: -3px;
     color: $color-white;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 17px;
   }
 }
 

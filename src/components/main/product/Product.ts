@@ -39,11 +39,35 @@ class Product {
     return initialPrice;
   }
 
-  public render(): string {
+  public addProductToCart(buttonAdd: HTMLElement) {
+    buttonAdd.addEventListener('click', () => {
+      const cartIcon = document.querySelector('.header__basket-counter');
+
+      if (cartIcon) {
+        const counter: string = cartIcon.innerHTML;
+        let counterNum = 0;
+        if (buttonAdd.classList.length == 1) {
+          counterNum = Number(counter) + 1;
+        } else {
+          counterNum = Number(counter) - 1;
+        }
+        cartIcon.textContent = `${counterNum}`;
+        buttonAdd.classList.toggle('product__remove-from-cart');
+      }
+    });
+  }
+
+  private convertFromStringToHTML(htmlString: string): HTMLElement {
+    const parentDiv = document.createElement('div');
+    parentDiv.innerHTML = htmlString.trim();
+    return parentDiv.firstChild as HTMLElement;
+  }
+
+  public render(): HTMLElement {
     const ratingStars: string = this.fillRating();
     const initialPrice: number = this.initialPrice();
 
-    return `
+    const productString = `
       <div class="product">
         <div class="product__stock">stock: ${this.product.stock}</div>
         <div class="product__img-wrap">
@@ -62,10 +86,24 @@ class Product {
             <div class="product__price">${initialPrice}$</div>
             <div class="product__price_discount">${this.product.price}$</div>
           </div>
-          <div class="product__add-to-cart"></div>
-          </div>
+          
+        </div>
+        
       </div>
       `;
+    const product: HTMLElement = this.convertFromStringToHTML(productString);
+
+    const addButton: HTMLDivElement = document.createElement('div');
+    addButton.classList.add('product__add-to-cart');
+    this.addProductToCart(addButton);
+
+    const productFooter: HTMLElement | null = product.querySelector('.product__footer-wrap');
+
+    if (productFooter) {
+      productFooter.append(addButton);
+    }
+
+    return product;
   }
 }
 

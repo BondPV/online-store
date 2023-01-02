@@ -62,7 +62,7 @@ class ProductDetails extends Product {
 
     const productTitle: HTMLElement = document.createElement('div');
     productTitle.classList.add('product-details__title');
-    productTitle.innerText = `${this.product.titleDatail}`;
+    productTitle.innerText = `${this.product.titleDetail}`;
     productDetails.append(productTitle);
 
     const productReting: HTMLElement = document.createElement('div');
