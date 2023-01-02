@@ -1,26 +1,35 @@
 import ProductsDB from 'database/ProductsDB';
-import { IProduct } from 'types/interfaces';
+import ProductDetails from 'components/main/productDetails/ProductDetails';
 
 class ProductDetailsPage {
   container: HTMLElement;
 
   hash: string;
 
-  constructor(container: HTMLElement, hash: string, private productsDB = new ProductsDB()) {
+  constructor(container: HTMLElement, hash: string, private products = new ProductsDB().getProducts()) {
     this.container = container;
     this.hash = hash;
-    this.renderPage(this.hash);
+    this.renderPage();
   }
 
-  public renderPage(hash: string): void {
-    const hashId = Number(hash.split('/').at(-1));
-    const products: IProduct[] = this.productsDB.getProducts();
-    const productItem = products.find((elem) => elem.id === hashId);
+  public renderPage(): void {
+    const hashId = Number(this.hash.split('/').at(-1));
+    const productItem = this.products.find((elem) => elem.id === hashId);
+
+    const productDetailsContainer: HTMLElement = document.createElement('div');
+    productDetailsContainer.classList.add('product-details');
+    this.container.append(productDetailsContainer);
 
     if (productItem) {
-      this.container.innerHTML = productItem.title;
+      const productDetails = new ProductDetails(productItem);
+      this.container.prepend(productDetails.renderHeader());
+      productDetailsContainer.append(productDetails.renderDescription());
+      productDetailsContainer.append(productDetails.renderGallery());
     } else {
-      this.container.innerHTML = 'Товар не найден';
+      const productNotFound: HTMLElement = document.createElement('div');
+      productNotFound.classList.add('product-details__notFound');
+      productNotFound.innerText = 'Sorry. Product not found.';
+      productDetailsContainer.append(productNotFound);
     }
   }
 

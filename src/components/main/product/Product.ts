@@ -2,9 +2,9 @@ import './product.scss';
 import { IProduct } from 'types/interfaces';
 
 class Product {
-  constructor(private product: IProduct) {}
+  constructor(protected product: IProduct) {}
 
-  private fillRating(): string {
+  protected fillRating(): string {
     const totalStarsCount = 5;
     const fullStarsCount: number = Math.trunc(this.product.rating);
     let result = '';
@@ -32,10 +32,16 @@ class Product {
     return result;
   }
 
-  render() {
+  protected initialPrice(): number {
     const discount: number = 1 + this.product.discountPercentage / 100;
     const initialPrice: number = Math.round(this.product.price * discount);
+
+    return initialPrice;
+  }
+
+  public render(): string {
     const ratingStars: string = this.fillRating();
+    const initialPrice: number = this.initialPrice();
 
     return `
       <div class="product">
