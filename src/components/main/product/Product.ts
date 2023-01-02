@@ -56,7 +56,7 @@ class Product {
           <span class="product__rating-text">${this.product.rating}</span>
         </div>
         <div class="product__title">${this.product.title}</div>
-        <div class="product__description">${this.product.titleDatail}</div>
+        <div class="product__description">${this.product.titleDetail}</div>
         <div class="product__footer-wrap">
           <div class="product__price-wrap">
             <div class="product__price">${initialPrice}$</div>
