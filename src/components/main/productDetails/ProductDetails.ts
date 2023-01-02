@@ -78,7 +78,23 @@ class ProductDetails extends Product {
     productDetails.append(this.price()[0]);
     productDetails.append(this.price()[1]);
 
+    const productBrand: HTMLElement = document.createElement('div');
+    productBrand.classList.add('product-details__article');
+    productBrand.innerHTML = `<span>Brand:</span> ${this.product.brand}`;
+    productDetails.append(productBrand);
+
+    const productCategory: HTMLElement = document.createElement('div');
+    productCategory.classList.add('product-details__article');
+    productCategory.innerHTML = `<span>Category:</span> ${this.product.category}`;
+    productDetails.append(productCategory);
+
+    const productStock: HTMLElement = document.createElement('div');
+    productStock.classList.add('product-details__article');
+    productStock.innerHTML = `<span>Stock:</span> ${this.product.stock}`;
+    productDetails.append(productStock);
+
     const productDescription: HTMLElement = document.createElement('ul');
+    productDescription.innerText = 'Description:';
     productDescription.classList.add('product-details__specification');
     productDetails.append(productDescription);
 
