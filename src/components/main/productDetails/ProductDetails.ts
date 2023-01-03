@@ -11,7 +11,7 @@ class ProductDetails extends Product {
 
     const productPriceDiscount: HTMLElement = document.createElement('div');
     productPriceDiscount.classList.add('product-details__price', 'product__price_discount');
-    productPriceDiscount.innerText = `${this.product.price} $`;
+    productPriceDiscount.innerText = `${Math.round(this.product.price)} $`;
 
     return [productPrice, productPriceDiscount];
   }

@@ -1,7 +1,6 @@
 import { FiltersValueType, FiltersRangeType, FiltersDataType } from 'types/types';
 import { IProduct } from 'types/interfaces';
 
-
 class LocalStorage {
   public static savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
 
