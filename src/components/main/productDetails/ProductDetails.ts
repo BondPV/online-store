@@ -1,6 +1,7 @@
 import './productDetails.scss';
 import Product from '../product/Product';
 import Gallery from './gallary/Gallery';
+import LocalStorage from 'helpers/localStorage/LocalStorage';
 
 class ProductDetails extends Product {
   private price(): HTMLElement[] {
@@ -45,13 +46,21 @@ class ProductDetails extends Product {
     buttonBuyNow.innerText = 'BUY NOW';
     buttons.append(buttonBuyNow);
 
+    if (LocalStorage.isProductExists(this.product.id)) {
+      buttonAddToCart.classList.add('product-details__button_remove');
+      buttonAddToCart.textContent = 'REMOVE FROM CART';
+    } else {
+      buttonAddToCart.classList.remove('product-details__button_remove');
+      buttonAddToCart.textContent = 'ADD TO CART';
+    }
+
     buttonAddToCart.addEventListener('click', () => {
       if (buttonAddToCart.classList.length === 1) {
         buttonAddToCart.textContent = 'REMOVE FROM CART';
       } else {
         buttonAddToCart.textContent = 'ADD TO CART';
       }
-      Product.addProductToCart(buttonAddToCart, 'product-details__button_remove');
+      Product.addProductToCart(buttonAddToCart, this.product, 'product-details__button_remove');
     });
 
     buttonBuyNow.addEventListener('click', () => {

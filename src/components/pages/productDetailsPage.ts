@@ -1,5 +1,6 @@
 import ProductsDB from 'database/ProductsDB';
 import ProductDetails from 'components/main/productDetails/ProductDetails';
+import Cart from 'components/main/cart/cart';
 
 class ProductDetailsPage {
   container: HTMLElement;
@@ -10,6 +11,7 @@ class ProductDetailsPage {
     this.container = container;
     this.hash = hash;
     this.renderPage();
+    Cart.fillHeaderCounter();
   }
 
   public renderPage(): void {

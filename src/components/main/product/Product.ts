@@ -1,5 +1,7 @@
 import './product.scss';
 import { IProduct } from 'types/interfaces';
+import LocalStorage from 'helpers/localStorage/LocalStorage';
+import Cart from 'components/main/cart/cart';
 
 class Product {
   constructor(protected product: IProduct) {}
@@ -39,22 +41,16 @@ class Product {
     return initialPrice;
   }
 
-  public static addProductToCart(buttonAdd: HTMLElement, currentClass: string) {
-    const cartIcon = document.querySelector('.header__basket-counter');
-
-    if (cartIcon) {
-      const counter: string = cartIcon.innerHTML;
-      let counterNum = 0;
-
-      if (buttonAdd.classList.length == 1) {
-        counterNum = Number(counter) + 1;
-      } else {
-        counterNum = Number(counter) - 1;
-      }
-
-      cartIcon.textContent = `${counterNum}`;
-      buttonAdd.classList.toggle(currentClass);
+  public static addProductToCart(buttonAdd: HTMLElement, product: IProduct, currentClass: string) {
+    if (buttonAdd.classList.contains(currentClass)) {
+      LocalStorage.removeProductFromCart(product.id);
+    } else {
+      LocalStorage.addProductToCart(product);
     }
+
+    buttonAdd.classList.toggle(currentClass);
+
+    Cart.fillHeaderCounter();
   }
 
   private convertFromStringToHTML(htmlString: string): HTMLElement {
@@ -96,8 +92,15 @@ class Product {
 
     const addButton: HTMLDivElement = document.createElement('div');
     addButton.classList.add('product__add-to-cart');
+
+    if (LocalStorage.isProductExists(this.product.id)) {
+      addButton.classList.add('product__remove-from-cart');
+    } else {
+      addButton.classList.remove('product__remove-from-cart');
+    }
+
     addButton.addEventListener('click', () => {
-      Product.addProductToCart(addButton, 'product__remove-from-cart');
+      Product.addProductToCart(addButton, this.product, 'product__remove-from-cart');
     });
 
     const productFooter: HTMLElement | null = product.querySelector('.product__footer-wrap');

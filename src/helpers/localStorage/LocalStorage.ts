@@ -1,4 +1,6 @@
 import { FiltersValueType, FiltersRangeType, FiltersDataType } from 'types/types';
+import { IProduct } from 'types/interfaces';
+
 
 class LocalStorage {
   public static savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
@@ -52,6 +54,32 @@ class LocalStorage {
 
   public static getGridCatalog(): string | null {
     return localStorage.getItem('grid');
+  }
+
+  public static addProductToCart(product: IProduct): void {
+    const cartStorage: IProduct[] = this.getCart();
+    cartStorage.push(product);
+    localStorage.setItem('cart', JSON.stringify(cartStorage));
+  }
+
+  public static removeProductFromCart(id: number): void {
+    const cartArr = this.getCart();
+    const filteredCart = cartArr.filter((product) => product.id !== id);
+    localStorage.setItem('cart', JSON.stringify(filteredCart));
+  }
+
+  public static getCart(): IProduct[] {
+    const cartString = localStorage.getItem('cart');
+    if (cartString) {
+      return JSON.parse(cartString);
+    }
+    return [];
+  }
+
+  public static isProductExists(id: number): boolean {
+    const cartArr = this.getCart();
+    const currProduct = cartArr.find((product) => product.id === id);
+    return !!currProduct;
   }
 }
 
