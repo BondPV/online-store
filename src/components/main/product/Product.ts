@@ -72,7 +72,8 @@ class Product {
         <div class="product__stock">stock: ${this.product.stock}</div>
         <div class="product__img-wrap">
           <a href="#product-details/${this.product.id}">
-            <div class="product__img" style="background: url('${this.product.thumbnail}') no-repeat center / contain;"></div>
+            <div class="product__img" style="background: 
+            url('${this.product.thumbnail}') no-repeat center / contain;"></div>
           </a>
         </div>
         <div class="product__rating-wrap">

@@ -3,6 +3,7 @@ import './sortCatalog.scss';
 import { IProduct } from 'types/interfaces';
 import { SortOption } from 'types/types';
 import { SortOptionMap, optionNames, ClassMap, valueOptionAsc, ClassListName } from 'constants/htmlConstants';
+import LocalStorage from 'helpers/localStorage/LocalStorage';
 
 class SortCatalog {
   constructor(private readonly catalog: Catalog) {}
@@ -24,8 +25,11 @@ class SortCatalog {
     selectSortButton.textContent = 'Sort by:';
     catalogHeader.append(selectSortButton);
 
+    const currSelectedOrder = LocalStorage.getSort();
+
     optionNames.forEach((item) => {
-      this.createOptionsSort(item, selectSortButton);
+      const isSelected = currSelectedOrder === item;
+      this.createOptionsSort(item, selectSortButton, isSelected);
     });
 
     selectSortButton.addEventListener('change', () => this.selectOrder());
@@ -54,6 +58,7 @@ class SortCatalog {
     }
     oldCatalog.childNodes.forEach((child) => oldCatalog.removeChild(child));
 
+    LocalStorage.saveSort(currentOptionValue);
     this.catalog.render();
   }
 
@@ -68,10 +73,11 @@ class SortCatalog {
     this.catalog.products = products;
   }
 
-  private createOptionsSort(optionName: string, parentElem: HTMLSelectElement): void {
+  private createOptionsSort(optionName: string, parentElem: HTMLSelectElement, isSelected: boolean): void {
     const optionSort: HTMLOptionElement = document.createElement('option');
     optionSort.textContent = optionName;
     optionSort.value = optionName;
+    optionSort.selected = isSelected;
     parentElem.append(optionSort);
   }
 }
