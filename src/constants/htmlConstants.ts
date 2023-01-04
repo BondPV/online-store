@@ -40,6 +40,6 @@ export const SortOptionMap: SortOption = {
 
 export const optionNames = ['Name ASC', 'Name DESC', 'Price ASC', 'Price DESC', 'Rating ASC', 'Rating DESC'];
 
-export const itemsCart = ['Item', 'Price', 'Qty', 'Subtotal'];
+export const itemsCart = ['Item', 'Description', 'Qty', 'Subtotal'];
 
 export const valueOptionAsc = 'ASC';

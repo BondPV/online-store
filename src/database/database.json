@@ -11,7 +11,7 @@
         "128 GB storage, microSD-Slot, Dual-Sim",
         "LTE, Wi-Fi 5 (802.11ac), Bluetooth , NFC, GPS"
       ],
-      "price": 167.23,
+      "price": 167,
       "discountPercentage": 5,
       "rating": 4.8,
       "stock": 45,
@@ -36,7 +36,7 @@
         "128 GB storage, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 287.39,
+      "price": 287,
       "discountPercentage": 7,
       "rating": 4.7,
       "stock": 45,
@@ -61,7 +61,7 @@
         "256 GB storage, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 448.73,
+      "price": 448,
       "discountPercentage": 12,
       "rating": 4.7,
       "stock": 34,
@@ -86,7 +86,7 @@
         "128 GB storage, microSD-Slot, Dual-Sim",
         "5G, Wi-Fi 5 (802.11ac), Bluetooth , NFC, GPS"
       ],
-      "price": 242.86,
+      "price": 242,
       "discountPercentage": 12,
       "rating": 4.4,
       "stock": 34,
@@ -111,7 +111,7 @@
         "128 GB storage, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 699.88,
+      "price": 699,
       "discountPercentage": 4,
       "rating": 4.9,
       "stock": 12,
@@ -136,7 +136,7 @@
         "128 GB storage, microSD-Slot, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 348.74,
+      "price": 348,
       "discountPercentage": 25,
       "rating": 4.6,
       "stock": 25,
@@ -161,7 +161,7 @@
         "128 GB storage, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 896.98,
+      "price": 896,
       "discountPercentage": 4,
       "rating": 4.8,
       "stock": 43,
@@ -186,7 +186,7 @@
         "1 TB storage, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 1721.85,
+      "price": 1721,
       "discountPercentage": 6,
       "rating": 5,
       "stock": 45,
@@ -211,7 +211,7 @@
         "256 GB storage, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 769.44,
+      "price": 769,
       "discountPercentage": 12,
       "rating": 4.7,
       "stock": 12,
@@ -236,7 +236,7 @@
         "256 GB storage, Dual-Sim",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth , NFC, GPS"
       ],
-      "price": 677.30,
+      "price": 677,
       "discountPercentage": 5,
       "rating": 4.8,
       "stock": 35,
@@ -261,7 +261,7 @@
         "M1 Pro GPU (14C) Shared Memory",
         "16 GB RAM, 512 GB SSD"
       ],
-      "price": 1679.83,
+      "price": 1679,
       "discountPercentage": 23,
       "rating": 4.8,
       "stock": 3,
@@ -286,7 +286,7 @@
         "M1 GPU (7c) Shared Memory",
         "8 GB RAM, 256 GB SSD"
       ],
-      "price": 898.32,
+      "price": 898,
       "discountPercentage": 3,
       "rating": 4.6,
       "stock": 12,
@@ -311,7 +311,7 @@
         "M1 Max GPU (32C) Shared Memory",
         "64 GB RAM, 1 TB SSD"
       ],
-      "price": 2217.65,
+      "price": 2217,
       "discountPercentage": 12,
       "rating": 4.8,
       "stock": 6,
@@ -336,7 +336,7 @@
         "NVIDIA® GeForce® RTX 3050 4.0 GB",
         "16 GB RAM, 512 GB SSD"
       ],
-      "price": 797.45,
+      "price": 797,
       "discountPercentage": 6,
       "rating": 4.5,
       "stock": 23,
@@ -361,7 +361,7 @@
         "NVIDIA® GeForce® RTX 3070 8.0 GB",
         "16 GB RAM, 1 TB SSD"
       ],
-      "price": 1259.38,
+      "price": 1259,
       "discountPercentage": 5,
       "rating": 4.7,
       "stock": 23,
@@ -386,7 +386,7 @@
         "Intel® UHD Graphics Shared Memory",
         "8 GB RAM, 512 GB SSD"
       ],
-      "price": 335.29,
+      "price": 335,
       "discountPercentage": 7,
       "rating": 4.5,
       "stock": 12,
@@ -411,7 +411,7 @@
         "Intel® UHD Graphics Shared Memory",
         "4 GB RAM, 128 GB SSD"
       ],
-      "price": 284.87,
+      "price": 284,
       "discountPercentage": 3,
       "rating": 4.5,
       "stock": 23,
@@ -436,7 +436,7 @@
         "NVIDIA® GeForce® RTX 3070 8.0 GB",
         "16 GB RAM, 1 TB SSD"
       ],
-      "price": 1259.66,
+      "price": 1259,
       "discountPercentage": 5,
       "rating": 4.6,
       "stock": 5,
@@ -461,7 +461,7 @@
         "NVIDIA® GeForce® RTX 3050 (60W TGP), 4GB",
         "16 GB RAM, 512 GB SSD"
       ],
-      "price": 629.41,
+      "price": 629,
       "discountPercentage": 3,
       "rating": 4.5,
       "stock": 28,
@@ -486,7 +486,7 @@
         "NVIDIA® GeForce® RTX 3060 6.0 GB",
         "16 GB RAM, 512 GB SSD"
       ],
-      "price": 1427.73,
+      "price": 1427,
       "discountPercentage": 5,
       "rating": 4.3,
       "stock": 4,
@@ -511,7 +511,7 @@
         "Wi-Fi 6 (802.11ax), Bluetooth 5.0",
         "Fingerprint scanner"
       ],
-      "price": 335.29,
+      "price": 335,
       "discountPercentage": 5,
       "rating": 4.8,
       "stock": 50,
@@ -536,7 +536,7 @@
         "1x Thunderbolt 4",
         "5G, Wi-Fi 6 (802.11ax), Bluetooth 5.0, GPS"
       ],
-      "price": 1491.60,
+      "price": 1491,
       "discountPercentage": 3,
       "rating": 4.8,
       "stock": 48,
@@ -561,7 +561,7 @@
         "Wi-Fi 6 (802.11ax), Bluetooth 5.0",
         "Touch ID, Apple Pencil compatible (sold separatly)"
       ],
-      "price": 772.27,
+      "price": 772,
       "discountPercentage": 9,
       "rating": 4.9,
       "stock": 40,
@@ -586,7 +586,7 @@
         "1x USB 3.1 Gen1 Typ C",
         "Wi-Fi 6 (802.11ax), Bluetooth 5.1, microSDXC-Slo"
       ],
-      "price": 419.33,
+      "price": 419,
       "discountPercentage": 3,
       "rating": 4.8,
       "stock": 34,
@@ -611,7 +611,7 @@
         "Wi-Fi 6E (802.11ax), Bluetooth 5.2, GPS, microSDXC-Slot",
         "incl. Stylus, Fingerprint scanner, 120 Hz Display"
       ],
-      "price": 529.33,
+      "price": 529,
       "discountPercentage": 4,
       "rating": 4.8,
       "stock": 43,
@@ -636,7 +636,7 @@
         "LTE, Wi-Fi 5 (802.11ac), Bluetooth 5.0",
         "GPS, microSD-Slot"
       ],
-      "price": 125.21,
+      "price": 125,
       "discountPercentage": 10,
       "rating": 4.5,
       "stock": 50,
@@ -661,7 +661,7 @@
         "5G, Wi-Fi 6E (802.11ax), Bluetooth 5.2, GPS, microSDXC-Slot",
         "incl. Stylus, Fingerprint scanner, 120 Hz Display"
       ],
-      "price": 826.73,
+      "price": 826,
       "discountPercentage": 4,
       "rating": 4.9,
       "stock": 33,
@@ -686,7 +686,7 @@
         "Breathtaking Immersion - Discover a deeper gaming experience with support for haptic feedback, adaptive triggers, and 3D Audio technology.",
         "Lightning Speed - Harness the power of a custom CPU, GPU, and SSD with Integrated I/O that rewrite the rules of what a PlayStation console can do."
       ],
-      "price": 504.12,
+      "price": 504,
       "discountPercentage": 5,
       "rating": 4.9,
       "stock": 10,
@@ -711,7 +711,7 @@
         "Enjoy digital games from four generations of Xbox, with hundreds of optimized titles that look and play better than ever.",
         "Add Xbox Game Pass Ultimate (membership sold separately) to play new games day one. "
       ],
-      "price": 251.18,
+      "price": 251,
       "discountPercentage": 5,
       "rating": 4.3,
       "stock": 20,
@@ -736,7 +736,7 @@
         "Xbox Smart delivery ensures you play the best available version of your game no matter which Console you're playing on.",
         "Color Black"
       ],
-      "price": 466.39,
+      "price": 466,
       "discountPercentage": 3,
       "rating": 4.7,
       "stock": 12,
@@ -761,7 +761,7 @@
         "Breathtaking Immersion - Discover a deeper gaming experience with support for haptic feedback, adaptive triggers, and 3D Audio technology.",
         "Lightning Speed - Harness the power of a custom CPU, GPU, and SSD with Integrated I/O that rewrite the rules of what a PlayStation console can do."
       ],
-      "price": 385.71,
+      "price": 385,
       "discountPercentage": 5,
       "rating": 4.7,
       "stock": 22,
@@ -786,7 +786,7 @@
         "Enhanced audio – Enjoy enhanced sound from the systems onboard speakers when playing in Handheld and Tabletop modes.",
         "Nintendo Switch – OLED Model supports all Joy-Con controllers and Nintendo Switch software"
       ],
-      "price": 311.76,
+      "price": 311,
       "discountPercentage": 5,
       "rating": 4.8,
       "stock": 5,
@@ -811,7 +811,7 @@
         "2x USB, CI+ Slot, LAN, WiFi integrated",
         "Bluetooth, Google Assistant"
       ],
-      "price": 1217.65,
+      "price": 1217,
       "discountPercentage": 24,
       "rating": 5,
       "stock": 15,
@@ -836,7 +836,7 @@
         "1x USB, CI+ Slot, LAN, WiFi integrated",
         "3x HDMI"
       ],
-      "price": 326.89,
+      "price": 326,
       "discountPercentage": 4,
       "rating": 4.8,
       "stock": 20,
@@ -861,7 +861,7 @@
         "3x USB, CI+ Slot, LAN, WiFi integrated",
         "PVR / Time-Shift, Bluetooth"
       ],
-      "price": 1511.76,
+      "price": 1511,
       "discountPercentage": 5,
       "rating": 4.7,
       "stock": 14,
@@ -886,7 +886,7 @@
         "2x USB, CI+ Slot, LAN, WiFi integrated",
         "PVR / Time-Shift, Bluetooth, Miracast, Google"
       ],
-      "price": 671.43,
+      "price": 671,
       "discountPercentage": 12,
       "rating": 4.7,
       "stock": 15,
@@ -911,7 +911,7 @@
         "360 Spatial Sound that adapts to your environment available with optional rear speakers",
         "Supported Internet Services Google TV"
       ],
-      "price": 1396.00,
+      "price": 1396,
       "discountPercentage": 5,
       "rating": 4.8,
       "stock": 5,
@@ -936,7 +936,7 @@
         "360 Spatial Sound that adapts to your environment available with optional rear speakers",
         "Supported Internet Services Google TV"
       ],
-      "price": 1796.50,
+      "price": 1796,
       "discountPercentage": 8,
       "rating": 4.5,
       "stock": 34,
@@ -961,7 +961,7 @@
         "Google TV with Google Assistant organizes your favorite content all in one place.",
         "Through an Alexa enabled device, ask Alexa to change channels, adjust volume, and turn your TV on/off."
       ],
-      "price": 368.00,
+      "price": 368,
       "discountPercentage": 5,
       "rating": 4.4,
       "stock": 37,
@@ -986,7 +986,7 @@
         "Smooth action on fast-moving content with Motion Rate 120",
         "Supported Internet Services Netflix, Hulu, Amazon Instant Video, Browser"
       ],
-      "price": 1585.00,
+      "price": 1585,
       "discountPercentage": 5,
       "rating": 4.7,
       "stock": 12,

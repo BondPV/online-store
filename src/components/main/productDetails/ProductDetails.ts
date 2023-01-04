@@ -81,7 +81,7 @@ class ProductDetails extends Product {
 
     const productReting: HTMLElement = document.createElement('div');
     productReting.classList.add('product-details__rating');
-    const ratingStars: string = this.fillRating();
+    const ratingStars: string = Product.fillRating(this.product.rating);
     productReting.innerHTML = `
       <div class="product__rating">${ratingStars}</div>
       <span class="product__rating-text">${this.product.rating}</span>

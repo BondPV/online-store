@@ -1,21 +1,21 @@
 import './product.scss';
-import { IProduct } from 'types/interfaces';
+import { ICartProduct, IProduct } from 'types/interfaces';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import Cart from 'components/main/cart/cart';
 
 class Product {
   constructor(protected product: IProduct) {}
 
-  protected fillRating(): string {
+  public static fillRating(rating: number): string {
     const totalStarsCount = 5;
-    const fullStarsCount: number = Math.trunc(this.product.rating);
+    const fullStarsCount: number = Math.trunc(rating);
     let result = '';
 
     for (let i = 0; i < fullStarsCount; i += 1) {
       result += '<i class="fa-solid fa-star rating-star"></i>';
     }
 
-    const halfStar: number = this.product.rating - fullStarsCount;
+    const halfStar: number = rating - fullStarsCount;
 
     if (halfStar > 0 && halfStar < 0.25) {
       result += '<i class="fa-regular fa-star rating-star"></i>';
@@ -25,7 +25,7 @@ class Product {
       result += '<i class="fa-solid fa-star rating-star"></i>';
     }
 
-    const emptyStarsCount: number = totalStarsCount - Math.ceil(this.product.rating);
+    const emptyStarsCount: number = totalStarsCount - Math.ceil(rating);
 
     for (let i = 0; i < emptyStarsCount; i += 1) {
       result += '<i class="fa-regular fa-star rating-star"></i>';
@@ -45,7 +45,7 @@ class Product {
     if (buttonAdd.classList.contains(currentClass)) {
       LocalStorage.removeProductFromCart(product.id);
     } else {
-      LocalStorage.addProductToCart(product);
+      LocalStorage.addProductToCart(product as ICartProduct);
     }
 
     buttonAdd.classList.toggle(currentClass);
@@ -60,7 +60,7 @@ class Product {
   }
 
   public render(): HTMLElement {
-    const ratingStars: string = this.fillRating();
+    const ratingStars: string = Product.fillRating(this.product.rating);
     const initialPrice: number = this.initialPrice();
 
     const productString = `
@@ -81,7 +81,7 @@ class Product {
         <div class="product__footer-wrap">
           <div class="product__price-wrap">
             <div class="product__price">${initialPrice}$</div>
-            <div class="product__price_discount">${Math.round(this.product.price)}$</div>
+            <div class="product__price_discount">${this.product.price}$</div>
           </div>
           
         </div>

@@ -13,6 +13,10 @@ export interface IProduct {
   images: string[];
 }
 
+export interface ICartProduct extends IProduct {
+  count: number;
+}
+
 //  JSON database structure
 export interface IProducts {
   products: IProduct[];
