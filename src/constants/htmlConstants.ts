@@ -42,4 +42,6 @@ export const optionNames = ['Name ASC', 'Name DESC', 'Price ASC', 'Price DESC', 
 
 export const itemsCart = ['Item', 'Description', 'Qty', 'Subtotal'];
 
+export const promoCodes = ['RS', 'EPAM', 'METRO'];
+
 export const valueOptionAsc = 'ASC';

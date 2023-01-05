@@ -65,27 +65,30 @@ class Product {
 
     const productString = `
       <div class="product">
-        <div class="product__stock">stock: ${this.product.stock}</div>
-        <div class="product__img-wrap">
-          <a href="#product-details/${this.product.id}">
-            <div class="product__img" style="background: 
-            url('${this.product.thumbnail}') no-repeat center / contain;"></div>
-          </a>
-        </div>
-        <div class="product__rating-wrap">
-          <div class="product__rating">${ratingStars}</div>
-          <span class="product__rating-text">${this.product.rating}</span>
-        </div>
-        <div class="product__title">${this.product.title}</div>
-        <div class="product__description">${this.product.titleDetail}</div>
-        <div class="product__footer-wrap">
-          <div class="product__price-wrap">
-            <div class="product__price">${initialPrice}$</div>
-            <div class="product__price_discount">${this.product.price}$</div>
+        <div class="product__wrap">
+          <div class="product__stock">stock: ${this.product.stock}</div>
+          <div class="product__descriptionk">category: ${this.product.category}</div>
+          <div class="product__img-wrap">
+            <a href="#product-details/${this.product.id}">
+              <div class="product__img" style="background: 
+              url('${this.product.thumbnail}') no-repeat center / contain;"></div>
+            </a>
           </div>
-          
         </div>
-        
+        <div class="product__wrap">
+          <div class="product__title">${this.product.title}</div>
+          <div class="product__rating-wrap">
+            <div class="product__rating">${ratingStars}</div>
+            <span class="product__rating-text">${this.product.rating}</span>
+          </div>
+          <div class="product__description">${this.product.titleDetail}</div>
+          <div class="product__footer-wrap">
+            <div class="product__price-wrap">
+              <div class="product__price">$ ${initialPrice}$</div>
+              <div class="product__price_discount">$ ${this.product.price}</div>
+            </div>
+          </div>
+        </div> 
       </div>
       `;
     const product: HTMLElement = this.convertFromStringToHTML(productString);
