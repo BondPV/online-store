@@ -50,6 +50,11 @@ class MainPage {
     rangeFilters.id = 'range-filters';
     filtersBar.append(rangeFilters);
 
+    const copyBtn: HTMLElement = document.createElement('div');
+    copyBtn.classList.add('copy-btn');
+    copyBtn.id = 'copy-button';
+    filtersBar.append(copyBtn);
+
     const catalog: HTMLElement = document.createElement('section');
     catalog.classList.add('catalog-wrap');
     mainContainer.append(catalog);

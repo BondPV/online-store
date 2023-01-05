@@ -262,32 +262,32 @@ class Filters {
     newSortCatalog.render();
   }
 
-  // TODO rewrite this code
-  resetFiltersSettings(): void {
-    const parentElement = document.querySelector('#reset-button') as HTMLElement;
-    const resetButton: HTMLButtonElement = document.createElement('button');
-    resetButton.classList.add('reset-button');
-    resetButton.innerText = 'Clear Filter';
+  // // TODO rewrite this code
+  // resetFiltersSettings(): void {
+  //   const parentElement = document.querySelector('#reset-button') as HTMLElement;
+  //   const resetButton: HTMLButtonElement = document.createElement('button');
+  //   resetButton.classList.add('reset-button');
+  //   resetButton.innerText = 'Clear Filter';
 
-    parentElement.innerHTML = '';
-    parentElement.append(resetButton);
+  //   parentElement.innerHTML = '';
+  //   parentElement.append(resetButton);
 
-    resetButton.addEventListener('click', () => {
-      UrlHash.clearHash();
-      this.reRenderFilters();
-      this.resetCheckActiveElement();
-    });
-  }
+  //   resetButton.addEventListener('click', () => {
+  //     UrlHash.clearHash();
+  //     this.reRenderFilters();
+  //     this.resetCheckActiveElement();
+  //   });
+  // }
 
-  resetCheckActiveElement(): void {
-    const elements: NodeList = document.querySelectorAll('.value-filters__element-input');
+  // resetCheckActiveElement(): void {
+  //   const elements: NodeList = document.querySelectorAll('.value-filters__element-input');
 
-    for (const element of elements) {
-      if (element instanceof HTMLInputElement) {
-        element.checked = false;
-      }
-    }
-  }
+  //   for (const element of elements) {
+  //     if (element instanceof HTMLInputElement) {
+  //       element.checked = false;
+  //     }
+  //   }
+  // }
 }
 
 export default Filters;

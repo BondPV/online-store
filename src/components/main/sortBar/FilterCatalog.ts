@@ -4,6 +4,8 @@ import Filters from 'components/main/sortBar/filters/Filters';
 import Catalog from 'components/main/catalog/Catalog';
 import ProductsDB from 'database/ProductsDB';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
+import ResetButton from './filters/resetButton/ResetButton';
+import CopyLinkButton from './filters/copyLinkButton/CopyLinkButton';
 
 class FilterCatalog {
   constructor(
@@ -15,12 +17,18 @@ class FilterCatalog {
   ) {}
 
   public render(): void {
+    const resetButton = new ResetButton();
+    resetButton.render();
+
+    const copyLinkButton = new CopyLinkButton();
+    copyLinkButton.render();
+
     const filtersContainer = document.querySelector(IdMap.valueFilters) as HTMLElement;
     const filtersRangeContainer = document.querySelector(IdMap.rangeFilters) as HTMLElement;
 
     const filterCategory = new Filters(FiltersName.Category, this.catalog, this.sortCatalog, this.productsDB);
     filterCategory.appendFilterList(filtersContainer);
-    filterCategory.resetFiltersSettings();
+    //filterCategory.resetFiltersSettings();
 
     const filterBrand = new Filters(FiltersName.Brand, this.catalog, this.sortCatalog, this.productsDB);
     filterBrand.appendFilterList(filtersContainer);
