@@ -115,7 +115,7 @@ class Filters {
 
   //* render Catalog
   public filterProducts(): void {
-    const savedFilters: FiltersDataType = UrlHash.hashData; //!llllllllll
+    const savedFilters: FiltersDataType = UrlHash.hashData;
     const filterValue: FiltersValueDataType = savedFilters.filtersValue;
     const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
 
@@ -225,9 +225,8 @@ class Filters {
     return items.filter((item) => item[filterName] >= filterRange[0] && item[filterName] <= filterRange[1]);
   }
 
-  // check for activity on saved from Local Storage
+  // check for activity on saved
   checkActiveElement(elementValue: string, element: HTMLInputElement): void {
-
     if (window.location.hash.includes('?')) {
       const filteredCatalog = UrlHash.hashData.filtersValue[this.filterName as FiltersValueType];
       element.checked = filteredCatalog.includes(elementValue);

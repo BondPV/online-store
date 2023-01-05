@@ -3,7 +3,7 @@ import { FiltersValueType, FiltersRangeType, FiltersDataType } from 'types/types
 class LocalStorage {
   public static savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
 
-  //* update local storage filters
+  //* update filters
   public static controlFilter(filterName: FiltersValueType, elementValue: string): void {
     this.savedFilters = JSON.parse(localStorage.getItem('filters') as string);
     let filteredCatalog = this.savedFilters.filtersValue[filterName];

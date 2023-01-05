@@ -3,6 +3,7 @@ import './sortCatalog.scss';
 import { IProduct } from 'types/interfaces';
 import { SortOption } from 'types/types';
 import { SortOptionMap, optionNames, ClassMap, valueOptionAsc, ClassListName } from 'constants/htmlConstants';
+import UrlHash from 'helpers/router/UrlHash';
 
 class SortCatalog {
   constructor(private readonly catalog: Catalog) {}
@@ -24,8 +25,11 @@ class SortCatalog {
     selectSortButton.textContent = 'Sort by:';
     catalogHeader.append(selectSortButton);
 
+    const currSelectedOrder = UrlHash.getSort();
+
     optionNames.forEach((item) => {
-      this.createOptionsSort(item, selectSortButton);
+      const isSelected = currSelectedOrder === item;
+      this.createOptionsSort(item, selectSortButton, isSelected);
     });
 
     selectSortButton.addEventListener('change', () => this.selectOrder());
@@ -41,7 +45,7 @@ class SortCatalog {
     currentOption.selected = true;
     const currentOptionValue: string = currentOption.value;
 
-    const [firstValue, secondValue] = currentOptionValue.split(' ');
+    const [firstValue, secondValue] = currentOptionValue.split('-');
     const currentField = SortOptionMap[firstValue as keyof SortOption];
     const currentOrder = secondValue;
 
@@ -54,6 +58,7 @@ class SortCatalog {
     }
     oldCatalog.childNodes.forEach((child) => oldCatalog.removeChild(child));
 
+    UrlHash.setSort(currentOptionValue);
     this.catalog.render();
   }
 
@@ -68,10 +73,16 @@ class SortCatalog {
     this.catalog.products = products;
   }
 
-  private createOptionsSort(optionName: string, parentElem: HTMLSelectElement): void {
+  private createOptionsSort(optionName: string, parentElem: HTMLSelectElement, isSelected: boolean): void {
     const optionSort: HTMLOptionElement = document.createElement('option');
     optionSort.textContent = optionName;
     optionSort.value = optionName;
+    optionSort.selected = isSelected;
+
+    if (optionName === optionNames[0]) {
+      optionSort.hidden = true;
+    }
+
     parentElem.append(optionSort);
   }
 }

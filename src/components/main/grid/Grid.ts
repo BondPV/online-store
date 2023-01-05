@@ -1,5 +1,6 @@
 import './grid.scss';
 import { ClassListName, ClassMap } from 'constants/htmlConstants';
+import UrlHash from 'helpers/router/UrlHash';
 
 class Grid {
   public changeGridList(): void {
@@ -45,8 +46,22 @@ class Grid {
     viewButtonList.classList.add(ClassListName.catalogView, ClassListName.catalogViewList);
     catalogHeader.append(viewButtonList);
 
-    viewButtonList.addEventListener('click', () => this.changeGridList());
-    viewButtonTable.addEventListener('click', () => this.changeGridTable());
+    const currentGridValue = UrlHash.getGridCatalog();
+
+    if (currentGridValue === 'list') {
+      this.changeGridList();
+    } else {
+      this.changeGridTable();
+    }
+
+    viewButtonList.addEventListener('click', () => {
+      UrlHash.setGridCatalog('list');
+      this.changeGridList();
+    });
+    viewButtonTable.addEventListener('click', () => {
+      UrlHash.setGridCatalog('');
+      this.changeGridTable();
+    });
   }
 }
 

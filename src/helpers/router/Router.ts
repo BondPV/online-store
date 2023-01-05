@@ -3,6 +3,7 @@ import MainPage from 'components/pages/mainPage';
 import ProductDetailsPage from 'components/pages/productDetailsPage';
 import CartPage from 'components/pages/cartPage';
 import { Pages } from 'types/enums';
+import UrlHash from './UrlHash';
 
 class Router {
   private location: Location;
@@ -40,6 +41,7 @@ class Router {
 
     switch (hash) {
       case Pages.Main:
+        UrlHash.clearHash();
         this.currentPage = new MainPage(Container);
         break;
 

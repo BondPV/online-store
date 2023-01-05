@@ -7,7 +7,7 @@ class UrlHash {
     filtersRange: { price: [], stock: [] },
     search: null,
     sort: '',
-    view: null,
+    view: '',
   };
 
   static setUrlHash(hashData: HashDataType) {
@@ -66,11 +66,28 @@ class UrlHash {
     this.setUrlHash(this.hashData);
   }
 
-  public static controlSort(currentOptionValue: string | null): void {
+  public static getSort(): string | null {
+    const currentHash = window.location.hash.slice(2);
+    this.getHashData(currentHash);
+    return this.hashData.sort;
+  }
+
+  public static setSort(currentOptionValue: string): void {
     this.hashData.sort = currentOptionValue;
     if (currentOptionValue !== '') {
       this.setUrlHash(this.hashData);
     }
+  }
+
+  public static getGridCatalog(): string {
+    const currentHash = window.location.hash.slice(2);
+    this.getHashData(currentHash);
+    return this.hashData.view;
+  }
+
+  public static setGridCatalog(value: string): void {
+    this.hashData.view = value;
+    this.setUrlHash(this.hashData);
   }
 
   static clearHash() {
@@ -80,7 +97,7 @@ class UrlHash {
       filtersRange: { price: [], stock: [] },
       search: null,
       sort: '',
-      view: null,
+      view: '',
     };
   }
 }
