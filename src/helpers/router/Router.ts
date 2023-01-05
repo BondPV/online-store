@@ -34,6 +34,10 @@ class Router {
       this.currentPage = new ProductDetailsPage(Container, hash);
     }
 
+    if (hash.includes('?')) {
+      this.currentPage = new MainPage(Container);
+    }
+
     switch (hash) {
       case Pages.Main:
         this.currentPage = new MainPage(Container);

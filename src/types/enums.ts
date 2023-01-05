@@ -3,6 +3,9 @@ export enum FiltersName {
   Brand = 'brand',
   Price = 'price',
   Stock = 'stock',
+  Search = 'search',
+  Sort = 'sort',
+  View = 'view',
 }
 
 export enum Pages {

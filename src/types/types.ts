@@ -14,3 +14,11 @@ export type SortOption = {
   Price: string;
   Rating: string;
 };
+
+export type HashDataType = {
+  filtersValue: FiltersValueDataType;
+  filtersRange: FiltersRangeDataType;
+  search: string | null;
+  sort: string | null;
+  view: string | null;
+};

@@ -37,6 +37,14 @@ class LocalStorage {
     localStorage.removeItem('filters');
     LocalStorage.setItems();
   }
+
+  public static saveSort(name: string): void {
+    localStorage.setItem('sort', name);
+  }
+
+  public static getSort(): string | null {
+    return localStorage.getItem('sort');
+  }
 }
 
 export default LocalStorage;

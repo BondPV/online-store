@@ -11,9 +11,9 @@ import Catalog from 'components/main/catalog/Catalog';
 import ProductsDB from 'database/ProductsDB';
 import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderControl/RangeSliderControl';
 import { FiltersName } from 'types/enums';
-import LocalStorage from 'helpers/localStorage/LocalStorage';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
 import { ClassMap } from 'constants/htmlConstants';
+import UrlHash from 'helpers/router/UrlHash';
 
 import FilterCatalog from '../FilterCatalog';
 
@@ -94,7 +94,7 @@ class Filters {
     this.checkActiveElement(elementValue, elementInput);
 
     elementInput.addEventListener('click', () => {
-      LocalStorage.controlFilter(this.filterName as FiltersValueType, elementValue);
+      UrlHash.controlFilter(this.filterName as FiltersValueType, elementValue);
       this.filterProducts();
       this.reRenderFilters();
       this.appendTotalFoundQuantity();
@@ -104,17 +104,18 @@ class Filters {
   }
 
   private initialFilter(): void {
-    if (!localStorage.getItem('filters')) {
-      LocalStorage.setItems();
+    if (!window.location.hash.includes('?')) {
+      UrlHash.clearHash();
+    } else {
+      UrlHash.getHashData(window.location.hash.slice(1));
     }
-
     this.filterProducts();
     this.appendTotalFoundQuantity();
   }
 
   //* render Catalog
   public filterProducts(): void {
-    const savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
+    const savedFilters: FiltersDataType = UrlHash.hashData; //!llllllllll
     const filterValue: FiltersValueDataType = savedFilters.filtersValue;
     const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
 
@@ -182,21 +183,21 @@ class Filters {
 
     range.fromSlider.addEventListener('input', () => {
       range.controlFromSlider(range.fromSlider, range.toSlider, range.formValueLeft);
-      LocalStorage.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.filterProducts();
     });
 
     range.toSlider.addEventListener('input', () => {
       range.controlToSlider(range.fromSlider, range.toSlider, range.formValueRight);
-      LocalStorage.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.filterProducts();
     });
 
     range.fromSlider.addEventListener('change', () => {
+      UrlHash.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.reRenderFilters();
     });
 
     range.toSlider.addEventListener('change', () => {
+      UrlHash.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.reRenderFilters();
     });
 
@@ -226,8 +227,9 @@ class Filters {
 
   // check for activity on saved from Local Storage
   checkActiveElement(elementValue: string, element: HTMLInputElement): void {
-    if (LocalStorage.savedFilters) {
-      const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
+
+    if (window.location.hash.includes('?')) {
+      const filteredCatalog = UrlHash.hashData.filtersValue[this.filterName as FiltersValueType];
       element.checked = filteredCatalog.includes(elementValue);
     }
   }
@@ -272,7 +274,7 @@ class Filters {
     parentElement.append(resetButton);
 
     resetButton.addEventListener('click', () => {
-      LocalStorage.resetFilters();
+      UrlHash.clearHash();
       this.reRenderFilters();
       this.resetCheckActiveElement();
     });
