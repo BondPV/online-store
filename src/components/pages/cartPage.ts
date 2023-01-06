@@ -81,50 +81,71 @@ class CartPage {
     totalPriceContainer.append(newPrice);
 
     const appliedCodesWrap = document.createElement('div');
-    appliedCodesWrap.classList.add('applied-codes-wrap');
+    appliedCodesWrap.classList.add('promo-codes-wrap');
     parentElem.append(appliedCodesWrap);
 
     const titlePromo = document.createElement('h4');
     titlePromo.textContent = 'Apply Discount Code';
+    titlePromo.classList.add('price-subtitle');
     appliedCodesWrap.append(titlePromo);
 
     const appliedPromoList = document.createElement('ul');
+    appliedPromoList.classList.add('promo-list');
     appliedCodesWrap.append(appliedPromoList);
 
     const inputPromo = document.createElement('input');
     inputPromo.type = 'search';
-    inputPromo.placeholder = 'Enter promo code';
-    parentElem.append(inputPromo);
-
-    const textPromo = document.createElement('p');
-    textPromo.textContent = 'Promo: "RS", "EPAM", "METRO"';
-    parentElem.append(textPromo);
+    inputPromo.placeholder = 'Enter your promo code';
+    inputPromo.classList.add('promo-search');
+    appliedCodesWrap.append(inputPromo);
 
     inputPromo.addEventListener('keyup', () => {
       if (this.isPromoExist(inputPromo.value) && !this.isPromoAdded(inputPromo.value)) {
-        const discountWrap = document.createElement('div');
-        discountWrap.textContent = `Promo ${inputPromo.value} - 10%`;
-        parentElem.append(discountWrap);
+        const discountList = document.createElement('ul');
+        discountList.classList.add('promo-list');
+        inputPromo.after(discountList);
+
+        const discountItem = document.createElement('li');
+        discountItem.textContent = `Promo ${inputPromo.value.toUpperCase()} - 10%`;
+        discountItem.classList.add('promo-item');
+        discountList.append(discountItem);
 
         const buttonAdd = document.createElement('button');
         buttonAdd.textContent = 'ADD';
-        discountWrap.append(buttonAdd);
+        buttonAdd.classList.add('promo-button');
+        discountItem.append(buttonAdd);
 
         buttonAdd.addEventListener('click', () => {
           LocalStorage.addPromo(inputPromo.value.toUpperCase());
-          totalPriceContainer.classList.add('discount');
-
-          totalPrice.classList.add('old-price');
-          newPrice.classList.add('new-price_active');
-
-          const promoItem = document.createElement('li');
-          promoItem.textContent = `Promo ${inputPromo.value.toUpperCase()} - 10%`;
-          promoItem.append(buttonAdd);
-          buttonAdd.classList.add('drop-button');
-          buttonAdd.textContent = 'DROP';
-          appliedPromoList.append(promoItem);
+          discountList.remove();
+          buttonAdd.remove();
+          CartPage.createPromoItem(inputPromo.value.toUpperCase(), appliedPromoList);
+          Cart.fillHeaderCounter();
         });
       }
+    });
+
+    const textPromo = document.createElement('p');
+    textPromo.textContent = `Promo: ${promoCodes.join(', ')}`;
+    textPromo.classList.add('promo-text');
+    parentElem.append(textPromo);
+  }
+
+  public static createPromoItem(value: string, parentElem: Element): void {
+    const promoItem = document.createElement('li');
+    promoItem.textContent = `Promo ${value} - 10%`;
+    promoItem.classList.add('promo-item');
+    parentElem.append(promoItem);
+
+    const dropButton = document.createElement('button');
+    dropButton.classList.add('promo-button');
+    dropButton.textContent = 'DROP';
+    promoItem.append(dropButton);
+
+    dropButton.addEventListener('click', () => {
+      LocalStorage.removePromo(value);
+      promoItem.remove();
+      Cart.fillHeaderCounter();
     });
   }
 
@@ -147,6 +168,7 @@ class CartPage {
 
   private renderProducts(parentElem: HTMLElement): void {
     const allProducts = LocalStorage.getCart();
+
     allProducts.forEach((item) => {
       this.renderProduct(item, parentElem);
     });
@@ -235,6 +257,7 @@ class CartPage {
 
     inputButtonMinus.addEventListener('click', () => {
       item.count -= 1;
+
       if (item.count === 0) {
         LocalStorage.removeProductFromCart(item.id);
         productCart.remove();
@@ -246,6 +269,7 @@ class CartPage {
         LocalStorage.updateProductToCart(item.id, item.count);
         quantityValue.textContent = `${item.count}`;
       }
+
       Cart.fillHeaderCounter();
     });
 
@@ -255,6 +279,7 @@ class CartPage {
         LocalStorage.updateProductToCart(item.id, item.count);
         quantityValue.textContent = `${item.count}`;
       }
+
       Cart.fillHeaderCounter();
     });
   }
