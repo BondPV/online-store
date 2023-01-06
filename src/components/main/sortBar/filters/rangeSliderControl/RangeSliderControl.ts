@@ -77,11 +77,11 @@ class RangeSliderControl {
     this.parentElement.append(this.formControl);
 
     this.formValueLeft.classList.add('form-control__value');
-    this.formValueLeft.innerText = `${this.char} ${this.minCurrentValue}`;
+    this.formValueLeft.innerText = `${this.char} ${this.minCurrentValue !== Infinity ? this.minCurrentValue : '0'}`;
     this.formControl.append(this.formValueLeft);
 
     this.formValueRight.classList.add('form-control__value');
-    this.formValueRight.innerText = `${this.char} ${this.maxCurrentValue}`;
+    this.formValueRight.innerText = `${this.char} ${this.maxCurrentValue > 0 ? this.maxCurrentValue : '0'}`;
     this.formControl.append(this.formValueRight);
   }
 

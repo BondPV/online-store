@@ -82,13 +82,6 @@ class UrlHash {
     }
   }
 
-  public static setSort(currentOptionValue: string): void {
-    this.hashData.sort = currentOptionValue;
-    if (currentOptionValue !== '') {
-      this.setUrlHash(this.hashData);
-    }
-  }
-
   static clearHash() {
     window.location.hash = '#main';
     this.hashData = {
