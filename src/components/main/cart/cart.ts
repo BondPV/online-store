@@ -7,19 +7,26 @@ class Cart {
 
     const headerTotalPrice = document.querySelector('.header__total-price');
     const cartTotalPrice = document.querySelector('.total-price');
+    const cartDiscountPrice = document.querySelector('.new-price');
 
-    if (headerQty && cartTotalQty) {
-      const counterQty = LocalStorage.getCart();
-      const totalQty = counterQty.reduce((acc, currentValue) => acc + currentValue.count, 0);
+    const cart = LocalStorage.getCart();
+    const totalQty = cart.reduce((acc, currentValue) => acc + currentValue.count, 0);
+    const totalPrice = cart.reduce((acc, currentValue) => acc + currentValue.price * currentValue.count, 0);
+
+    if (headerTotalPrice && headerQty) {
+      headerTotalPrice.textContent = `Cart total: $ ${totalPrice}`;
       headerQty.textContent = `${totalQty}`;
-      cartTotalQty.textContent = `Total products: ${totalQty}`;
     }
 
-    if (headerTotalPrice && cartTotalPrice) {
-      const counterPrice = LocalStorage.getCart();
-      const totalPrice = counterPrice.reduce((acc, currentValue) => acc + currentValue.price * currentValue.count, 0);
-      headerTotalPrice.textContent = `Cart total: $ ${totalPrice}`;
+    if (cartTotalPrice && cartTotalQty) {
+      cartTotalQty.textContent = `Total products: ${totalQty}`;
       cartTotalPrice.textContent = `Total: $ ${totalPrice}`;
+    }
+
+    if (cartDiscountPrice) {
+      const priceDiscount = Math.round(totalPrice * 0.9);
+      console.log(priceDiscount);
+      cartDiscountPrice.textContent = `Total: $ ${priceDiscount}`;
     }
   }
 }

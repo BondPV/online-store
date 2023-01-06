@@ -1,5 +1,5 @@
 import Cart from 'components/main/cart/cart';
-import { itemsCart } from 'constants/htmlConstants';
+import { itemsCart, promoCodes } from 'constants/htmlConstants';
 import '../main/cart/Cart.scss';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import { ICartProduct } from 'types/interfaces';
@@ -68,13 +68,28 @@ class CartPage {
     totalQty.classList.add('total-quantity');
     parentElem.append(totalQty);
 
+    const totalPriceContainer = document.createElement('div');
+    totalPriceContainer.classList.add('total-price-container');
+    parentElem.append(totalPriceContainer);
+
     const totalPrice = document.createElement('div');
     totalPrice.classList.add('total-price');
-    parentElem.append(totalPrice);
+    totalPriceContainer.append(totalPrice);
+
+    const newPrice = document.createElement('div');
+    newPrice.classList.add('new-price');
+    totalPriceContainer.append(newPrice);
+
+    const appliedCodesWrap = document.createElement('div');
+    appliedCodesWrap.classList.add('applied-codes-wrap');
+    parentElem.append(appliedCodesWrap);
 
     const titlePromo = document.createElement('h4');
     titlePromo.textContent = 'Apply Discount Code';
-    parentElem.append(titlePromo);
+    appliedCodesWrap.append(titlePromo);
+
+    const appliedPromoList = document.createElement('ul');
+    appliedCodesWrap.append(appliedPromoList);
 
     const inputPromo = document.createElement('input');
     inputPromo.type = 'search';
@@ -85,24 +100,43 @@ class CartPage {
     textPromo.textContent = 'Promo: "RS", "EPAM", "METRO"';
     parentElem.append(textPromo);
 
-    inputPromo.addEventListener('change', () => {
-      if (inputPromo.value === 'RS') {
-        const newPrice = document.createElement('div');
-        newPrice.textContent = 'aaa';
-        totalPrice.append(newPrice);
-        totalPrice.style.textDecoration = 'line-through';
+    inputPromo.addEventListener('keyup', () => {
+      if (this.isPromoExist(inputPromo.value) && !this.isPromoAdded(inputPromo.value)) {
+        const discountWrap = document.createElement('div');
+        discountWrap.textContent = `Promo ${inputPromo.value} - 10%`;
+        parentElem.append(discountWrap);
+
+        const buttonAdd = document.createElement('button');
+        buttonAdd.textContent = 'ADD';
+        discountWrap.append(buttonAdd);
+
+        buttonAdd.addEventListener('click', () => {
+          LocalStorage.addPromo(inputPromo.value.toUpperCase());
+          totalPriceContainer.classList.add('discount');
+
+          totalPrice.classList.add('old-price');
+          newPrice.classList.add('new-price_active');
+
+          const promoItem = document.createElement('li');
+          promoItem.textContent = `Promo ${inputPromo.value.toUpperCase()} - 10%`;
+          promoItem.append(buttonAdd);
+          buttonAdd.classList.add('drop-button');
+          buttonAdd.textContent = 'DROP';
+          appliedPromoList.append(promoItem);
+        });
       }
     });
   }
 
-  // private checkPromo(value: string) {
-  //   const promo = promoCodes;
-  //   const valueName = value.toUpperCase();
-  //   const findValue = promo.filter((value) => value === valueName);
-  //   if (findValue) {
-  //
-  //   }
-  // }
+  private isPromoExist(value: string): boolean {
+    value = value.toUpperCase();
+    return promoCodes.indexOf(value) !== -1;
+  }
+
+  private isPromoAdded(value: string): boolean {
+    value = value.toUpperCase();
+    return LocalStorage.isPromoExist(value);
+  }
 
   private createHeaderItem(itemName: string, parentElem: HTMLElement): void {
     const itemTitle: HTMLDivElement = document.createElement('div');

@@ -88,8 +88,33 @@ class LocalStorage {
 
   public static isProductExists(id: number): boolean {
     const cartArr = this.getCart();
-    const currProduct = cartArr.find((product) => product.id === id);
-    return !!currProduct;
+    return !!cartArr.find((product) => product.id === id);
+  }
+
+  public static getPromo(): string[] {
+    const promoStorage = localStorage.getItem('promo');
+    if (promoStorage) {
+      return JSON.parse(promoStorage);
+    }
+    return [];
+  }
+
+  public static addPromo(promo: string): void {
+    const promoStorage = this.getPromo();
+    promoStorage.push(promo);
+    localStorage.setItem('promo', JSON.stringify(promoStorage));
+  }
+
+  public static removePromo(promo: string): void {
+    const promoStorage = this.getPromo();
+    const filteredPromo = promoStorage.filter((item) => item !== promo);
+    localStorage.setItem('promo', JSON.stringify(filteredPromo));
+  }
+
+  public static isPromoExist(promo: string): boolean {
+    const promoStorage = this.getPromo();
+    console.log(promoStorage);
+    return promoStorage.indexOf(promo) !== -1;
   }
 }
 
