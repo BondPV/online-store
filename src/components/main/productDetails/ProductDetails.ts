@@ -22,8 +22,11 @@ class ProductDetails extends Product {
     const breadCrumbs: HTMLElement = document.createElement('div');
     breadCrumbs.classList.add('product-details__bread-crumbs');
     breadCrumbs.innerHTML = `
-    <a href="#">Home</a> > ${this.product.category} > ${this.product.brand} > ${this.product.title}
-    `;
+      <a href="#">Home</a> >
+      <a href="#?category=${this.product.category}">${this.product.category}</a> >
+      <a href="#?category=${this.product.category}&brand=${this.product.brand}">${this.product.brand}</a> >
+      ${this.product.title}
+      `;
     header.append(breadCrumbs);
 
     const price: HTMLElement = document.createElement('div');
@@ -115,14 +118,6 @@ class ProductDetails extends Product {
     new Gallery(productGallery, this.product.images);
 
     return productGallery;
-  }
-
-  public renderProductNotFound(): HTMLElement {
-    const productNotFound: HTMLElement = document.createElement('div');
-    productNotFound.classList.add('product-details__notFound');
-    productNotFound.innerText = 'Sorry. Product not found.';
-
-    return productNotFound;
   }
 }
 
