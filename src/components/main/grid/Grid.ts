@@ -1,6 +1,7 @@
 import './grid.scss';
 import { ClassListName, ClassMap } from 'constants/htmlConstants';
 import UrlHash from 'helpers/router/UrlHash';
+import { FiltersName } from 'types/enums';
 
 class Grid {
   public changeGridList(): void {
@@ -46,7 +47,7 @@ class Grid {
     viewButtonList.classList.add(ClassListName.catalogView, ClassListName.catalogViewList);
     catalogHeader.append(viewButtonList);
 
-    const currentGridValue = UrlHash.getGridCatalog();
+    const currentGridValue = UrlHash.getUrlHashParam(FiltersName.View);
 
     if (currentGridValue === 'list') {
       this.changeGridList();
@@ -55,11 +56,11 @@ class Grid {
     }
 
     viewButtonList.addEventListener('click', () => {
-      UrlHash.setGridCatalog('list');
+      UrlHash.setUrlHashParam(FiltersName.View, 'list');
       this.changeGridList();
     });
     viewButtonTable.addEventListener('click', () => {
-      UrlHash.setGridCatalog('');
+      UrlHash.setUrlHashParam(FiltersName.View, '');
       this.changeGridTable();
     });
   }

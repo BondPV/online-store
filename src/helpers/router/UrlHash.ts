@@ -5,7 +5,7 @@ class UrlHash {
   static hashData: HashDataType = {
     filtersValue: { category: [], brand: [] },
     filtersRange: { price: [], stock: [] },
-    search: null,
+    search: '',
     sort: '',
     view: '',
   };
@@ -66,10 +66,20 @@ class UrlHash {
     this.setUrlHash(this.hashData);
   }
 
-  public static getSort(): string | null {
-    const currentHash = window.location.hash.slice(2);
+  public static getUrlHashParam(param: FiltersName.Sort | FiltersName.Search | FiltersName.View): string {
+    const currentHash = decodeURI(window.location.hash).slice(2);
     this.getHashData(currentHash);
-    return this.hashData.sort;
+    return this.hashData[param];
+  }
+
+  public static setUrlHashParam(param: FiltersName.Sort | FiltersName.Search | FiltersName.View, value: string): void {
+    this.hashData[param] = value;
+
+    if (param === FiltersName.Sort && value === '') {
+      return;
+    } else {
+      this.setUrlHash(this.hashData);
+    }
   }
 
   public static setSort(currentOptionValue: string): void {
@@ -79,23 +89,12 @@ class UrlHash {
     }
   }
 
-  public static getGridCatalog(): string {
-    const currentHash = window.location.hash.slice(2);
-    this.getHashData(currentHash);
-    return this.hashData.view;
-  }
-
-  public static setGridCatalog(value: string): void {
-    this.hashData.view = value;
-    this.setUrlHash(this.hashData);
-  }
-
   static clearHash() {
     window.location.hash = '#main';
     this.hashData = {
       filtersValue: { category: [], brand: [] },
       filtersRange: { price: [], stock: [] },
-      search: null,
+      search: '',
       sort: '',
       view: '',
     };

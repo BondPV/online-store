@@ -20,6 +20,7 @@ class MainPage {
     this.sortCatalog.render();
     this.grid.render();
     this.filterCatalog.render();
+    this.filterCatalog.renderSearch();
   }
 
   public renderPage(): void {

@@ -48,3 +48,32 @@
     margin: 0 auto;
   }
 }
+
+.search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 2px solid #CACDD8;
+  border-radius: 5px;
+  padding: 0 5px;
+
+  &__icon {
+    height: 16px;
+    width: 17px;
+    background: url('../../../../assets/icons/search-icon.svg') center center/cover no-repeat;
+    opacity: 0.5;
+  }
+
+  &__input {
+    width: 100%;
+    border: none;
+    height: 2rem;
+    outline: none;
+    color: #CACDD8;
+
+    &:focus{
+      color: #000000;
+    }
+  }
+}

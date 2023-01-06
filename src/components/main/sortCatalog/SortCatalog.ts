@@ -4,6 +4,7 @@ import { IProduct } from 'types/interfaces';
 import { SortOption } from 'types/types';
 import { SortOptionMap, optionNames, ClassMap, valueOptionAsc, ClassListName } from 'constants/htmlConstants';
 import UrlHash from 'helpers/router/UrlHash';
+import { FiltersName } from 'types/enums';
 
 class SortCatalog {
   constructor(private readonly catalog: Catalog) {}
@@ -25,7 +26,7 @@ class SortCatalog {
     selectSortButton.textContent = 'Sort by:';
     catalogHeader.append(selectSortButton);
 
-    const currSelectedOrder = UrlHash.getSort();
+    const currSelectedOrder = UrlHash.getUrlHashParam(FiltersName.Sort);
 
     optionNames.forEach((item) => {
       const isSelected = currSelectedOrder === item;
@@ -58,7 +59,7 @@ class SortCatalog {
     }
     oldCatalog.childNodes.forEach((child) => oldCatalog.removeChild(child));
 
-    UrlHash.setSort(currentOptionValue);
+    UrlHash.setUrlHashParam(FiltersName.Sort, currentOptionValue);
     this.catalog.render();
   }
 

@@ -14,8 +14,14 @@ class Catalog {
       .join('');
 
     if (parentElement instanceof HTMLElement) {
-      parentElement.innerHTML = products.length ? products : 'No products found';
+      parentElement.innerHTML = products.length ? products : this.notFound();
     }
+  }
+
+  notFound(): string {
+    return `
+      <div class="catalog__not-found">Products not found!</div>
+      `;
   }
 }
 

@@ -16,6 +16,14 @@ class FilterCatalog {
     private productsDB: ProductsDB,
   ) {}
 
+  public renderSearch(): void {
+    const searchContainer = document.querySelector(IdMap.search) as HTMLElement;
+    searchContainer.innerHTML = '';
+
+    const search = new Filters(FiltersName.Search, this.catalog, this.sortCatalog, this.productsDB);
+    search.appendSearchField(searchContainer);
+  }
+
   public render(): void {
     const resetButton = new ResetButton();
     resetButton.render();
@@ -28,7 +36,6 @@ class FilterCatalog {
 
     const filterCategory = new Filters(FiltersName.Category, this.catalog, this.sortCatalog, this.productsDB);
     filterCategory.appendFilterList(filtersContainer);
-    //filterCategory.resetFiltersSettings();
 
     const filterBrand = new Filters(FiltersName.Brand, this.catalog, this.sortCatalog, this.productsDB);
     filterBrand.appendFilterList(filtersContainer);

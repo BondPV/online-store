@@ -8,6 +8,7 @@ export const IdMap = {
   resetButton: '#reset-button',
   valueFilters: '#value-filters',
   rangeFilters: '#range-filters',
+  search: '#search-field',
 };
 
 export const ClassMap = {

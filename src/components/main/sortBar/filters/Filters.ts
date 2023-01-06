@@ -5,6 +5,7 @@ import {
   FiltersRangeType,
   FiltersRangeDataType,
   FiltersDataType,
+  SearchType,
 } from 'types/types';
 import { IProduct, IQuantity, IValueRange } from 'types/interfaces';
 import Catalog from 'components/main/catalog/Catalog';
@@ -21,7 +22,7 @@ class Filters {
   private currentCatalog: IProduct[];
 
   constructor(
-    private readonly filterName: FiltersValueType | FiltersRangeType,
+    private readonly filterName: FiltersValueType | FiltersRangeType | SearchType,
 
     private readonly catalog: Catalog,
 
@@ -118,9 +119,11 @@ class Filters {
     const savedFilters: FiltersDataType = UrlHash.hashData;
     const filterValue: FiltersValueDataType = savedFilters.filtersValue;
     const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
+    const currentInput: string = UrlHash.hashData.search;
 
     let filteredCatalog: IProduct[] = this.filterValueProducts(this.productsDB.getProducts().slice(), filterValue);
     filteredCatalog = this.filterRangeProducts(filteredCatalog, filterRange);
+    filteredCatalog = this.searchProducts(filteredCatalog, currentInput);
 
     this.currentCatalog = filteredCatalog;
     this.catalog.products = filteredCatalog;
@@ -262,32 +265,59 @@ class Filters {
     newSortCatalog.render();
   }
 
-  // // TODO rewrite this code
-  // resetFiltersSettings(): void {
-  //   const parentElement = document.querySelector('#reset-button') as HTMLElement;
-  //   const resetButton: HTMLButtonElement = document.createElement('button');
-  //   resetButton.classList.add('reset-button');
-  //   resetButton.innerText = 'Clear Filter';
+  //* Search filter
+  public appendSearchField(parentElement: HTMLElement): void {
+    const search: HTMLDivElement = document.createElement('div');
+    search.classList.add('search');
+    parentElement.append(search);
 
-  //   parentElement.innerHTML = '';
-  //   parentElement.append(resetButton);
+    const searchIcon: HTMLDivElement = document.createElement('div');
+    searchIcon.classList.add('search__icon');
+    search.append(searchIcon);
 
-  //   resetButton.addEventListener('click', () => {
-  //     UrlHash.clearHash();
-  //     this.reRenderFilters();
-  //     this.resetCheckActiveElement();
-  //   });
-  // }
+    const searchInput: HTMLInputElement = document.createElement('input');
+    searchInput.classList.add('search__input');
+    searchInput.type = 'search';
+    searchInput.name = 'q';
+    searchInput.autocomplete = 'off';
+    searchInput.placeholder = 'Search product';
+    search.append(searchInput);
 
-  // resetCheckActiveElement(): void {
-  //   const elements: NodeList = document.querySelectorAll('.value-filters__element-input');
+    searchInput.value = UrlHash.getUrlHashParam(FiltersName.Search);
 
-  //   for (const element of elements) {
-  //     if (element instanceof HTMLInputElement) {
-  //       element.checked = false;
-  //     }
-  //   }
-  // }
+    searchInput.addEventListener('input', () => {
+      UrlHash.hashData.search = searchInput.value;
+      this.filterProducts();
+      this.appendTotalFoundQuantity();
+    });
+
+    searchInput.addEventListener('change', () => {
+      this.filterProducts();
+      UrlHash.setUrlHashParam(FiltersName.Search, searchInput.value);
+    });
+  }
+
+  private searchProducts(filteredProducts: IProduct[], currentInput: string): IProduct[] {
+    let newProducts: IProduct[] = filteredProducts;
+
+    newProducts = filteredProducts.filter((item) => {
+      const titleDatail = item.titleDatail.toLocaleLowerCase();
+      const category = item.category.toLocaleLowerCase();
+      const stock = String(item.stock);
+      const price = String(item.price);
+      const description = item.description.join().toLocaleLowerCase();
+
+      return (
+        titleDatail.includes(currentInput.toLowerCase()) ||
+        category.includes(currentInput.toLowerCase()) ||
+        stock.includes(currentInput) ||
+        price.includes(currentInput) ||
+        description.includes(currentInput.toLowerCase())
+      );
+    });
+
+    return (currentInput = '') ? filteredProducts : newProducts;
+  }
 }
 
 export default Filters;

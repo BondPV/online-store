@@ -18,7 +18,9 @@ export type SortOption = {
 export type HashDataType = {
   filtersValue: FiltersValueDataType;
   filtersRange: FiltersRangeDataType;
-  search: string | null;
+  search: string;
   sort: string;
   view: string;
 };
+
+export type SearchType = 'search';
