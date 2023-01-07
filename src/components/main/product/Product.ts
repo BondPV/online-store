@@ -55,8 +55,12 @@ class Product {
           <div class="product__rating">${ratingStars}</div>
           <span class="product__rating-text">${this.product.rating}</span>
         </div>
-        <div class="product__title">${this.product.title}</div>
-        <div class="product__description">${this.product.titleDatail}</div>
+        <div class="product__title">
+          <a href="#product-details/${this.product.id}">${this.product.title}</a>
+        </div>
+        <div class="product__description">
+          <a href="#product-details/${this.product.id}">${this.product.titleDatail}</a>
+        </div>
         <div class="product__footer-wrap">
           <div class="product__price-wrap">
             <div class="product__price">${initialPrice}$</div>

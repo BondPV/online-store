@@ -3,6 +3,9 @@ export enum FiltersName {
   Brand = 'brand',
   Price = 'price',
   Stock = 'stock',
+  Search = 'search',
+  Sort = 'sort',
+  View = 'view',
 }
 
 export enum Pages {
@@ -10,4 +13,12 @@ export enum Pages {
   ProductDetails = 'product-details',
   Price = 'price',
   Cart = 'cart',
+}
+
+export enum Symbol {
+  Plus = '+',
+  Ampersand = '&',
+  Currence = '$',
+  Query = '?',
+  Equality = '=',
 }
