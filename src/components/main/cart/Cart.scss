@@ -67,10 +67,12 @@
   }
 
   .product-card {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     border-bottom: 1px solid #CACDD8;
     padding: 15px 0;
+    box-sizing: border-box;
 
     &_wrap {
       display: flex;
@@ -242,6 +244,12 @@
     border: 1px solid #A2A6B0;
     border-radius: 4px;
     text-align: center;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 
   &__page-number {

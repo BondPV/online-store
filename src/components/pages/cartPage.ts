@@ -1,10 +1,11 @@
 import Cart from 'components/main/cart/cart';
-import { itemsCart, promoCodes } from 'constants/htmlConstants';
+import { ClassListName, ClassMap, itemsCart, promoCodes } from 'constants/htmlConstants';
 import '../main/cart/Cart.scss';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import { ICartProduct } from 'types/interfaces';
 import Product from 'components/main/product/Product';
 import localStorage from 'helpers/localStorage/LocalStorage';
+import { CartText } from 'types/enums';
 
 class CartPage {
   container: HTMLElement;
@@ -22,44 +23,44 @@ class CartPage {
     }
 
     const containerWrap = document.createElement('div');
-    containerWrap.classList.add('container-wrap');
+    containerWrap.classList.add(ClassListName.cartContainerWrap);
     this.container.append(containerWrap);
 
     const cartTitle = document.createElement('h2');
-    cartTitle.textContent = 'Shopping Cart';
-    cartTitle.classList.add('cart-title');
+    cartTitle.textContent = CartText.ShoppingCart;
+    cartTitle.classList.add(ClassListName.cartTitle);
     containerWrap.append(cartTitle);
 
     const cartSectionsWrap = document.createElement('div');
-    cartSectionsWrap.classList.add('cart-sections-wrap');
+    cartSectionsWrap.classList.add(ClassListName.cartSectionsWrap);
     containerWrap.append(cartSectionsWrap);
 
     const cartProductWrap = document.createElement('section');
-    cartProductWrap.classList.add('cart-product-wrap');
+    cartProductWrap.classList.add(ClassListName.cartProductWrap);
     cartSectionsWrap.append(cartProductWrap);
 
     const cartPaginationWrap = document.createElement('div');
-    cartPaginationWrap.classList.add('pagination-wrap');
+    cartPaginationWrap.classList.add(ClassListName.cartPaginationWrap);
     cartProductWrap.append(cartPaginationWrap);
 
     const paginationLimitPage = document.createElement('div');
-    paginationLimitPage.classList.add('pagination__limit-page');
+    paginationLimitPage.classList.add(ClassListName.cartPaginationLimitPage);
     cartPaginationWrap.append(paginationLimitPage);
 
     const paginationLabel = document.createElement('label');
-    paginationLabel.textContent = 'Show per page ';
-    paginationLabel.classList.add('pagination__label');
+    paginationLabel.textContent = CartText.ShowPage;
+    paginationLabel.classList.add(ClassListName.cartPaginationLabel);
     paginationLimitPage.append(paginationLabel);
 
     const cartContainer = document.createElement('div');
-    cartContainer.classList.add('cart-container');
+    cartContainer.classList.add(ClassListName.cartContainer);
 
     const paginationInput = document.createElement('input');
     paginationInput.type = 'number';
-    paginationInput.min = '1';
-    paginationInput.max = '20';
-    paginationInput.value = '5';
-    paginationInput.classList.add('pagination__input');
+    paginationInput.min = CartText.InputMinValue;
+    paginationInput.max = CartText.InputMaxValue;
+    paginationInput.value = CartText.InputOptionalValue;
+    paginationInput.classList.add(ClassListName.cartPaginationInput);
     paginationLimitPage.append(paginationInput);
 
     paginationInput.addEventListener('keyup', () => {
@@ -67,22 +68,22 @@ class CartPage {
     });
 
     const paginationPageNumberWrap = document.createElement('div');
-    paginationPageNumberWrap.classList.add('pagination__page-number');
+    paginationPageNumberWrap.classList.add(ClassListName.paginationPageNumberWrap);
     cartPaginationWrap.append(paginationPageNumberWrap);
 
     const pageButtonLeft = document.createElement('button');
-    pageButtonLeft.classList.add('pagination__button');
-    pageButtonLeft.textContent = '<';
+    pageButtonLeft.classList.add(ClassListName.paginationButton);
+    pageButtonLeft.textContent = CartText.PageButtonLeft;
     paginationPageNumberWrap.append(pageButtonLeft);
 
     const pageNumValue = document.createElement('div');
-    pageNumValue.classList.add('page-value');
-    pageNumValue.textContent = '1';
+    pageNumValue.classList.add(ClassListName.paginationPageNum);
+    pageNumValue.textContent = CartText.PageStartValue;
     paginationPageNumberWrap.append(pageNumValue);
 
     const pageButtonRight = document.createElement('button');
-    pageButtonRight.classList.add('pagination__button');
-    pageButtonRight.textContent = '>';
+    pageButtonRight.classList.add(ClassListName.paginationButton);
+    pageButtonRight.textContent = CartText.PageButtonRight;
     paginationPageNumberWrap.append(pageButtonRight);
 
     pageButtonLeft.addEventListener('click', () => {
@@ -96,10 +97,11 @@ class CartPage {
       let pageNumInputValue = Number(paginationInput.value);
 
       if (!pageNumInputValue) {
-        pageNumInputValue = 5;
+        pageNumInputValue = Number(CartText.InputOptionalValue);
       }
 
       const pageCount = Math.ceil(LocalStorage.getCart().length / pageNumInputValue);
+
       if (Number(pageNumValue.textContent) < pageCount) {
         pageNumValue.textContent = `${Number(pageNumValue.textContent) + 1}`;
         this.renderProducts(cartContainer);
@@ -107,7 +109,7 @@ class CartPage {
     });
 
     const cartHeaderList = document.createElement('ul');
-    cartHeaderList.classList.add('cart-list');
+    cartHeaderList.classList.add(ClassListName.cartHeaderList);
     cartProductWrap.append(cartHeaderList);
 
     itemsCart.forEach((item) => {
@@ -117,7 +119,7 @@ class CartPage {
     cartProductWrap.append(cartContainer);
 
     const priceContainerWrap = document.createElement('section');
-    priceContainerWrap.classList.add('price-container-wrap');
+    priceContainerWrap.classList.add(ClassListName.priceContainerWrap);
     cartSectionsWrap.append(priceContainerWrap);
 
     this.renderProducts(cartContainer);
@@ -126,47 +128,47 @@ class CartPage {
 
   private renderTotalContainer(parentElem: HTMLElement) {
     const priceTitle = document.createElement('h3');
-    priceTitle.classList.add('price-title');
-    priceTitle.textContent = 'Summary';
+    priceTitle.classList.add(ClassListName.cartTotalPriceTitle);
+    priceTitle.textContent = CartText.Summary;
     parentElem.append(priceTitle);
 
     const totalQty = document.createElement('div');
-    totalQty.classList.add('total-quantity');
+    totalQty.classList.add(ClassListName.cartTotalQty);
     parentElem.append(totalQty);
 
     const totalPriceContainer = document.createElement('div');
-    totalPriceContainer.classList.add('total-price-container');
+    totalPriceContainer.classList.add(ClassListName.cartTotalPriceContainer);
     parentElem.append(totalPriceContainer);
 
     const totalPrice = document.createElement('div');
-    totalPrice.classList.add('total-price');
+    totalPrice.classList.add(ClassListName.cartTotalPrice);
     totalPriceContainer.append(totalPrice);
 
     const newPrice = document.createElement('div');
-    newPrice.classList.add('new-price');
+    newPrice.classList.add(ClassListName.cartDiscountPrice);
     totalPriceContainer.append(newPrice);
 
     const appliedCodesWrap = document.createElement('div');
-    appliedCodesWrap.classList.add('promo-codes-wrap');
+    appliedCodesWrap.classList.add(ClassListName.cartAppliedCodesWrap);
     parentElem.append(appliedCodesWrap);
 
     const titlePromo = document.createElement('h4');
-    titlePromo.textContent = 'Apply Discount Code';
-    titlePromo.classList.add('price-subtitle');
+    titlePromo.textContent = CartText.TitlePromo;
+    titlePromo.classList.add(ClassListName.cartTotalPromoSubtitle);
     appliedCodesWrap.append(titlePromo);
 
     const appliedPromoList = document.createElement('ul');
-    appliedPromoList.classList.add('promo-list');
+    appliedPromoList.classList.add(ClassListName.cartTotalPromoList);
     appliedCodesWrap.append(appliedPromoList);
 
     const inputPromo = document.createElement('input');
     inputPromo.type = 'search';
-    inputPromo.placeholder = 'Enter your promo code';
-    inputPromo.classList.add('promo-search');
+    inputPromo.placeholder = CartText.PromoInputPlaceholder;
+    inputPromo.classList.add(ClassListName.cartTotalPromoInput);
     appliedCodesWrap.append(inputPromo);
 
     const discountList = document.createElement('ul');
-    discountList.classList.add('promo-list');
+    discountList.classList.add(ClassListName.cartTotalPromoList);
     inputPromo.after(discountList);
 
     inputPromo.addEventListener('keyup', () => {
@@ -174,12 +176,12 @@ class CartPage {
       if (this.isPromoExist(value) && !this.isPromoAdded(value)) {
         const discountItem = document.createElement('li');
         discountItem.textContent = `Promo ${value} - 10%`;
-        discountItem.classList.add('promo-item');
+        discountItem.classList.add(ClassListName.cartTotalPromoItem);
         discountList.append(discountItem);
 
         const buttonAdd = document.createElement('button');
-        buttonAdd.textContent = 'ADD';
-        buttonAdd.classList.add('promo-button');
+        buttonAdd.textContent = CartText.ButtonAdd;
+        buttonAdd.classList.add(ClassListName.cartTotalPromoButton);
         discountItem.append(buttonAdd);
 
         buttonAdd.addEventListener('click', () => {
@@ -196,24 +198,24 @@ class CartPage {
 
     const textPromo = document.createElement('p');
     textPromo.textContent = `Promo: ${promoCodes.join(', ')}`;
-    textPromo.classList.add('promo-text');
+    textPromo.classList.add(ClassListName.cartTotalPromoText);
     parentElem.append(textPromo);
 
     const buyButton = document.createElement('button');
-    buyButton.classList.add('promo-button');
-    buyButton.textContent = 'BUY NOW';
+    buyButton.classList.add(ClassListName.cartTotalPromoButton);
+    buyButton.textContent = CartText.ButtonBuy;
     parentElem.append(buyButton);
   }
 
   public static createPromoItem(value: string, parentElem: Element): void {
     const promoItem = document.createElement('li');
     promoItem.textContent = `Promo ${value} - 10%`;
-    promoItem.classList.add('promo-item');
+    promoItem.classList.add(ClassListName.cartTotalPromoItem);
     parentElem.append(promoItem);
 
     const dropButton = document.createElement('button');
-    dropButton.classList.add('promo-button');
-    dropButton.textContent = 'DROP';
+    dropButton.classList.add(ClassListName.cartTotalPromoButton);
+    dropButton.textContent = CartText.ButtonDrop;
     promoItem.append(dropButton);
 
     dropButton.addEventListener('click', () => {
@@ -236,21 +238,21 @@ class CartPage {
   private createHeaderItem(itemName: string, parentElem: HTMLElement): void {
     const itemTitle: HTMLDivElement = document.createElement('div');
     itemTitle.textContent = itemName;
-    itemTitle.classList.add('cart-item');
+    itemTitle.classList.add(ClassListName.cartHeaderItem);
     parentElem.append(itemTitle);
   }
 
   private renderProducts(parentElem: HTMLElement): void {
     parentElem.innerHTML = '';
-    const pageLimitInput = document.querySelector('.pagination__input') as HTMLInputElement;
-    const pageNumItem = document.querySelector('.page-value') as HTMLElement;
+    const pageLimitInput = document.querySelector(ClassMap.cartPaginationInput) as HTMLInputElement;
+    const pageNumItem = document.querySelector(ClassMap.paginationPageNum) as HTMLElement;
     let allProducts = LocalStorage.getCart();
 
     if (pageLimitInput) {
-      let pageNumInputValue = Number(pageLimitInput.value);
+      let pageNumInputValue = Math.abs(Number(pageLimitInput.value));
 
       if (!pageNumInputValue) {
-        pageNumInputValue = 5;
+        pageNumInputValue = Number(CartText.InputOptionalValue);
       }
 
       let pageNumItemValue = Number(pageNumItem.textContent);
@@ -277,92 +279,92 @@ class CartPage {
 
   private renderProduct(item: ICartProduct, parentElem: HTMLElement, index: number): void {
     const productCart = document.createElement('div');
-    productCart.classList.add('product-card');
+    productCart.classList.add(ClassListName.productCard);
     parentElem.append(productCart);
 
     const productIndex = document.createElement('div');
     productIndex.textContent = `${index}`;
-    productIndex.classList.add('product__index');
+    productIndex.classList.add(ClassListName.productIndex);
     productCart.append(productIndex);
 
     const productItemWrap = document.createElement('div');
-    productItemWrap.classList.add('product-card_wrap');
+    productItemWrap.classList.add(ClassListName.productItemWrap);
     productCart.append(productItemWrap);
 
     const productStock = document.createElement('div');
     productStock.textContent = `stock: ${item.stock}`;
-    productStock.classList.add('product__stock');
+    productStock.classList.add(ClassListName.productStock);
     productItemWrap.append(productStock);
 
     const productImg = document.createElement('div');
-    productImg.classList.add('product__img');
+    productImg.classList.add(ClassListName.productImg);
     productImg.style.backgroundImage = `url(${item.thumbnail})`;
     productImg.style.backgroundPosition = 'center';
     productImg.style.backgroundSize = 'cover';
     productItemWrap.append(productImg);
 
     const productCategory = document.createElement('div');
-    productCategory.classList.add('product__description');
+    productCategory.classList.add(ClassListName.productDesc);
     productCategory.textContent = `category: ${item.category}`;
     productItemWrap.append(productCategory);
 
     const productDescWrap = document.createElement('div');
-    productDescWrap.classList.add('product-card_wrap');
+    productDescWrap.classList.add(ClassListName.productDescWrap);
     productCart.append(productDescWrap);
 
     const productTitle = document.createElement('h3');
-    productTitle.classList.add('product-card__title');
+    productTitle.classList.add(ClassListName.productCardTitle);
     productTitle.textContent = item.title;
     productDescWrap.append(productTitle);
 
     const productRating: HTMLDivElement = document.createElement('div');
-    productRating.classList.add('product-details__rating');
+    productRating.classList.add(ClassListName.productCardRating);
     productRating.innerHTML = Product.fillRating(item.rating);
     productDescWrap.append(productRating);
 
     const productRatingText: HTMLSpanElement = document.createElement('span');
-    productRatingText.classList.add('product__rating-text');
+    productRatingText.classList.add(ClassListName.productCardRatingText);
     productRatingText.textContent = `${item.rating}`;
     productRating.append(productRatingText);
 
     const productDesc = document.createElement('p');
-    productDesc.classList.add('product__description');
+    productDesc.classList.add(ClassListName.productDesc);
     productDesc.textContent = item.titleDetail;
     productDescWrap.append(productDesc);
 
     const productPrice = document.createElement('div');
-    productPrice.classList.add('product__price_discount');
+    productPrice.classList.add(ClassListName.productPriceDiscount);
     productPrice.textContent = `$ ${item.price}`;
     productDescWrap.append(productPrice);
 
     const productQty = document.createElement('div');
-    productQty.classList.add('quantity');
+    productQty.classList.add(ClassListName.productCardQty);
     productCart.append(productQty);
 
     const inputButtonMinus = document.createElement('input');
     inputButtonMinus.type = 'button';
-    inputButtonMinus.value = '-';
-    inputButtonMinus.classList.add('quantity-button', 'minus');
+    inputButtonMinus.value = CartText.ProductButtonMinus;
+    inputButtonMinus.classList.add(ClassListName.productQtyButton, ClassListName.productQtyButtonMinus);
     productQty.append(inputButtonMinus);
 
     const quantityValue = document.createElement('div');
     quantityValue.textContent = `${item.count}`;
-    quantityValue.classList.add('quantity-number');
+    quantityValue.classList.add(ClassListName.productQtyValue);
     productQty.append(quantityValue);
 
     const inputButtonPlus = document.createElement('input');
     inputButtonPlus.type = 'button';
-    inputButtonPlus.value = '+';
-    inputButtonPlus.classList.add('quantity-button', 'plus');
+    inputButtonPlus.value = CartText.ProductButtonPlus;
+    inputButtonPlus.classList.add(ClassListName.productQtyButton, ClassListName.productQtyButtonPlus);
     productQty.append(inputButtonPlus);
 
     const totalPriceWrap = document.createElement('div');
     totalPriceWrap.textContent = `$ ${item.price}`;
-    totalPriceWrap.classList.add('product__price_discount', 'product-card__price');
+    totalPriceWrap.classList.add(ClassListName.productPriceDiscount, ClassListName.productCartPrice);
     productCart.append(totalPriceWrap);
 
     inputButtonMinus.addEventListener('click', () => {
-      const cartContainer = document.querySelector('.cart-container') as HTMLElement;
+      const cartContainer = document.querySelector(ClassMap.cartContainer) as HTMLElement;
       item.count -= 1;
 
       if (item.count === 0) {
@@ -398,8 +400,8 @@ class CartPage {
   private checkCart(parentElem: HTMLElement): void {
     parentElem.innerHTML = '';
     const emptyCartMessage = document.createElement('div');
-    emptyCartMessage.classList.add('empty-cart');
-    emptyCartMessage.textContent = 'Your cart is empty';
+    emptyCartMessage.classList.add(ClassListName.emptyCart);
+    emptyCartMessage.textContent = CartText.EmptyCart;
     parentElem.append(emptyCartMessage);
   }
 
