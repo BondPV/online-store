@@ -21,6 +21,12 @@ export const ClassMap = {
   catalogViewList: '.catalog__view_list',
   catalogQuantity: '.filter-quantity',
   headerCartCounter: '.header__cart-counter',
+  headerTotalPrice: '.header__total-price',
+  cartTotalQty: '.total-quantity',
+  cartPriceWrap: '.total-price-container',
+  cartTotalPrice: '.total-price',
+  cartDiscountPrice: '.new-price',
+  cartDiscountList: '.promo-list',
 };
 
 export const ClassListName = {
@@ -31,6 +37,8 @@ export const ClassListName = {
   catalogViewTable: 'catalog__view_table',
   catalogViewList: 'catalog__view_list',
   catalogLabelText: 'label-text',
+  cartDiscountPriceActive: 'new-price_active',
+  cartPrevPrice: 'old-price',
 };
 
 export const SortOptionMap: SortOption = {

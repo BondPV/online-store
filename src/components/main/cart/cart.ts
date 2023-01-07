@@ -1,15 +1,16 @@
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import CartPage from 'components/pages/cartPage';
+import { ClassListName, ClassMap } from 'constants/htmlConstants';
 
 class Cart {
   public static fillHeaderCounter(): void {
-    const headerQty = document.querySelector('.header__basket-counter');
-    const cartTotalQty = document.querySelector('.total-quantity');
+    const headerQty = document.querySelector(ClassMap.headerCartCounter);
+    const cartTotalQty = document.querySelector(ClassMap.cartTotalQty);
 
-    const headerTotalPrice = document.querySelector('.header__total-price');
-    const cartPriceWrap = document.querySelector('.total-price-container');
-    const cartTotalPrice = document.querySelector('.total-price');
-    const cartDiscountPrice = document.querySelector('.new-price');
+    const headerTotalPrice = document.querySelector(ClassMap.headerTotalPrice);
+    const cartPriceWrap = document.querySelector(ClassMap.cartPriceWrap);
+    const cartTotalPrice = document.querySelector(ClassMap.cartTotalPrice);
+    const cartDiscountPrice = document.querySelector(ClassMap.cartDiscountPrice);
 
     const cart = LocalStorage.getCart();
     const totalQty = cart.reduce((acc, currentValue) => acc + currentValue.count, 0);
@@ -32,18 +33,18 @@ class Cart {
 
       if (LocalStorage.getPromo().length > 0) {
         cartDiscountPrice.textContent = `Total: $ ${discount}`;
-        cartDiscountPrice.classList.add('new-price_active');
-        cartTotalPrice.classList.add('old-price');
+        cartDiscountPrice.classList.add(ClassListName.cartDiscountPriceActive);
+        cartTotalPrice.classList.add(ClassListName.cartPrevPrice);
       } else {
-        cartDiscountPrice.classList.remove('new-price_active');
-        cartTotalPrice.classList.remove('old-price');
+        cartDiscountPrice.classList.remove(ClassListName.cartDiscountPriceActive);
+        cartTotalPrice.classList.remove(ClassListName.cartPrevPrice);
       }
     }
   }
 
   private static createDiscountItems(): void {
     const promoStorage = LocalStorage.getPromo();
-    const discountList = document.querySelector('.promo-list');
+    const discountList = document.querySelector(ClassMap.cartDiscountList);
 
     if (discountList) {
       discountList.innerHTML = '';
