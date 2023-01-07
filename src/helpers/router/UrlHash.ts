@@ -1,20 +1,26 @@
 import { HashDataType, FiltersValueType, FiltersRangeType } from 'types/types';
-import { FiltersName } from 'types/enums';
+import { FiltersName, Symbol } from 'types/enums';
 
 class UrlHash {
   static hashData: HashDataType = {
-    filtersValue: { category: [], brand: [] },
-    filtersRange: { price: [], stock: [] },
+    filtersValue: {
+      category: [],
+      brand: [],
+    },
+    filtersRange: {
+      price: [],
+      stock: [],
+    },
     search: '',
     sort: '',
     view: '',
   };
 
   static setUrlHash(hashData: HashDataType) {
-    const category = `category=${hashData.filtersValue.category.join('+')}`;
-    const brand = `brand=${hashData.filtersValue.brand.join('+')}`;
-    const price = `price=${hashData.filtersRange.price.join('+')}`;
-    const stock = `stock=${hashData.filtersRange.stock.join('+')}`;
+    const category = `category=${hashData.filtersValue.category.join(Symbol.Plus)}`;
+    const brand = `brand=${hashData.filtersValue.brand.join(Symbol.Plus)}`;
+    const price = `price=${hashData.filtersRange.price.join(Symbol.Plus)}`;
+    const stock = `stock=${hashData.filtersRange.stock.join(Symbol.Plus)}`;
     const search = `search=${hashData.search}`;
     const sort = `sort=${hashData.sort}`;
     const view = `view=${hashData.view}`;
@@ -24,23 +30,23 @@ class UrlHash {
 
   static getHashData(hash: string): HashDataType {
     const hashData = this.hashData;
-    const urlHashArray: string[] = hash.slice(1).split('&');
+    const urlHashArray: string[] = hash.slice(1).split(Symbol.Ampersand);
 
     for (let i = 0; i < urlHashArray.length; i++) {
-      const param: string[] = urlHashArray[i].split('=');
+      const [paramName, paramValue] = urlHashArray[i].split(Symbol.Equality);
 
-      if ((param[0] === FiltersName.Category || param[0] === FiltersName.Brand) && param[1].length > 0) {
-        hashData.filtersValue[param[0]] = param[1].split('+');
+      if ((paramName === FiltersName.Category || paramName === FiltersName.Brand) && paramValue.length > 0) {
+        hashData.filtersValue[paramName] = paramValue.split(Symbol.Plus);
         hashData.filtersValue = hashData.filtersValue;
       }
 
-      if ((param[0] === FiltersName.Price || param[0] === FiltersName.Stock) && param[1].length > 0) {
-        hashData.filtersRange[param[0]] = param[1].split('+').map((el) => Number(el));
+      if ((paramName === FiltersName.Price || paramName === FiltersName.Stock) && paramValue.length > 0) {
+        hashData.filtersRange[paramName] = paramValue.split(Symbol.Plus).map((el) => Number(el));
         hashData.filtersRange = hashData.filtersRange;
       }
 
-      if (param[0] === FiltersName.Search || param[0] === FiltersName.Sort || param[0] === FiltersName.View) {
-        hashData[param[0]] = param[1];
+      if (paramName === FiltersName.Search || paramName === FiltersName.Sort || paramName === FiltersName.View) {
+        hashData[paramName] = paramValue;
       }
     }
     this.hashData = hashData;
@@ -75,9 +81,7 @@ class UrlHash {
   public static setUrlHashParam(param: FiltersName.Sort | FiltersName.Search | FiltersName.View, value: string): void {
     this.hashData[param] = value;
 
-    if (param === FiltersName.Sort && value === '') {
-      return;
-    } else {
+    if (param !== FiltersName.Sort || (param === FiltersName.Sort && value !== '')) {
       this.setUrlHash(this.hashData);
     }
   }
@@ -85,8 +89,14 @@ class UrlHash {
   static clearHash() {
     window.location.hash = '#main';
     this.hashData = {
-      filtersValue: { category: [], brand: [] },
-      filtersRange: { price: [], stock: [] },
+      filtersValue: {
+        category: [],
+        brand: [],
+      },
+      filtersRange: {
+        price: [],
+        stock: [],
+      },
       search: '',
       sort: '',
       view: '',

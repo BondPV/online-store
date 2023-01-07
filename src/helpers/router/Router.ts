@@ -3,7 +3,7 @@ import MainPage from 'components/pages/mainPage';
 import ProductDetailsPage from 'components/pages/productDetailsPage';
 import CartPage from 'components/pages/cartPage';
 import ErrorPage from 'components/pages/errorPage/errorPage';
-import { Pages } from 'types/enums';
+import { Pages, Symbol } from 'types/enums';
 import UrlHash from './UrlHash';
 
 class Router {
@@ -37,7 +37,7 @@ class Router {
       this.currentPage = new CartPage(Container);
     } else if (hash.includes(Pages.ProductDetails)) {
       this.currentPage = new ProductDetailsPage(Container, hash);
-    } else if (hash.includes('?')) {
+    } else if (hash.includes(Symbol.Query)) {
       this.currentPage = new MainPage(Container);
     } else {
       new ErrorPage();

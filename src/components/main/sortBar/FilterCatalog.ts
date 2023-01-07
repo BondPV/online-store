@@ -1,5 +1,5 @@
 import { IdMap } from 'constants/htmlConstants';
-import { FiltersName } from 'types/enums';
+import { FiltersName, Symbol } from 'types/enums';
 import Filters from 'components/main/sortBar/filters/Filters';
 import Catalog from 'components/main/catalog/Catalog';
 import ProductsDB from 'database/ProductsDB';
@@ -41,7 +41,7 @@ class FilterCatalog {
     filterBrand.appendFilterList(filtersContainer);
 
     const filterPrice = new Filters(FiltersName.Price, this.catalog, this.sortCatalog, this.productsDB);
-    filterPrice.appendFilterRange(filtersRangeContainer, '$');
+    filterPrice.appendFilterRange(filtersRangeContainer, Symbol.Currence);
 
     const filterStock = new Filters(FiltersName.Stock, this.catalog, this.sortCatalog, this.productsDB);
     filterStock.appendFilterRange(filtersRangeContainer, '');

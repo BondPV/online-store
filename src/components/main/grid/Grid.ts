@@ -3,6 +3,8 @@ import { ClassListName, ClassMap } from 'constants/htmlConstants';
 import UrlHash from 'helpers/router/UrlHash';
 import { FiltersName } from 'types/enums';
 
+const viewList = 'list';
+
 class Grid {
   public changeGridList(): void {
     const catalogView = document.querySelector(ClassMap.catalog);
@@ -49,14 +51,14 @@ class Grid {
 
     const currentGridValue = UrlHash.getUrlHashParam(FiltersName.View);
 
-    if (currentGridValue === 'list') {
+    if (currentGridValue === viewList) {
       this.changeGridList();
     } else {
       this.changeGridTable();
     }
 
     viewButtonList.addEventListener('click', () => {
-      UrlHash.setUrlHashParam(FiltersName.View, 'list');
+      UrlHash.setUrlHashParam(FiltersName.View, viewList);
       this.changeGridList();
     });
     viewButtonTable.addEventListener('click', () => {

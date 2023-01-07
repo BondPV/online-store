@@ -4,14 +4,13 @@ import {
   FiltersValueDataType,
   FiltersRangeType,
   FiltersRangeDataType,
-  FiltersDataType,
   SearchType,
 } from 'types/types';
 import { IProduct, IQuantity, IValueRange } from 'types/interfaces';
 import Catalog from 'components/main/catalog/Catalog';
 import ProductsDB from 'database/ProductsDB';
 import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderControl/RangeSliderControl';
-import { FiltersName } from 'types/enums';
+import { FiltersName, Symbol } from 'types/enums';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
 import { ClassMap } from 'constants/htmlConstants';
 import UrlHash from 'helpers/router/UrlHash';
@@ -105,7 +104,7 @@ class Filters {
   }
 
   private initialFilter(): void {
-    if (!window.location.hash.includes('?')) {
+    if (!window.location.hash.includes(Symbol.Query)) {
       UrlHash.clearHash();
     } else {
       UrlHash.getHashData(window.location.hash.slice(1));
@@ -116,14 +115,11 @@ class Filters {
 
   //* render Catalog
   public filterProducts(): void {
-    const savedFilters: FiltersDataType = UrlHash.hashData;
-    const filterValue: FiltersValueDataType = savedFilters.filtersValue;
-    const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
-    const currentInput: string = UrlHash.hashData.search;
+    const { filtersValue, filtersRange, search } = UrlHash.hashData;
 
-    let filteredCatalog: IProduct[] = this.filterValueProducts(this.productsDB.getProducts().slice(), filterValue);
-    filteredCatalog = this.filterRangeProducts(filteredCatalog, filterRange);
-    filteredCatalog = this.searchProducts(filteredCatalog, currentInput);
+    let filteredCatalog: IProduct[] = this.filterValueProducts(this.productsDB.getProducts().slice(), filtersValue);
+    filteredCatalog = this.filterRangeProducts(filteredCatalog, filtersRange);
+    filteredCatalog = this.searchProducts(filteredCatalog, search);
 
     this.currentCatalog = filteredCatalog;
     this.catalog.products = filteredCatalog;
@@ -229,8 +225,8 @@ class Filters {
   }
 
   // check for activity on saved
-  checkActiveElement(elementValue: string, element: HTMLInputElement): void {
-    if (window.location.hash.includes('?')) {
+  private checkActiveElement(elementValue: string, element: HTMLInputElement): void {
+    if (window.location.hash.includes(Symbol.Query)) {
       const filteredCatalog = UrlHash.hashData.filtersValue[this.filterName as FiltersValueType];
       element.checked = filteredCatalog.includes(elementValue);
     }
@@ -259,7 +255,7 @@ class Filters {
     }
   }
 
-  reRenderFilters() {
+  private reRenderFilters() {
     const newSortCatalog = new FilterCatalog(this.catalog, this.sortCatalog, this.productsDB);
     newSortCatalog.clear();
     newSortCatalog.render();
@@ -298,9 +294,11 @@ class Filters {
   }
 
   private searchProducts(filteredProducts: IProduct[], currentInput: string): IProduct[] {
-    let newProducts: IProduct[] = filteredProducts;
+    if (currentInput === '') {
+      return filteredProducts;
+    }
 
-    newProducts = filteredProducts.filter((item) => {
+    return filteredProducts.filter((item) => {
       const titleDatail = item.titleDatail.toLocaleLowerCase();
       const category = item.category.toLocaleLowerCase();
       const stock = String(item.stock);
@@ -315,8 +313,6 @@ class Filters {
         description.includes(currentInput.toLowerCase())
       );
     });
-
-    return (currentInput = '') ? filteredProducts : newProducts;
   }
 }
 

@@ -14,3 +14,11 @@ export enum Pages {
   Price = 'price',
   Cart = 'cart',
 }
+
+export enum Symbol {
+  Plus = '+',
+  Ampersand = '&',
+  Currence = '$',
+  Query = '?',
+  Equality = '=',
+}
