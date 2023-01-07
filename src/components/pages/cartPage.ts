@@ -47,7 +47,7 @@ class CartPage {
     cartPaginationWrap.append(paginationLimitPage);
 
     const paginationLabel = document.createElement('label');
-    paginationLabel.textContent = 'Show per page';
+    paginationLabel.textContent = 'Show per page ';
     paginationLabel.classList.add('pagination__label');
     paginationLimitPage.append(paginationLabel);
 
@@ -71,8 +71,8 @@ class CartPage {
     cartPaginationWrap.append(paginationPageNumberWrap);
 
     const pageButtonLeft = document.createElement('button');
-    pageButtonLeft.classList.add('quantity-button');
-    pageButtonLeft.textContent = '<-';
+    pageButtonLeft.classList.add('pagination__button');
+    pageButtonLeft.textContent = '<';
     paginationPageNumberWrap.append(pageButtonLeft);
 
     const pageNumValue = document.createElement('div');
@@ -81,8 +81,8 @@ class CartPage {
     paginationPageNumberWrap.append(pageNumValue);
 
     const pageButtonRight = document.createElement('button');
-    pageButtonRight.classList.add('quantity-button');
-    pageButtonRight.textContent = '->';
+    pageButtonRight.classList.add('pagination__button');
+    pageButtonRight.textContent = '>';
     paginationPageNumberWrap.append(pageButtonRight);
 
     pageButtonLeft.addEventListener('click', () => {
@@ -113,6 +113,7 @@ class CartPage {
     itemsCart.forEach((item) => {
       this.createHeaderItem(item, cartHeaderList);
     });
+
     cartProductWrap.append(cartContainer);
 
     const priceContainerWrap = document.createElement('section');
@@ -164,14 +165,15 @@ class CartPage {
     inputPromo.classList.add('promo-search');
     appliedCodesWrap.append(inputPromo);
 
-    inputPromo.addEventListener('keyup', () => {
-      if (this.isPromoExist(inputPromo.value) && !this.isPromoAdded(inputPromo.value)) {
-        const discountList = document.createElement('ul');
-        discountList.classList.add('promo-list');
-        inputPromo.after(discountList);
+    const discountList = document.createElement('ul');
+    discountList.classList.add('promo-list');
+    inputPromo.after(discountList);
 
+    inputPromo.addEventListener('keyup', () => {
+      const value = inputPromo.value.toUpperCase();
+      if (this.isPromoExist(value) && !this.isPromoAdded(value)) {
         const discountItem = document.createElement('li');
-        discountItem.textContent = `Promo ${inputPromo.value.toUpperCase()} - 10%`;
+        discountItem.textContent = `Promo ${value} - 10%`;
         discountItem.classList.add('promo-item');
         discountList.append(discountItem);
 
@@ -181,12 +183,14 @@ class CartPage {
         discountItem.append(buttonAdd);
 
         buttonAdd.addEventListener('click', () => {
-          LocalStorage.addPromo(inputPromo.value.toUpperCase());
-          discountList.remove();
+          LocalStorage.addPromo(value);
+          discountItem.remove();
           buttonAdd.remove();
-          CartPage.createPromoItem(inputPromo.value.toUpperCase(), appliedPromoList);
+          CartPage.createPromoItem(value, appliedPromoList);
           Cart.fillHeaderCounter();
         });
+      } else {
+        discountList.innerHTML = '';
       }
     });
 
@@ -194,6 +198,11 @@ class CartPage {
     textPromo.textContent = `Promo: ${promoCodes.join(', ')}`;
     textPromo.classList.add('promo-text');
     parentElem.append(textPromo);
+
+    const buyButton = document.createElement('button');
+    buyButton.classList.add('promo-button');
+    buyButton.textContent = 'BUY NOW';
+    parentElem.append(buyButton);
   }
 
   public static createPromoItem(value: string, parentElem: Element): void {
@@ -239,16 +248,19 @@ class CartPage {
 
     if (pageLimitInput) {
       let pageNumInputValue = Number(pageLimitInput.value);
+
       if (!pageNumInputValue) {
         pageNumInputValue = 5;
       }
 
       let pageNumItemValue = Number(pageNumItem.textContent);
       const pageCount = Math.ceil(allProducts.length / pageNumInputValue);
+
       if (pageNumItemValue > pageCount) {
         pageNumItemValue = pageCount;
         pageNumItem.textContent = `${pageNumItemValue}`;
       }
+
       const currCount = pageNumInputValue * pageNumItemValue;
 
       if (pageCount == pageNumInputValue) {
@@ -256,17 +268,22 @@ class CartPage {
       } else {
         allProducts = allProducts.slice(currCount - pageNumInputValue, currCount);
       }
-    }
 
-    allProducts.forEach((item) => {
-      this.renderProduct(item, parentElem);
-    });
+      allProducts.forEach((item, index) => {
+        this.renderProduct(item, parentElem, index + (currCount - pageNumInputValue) + 1);
+      });
+    }
   }
 
-  private renderProduct(item: ICartProduct, parentElem: HTMLElement): void {
+  private renderProduct(item: ICartProduct, parentElem: HTMLElement, index: number): void {
     const productCart = document.createElement('div');
     productCart.classList.add('product-card');
     parentElem.append(productCart);
+
+    const productIndex = document.createElement('div');
+    productIndex.textContent = `${index}`;
+    productIndex.classList.add('product__index');
+    productCart.append(productIndex);
 
     const productItemWrap = document.createElement('div');
     productItemWrap.classList.add('product-card_wrap');
