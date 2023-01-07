@@ -38,6 +38,74 @@ class CartPage {
     cartProductWrap.classList.add('cart-product-wrap');
     cartSectionsWrap.append(cartProductWrap);
 
+    const cartPaginationWrap = document.createElement('div');
+    cartPaginationWrap.classList.add('pagination-wrap');
+    cartProductWrap.append(cartPaginationWrap);
+
+    const paginationLimitPage = document.createElement('div');
+    paginationLimitPage.classList.add('pagination__limit-page');
+    cartPaginationWrap.append(paginationLimitPage);
+
+    const paginationLabel = document.createElement('label');
+    paginationLabel.textContent = 'Show per page';
+    paginationLabel.classList.add('pagination__label');
+    paginationLimitPage.append(paginationLabel);
+
+    const cartContainer = document.createElement('div');
+    cartContainer.classList.add('cart-container');
+
+    const paginationInput = document.createElement('input');
+    paginationInput.type = 'number';
+    paginationInput.min = '1';
+    paginationInput.max = '20';
+    paginationInput.value = '5';
+    paginationInput.classList.add('pagination__input');
+    paginationLimitPage.append(paginationInput);
+
+    paginationInput.addEventListener('keyup', () => {
+      this.renderProducts(cartContainer);
+    });
+
+    const paginationPageNumberWrap = document.createElement('div');
+    paginationPageNumberWrap.classList.add('pagination__page-number');
+    cartPaginationWrap.append(paginationPageNumberWrap);
+
+    const pageButtonLeft = document.createElement('button');
+    pageButtonLeft.classList.add('quantity-button');
+    pageButtonLeft.textContent = '<-';
+    paginationPageNumberWrap.append(pageButtonLeft);
+
+    const pageNumValue = document.createElement('div');
+    pageNumValue.classList.add('page-value');
+    pageNumValue.textContent = '1';
+    paginationPageNumberWrap.append(pageNumValue);
+
+    const pageButtonRight = document.createElement('button');
+    pageButtonRight.classList.add('quantity-button');
+    pageButtonRight.textContent = '->';
+    paginationPageNumberWrap.append(pageButtonRight);
+
+    pageButtonLeft.addEventListener('click', () => {
+      if (Number(pageNumValue.textContent) > 1) {
+        pageNumValue.textContent = `${Number(pageNumValue.textContent) - 1}`;
+        this.renderProducts(cartContainer);
+      }
+    });
+
+    pageButtonRight.addEventListener('click', () => {
+      let pageNumInputValue = Number(paginationInput.value);
+
+      if (!pageNumInputValue) {
+        pageNumInputValue = 5;
+      }
+
+      const pageCount = Math.ceil(LocalStorage.getCart().length / pageNumInputValue);
+      if (Number(pageNumValue.textContent) < pageCount) {
+        pageNumValue.textContent = `${Number(pageNumValue.textContent) + 1}`;
+        this.renderProducts(cartContainer);
+      }
+    });
+
     const cartHeaderList = document.createElement('ul');
     cartHeaderList.classList.add('cart-list');
     cartProductWrap.append(cartHeaderList);
@@ -45,9 +113,6 @@ class CartPage {
     itemsCart.forEach((item) => {
       this.createHeaderItem(item, cartHeaderList);
     });
-
-    const cartContainer = document.createElement('div');
-    cartContainer.classList.add('cart-container');
     cartProductWrap.append(cartContainer);
 
     const priceContainerWrap = document.createElement('section');
@@ -167,7 +232,31 @@ class CartPage {
   }
 
   private renderProducts(parentElem: HTMLElement): void {
-    const allProducts = LocalStorage.getCart();
+    parentElem.innerHTML = '';
+    const pageLimitInput = document.querySelector('.pagination__input') as HTMLInputElement;
+    const pageNumItem = document.querySelector('.page-value') as HTMLElement;
+    let allProducts = LocalStorage.getCart();
+
+    if (pageLimitInput) {
+      let pageNumInputValue = Number(pageLimitInput.value);
+      if (!pageNumInputValue) {
+        pageNumInputValue = 5;
+      }
+
+      let pageNumItemValue = Number(pageNumItem.textContent);
+      const pageCount = Math.ceil(allProducts.length / pageNumInputValue);
+      if (pageNumItemValue > pageCount) {
+        pageNumItemValue = pageCount;
+        pageNumItem.textContent = `${pageNumItemValue}`;
+      }
+      const currCount = pageNumInputValue * pageNumItemValue;
+
+      if (pageCount == pageNumInputValue) {
+        allProducts = allProducts.slice(currCount - pageNumInputValue, allProducts.length);
+      } else {
+        allProducts = allProducts.slice(currCount - pageNumInputValue, currCount);
+      }
+    }
 
     allProducts.forEach((item) => {
       this.renderProduct(item, parentElem);
@@ -256,6 +345,7 @@ class CartPage {
     productCart.append(totalPriceWrap);
 
     inputButtonMinus.addEventListener('click', () => {
+      const cartContainer = document.querySelector('.cart-container') as HTMLElement;
       item.count -= 1;
 
       if (item.count === 0) {
@@ -264,6 +354,10 @@ class CartPage {
 
         if (localStorage.getCart().length === 0) {
           this.checkCart(this.container);
+        } else {
+          if (cartContainer) {
+            this.renderProducts(cartContainer);
+          }
         }
       } else {
         LocalStorage.updateProductToCart(item.id, item.count);

@@ -207,3 +207,21 @@
   margin: 0;
   padding: 5px 0;
 }
+
+.pagination-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination {
+  &__page-number {
+    display: flex;
+
+  }
+}
+
+.page-value {
+  width: 30px;
+  height: 30px;
+  background: #A2A6B0;
+}
