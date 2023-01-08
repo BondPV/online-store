@@ -21,6 +21,7 @@ class MainPage {
     this.sortCatalog.render();
     this.grid.render();
     this.filterCatalog.render();
+    this.filterCatalog.renderSearch();
     Cart.fillHeaderCounter();
   }
 
@@ -51,6 +52,11 @@ class MainPage {
     rangeFilters.classList.add('range-filters');
     rangeFilters.id = 'range-filters';
     filtersBar.append(rangeFilters);
+
+    const copyBtn: HTMLElement = document.createElement('div');
+    copyBtn.classList.add('copy-btn');
+    copyBtn.id = 'copy-button';
+    filtersBar.append(copyBtn);
 
     const catalog: HTMLElement = document.createElement('section');
     catalog.classList.add('catalog-wrap');

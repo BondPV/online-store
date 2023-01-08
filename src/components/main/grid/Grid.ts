@@ -1,10 +1,12 @@
 import './grid.scss';
 import { ClassListName, ClassMap } from 'constants/htmlConstants';
-import LocalStorage from 'helpers/localStorage/LocalStorage';
+import UrlHash from 'helpers/router/UrlHash';
+import { FiltersName } from 'types/enums';
+
+const viewList = 'list';
 
 class Grid {
   public changeGridList(): void {
-    LocalStorage.saveGridCatalog('list');
     const catalogView = document.querySelector(ClassMap.catalog);
     const catalogListIcon = document.querySelector(ClassMap.catalogViewList);
     const catalogTableIcon = document.querySelector(ClassMap.catalogViewTable);
@@ -17,7 +19,6 @@ class Grid {
   }
 
   public changeGridTable(): void {
-    LocalStorage.saveGridCatalog('table');
     const catalogView = document.querySelector(ClassMap.catalog);
     const catalogListIcon = document.querySelector(ClassMap.catalogViewList);
     const catalogTableIcon = document.querySelector(ClassMap.catalogViewTable);
@@ -48,16 +49,22 @@ class Grid {
     viewButtonList.classList.add(ClassListName.catalogView, ClassListName.catalogViewList);
     catalogHeader.append(viewButtonList);
 
-    const currentGridValue = LocalStorage.getGridCatalog();
+    const currentGridValue = UrlHash.getUrlHashParam(FiltersName.View);
 
-    if (currentGridValue === 'list') {
+    if (currentGridValue === viewList) {
       this.changeGridList();
     } else {
       this.changeGridTable();
     }
 
-    viewButtonList.addEventListener('click', () => this.changeGridList());
-    viewButtonTable.addEventListener('click', () => this.changeGridTable());
+    viewButtonList.addEventListener('click', () => {
+      UrlHash.setUrlHashParam(FiltersName.View, viewList);
+      this.changeGridList();
+    });
+    viewButtonTable.addEventListener('click', () => {
+      UrlHash.setUrlHashParam(FiltersName.View, '');
+      this.changeGridTable();
+    });
   }
 }
 

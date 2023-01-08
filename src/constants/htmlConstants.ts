@@ -8,6 +8,7 @@ export const IdMap = {
   resetButton: '#reset-button',
   valueFilters: '#value-filters',
   rangeFilters: '#range-filters',
+  search: '#search-field',
 };
 
 export const ClassMap = {
@@ -95,7 +96,7 @@ export const SortOptionMap: SortOption = {
   Rating: 'rating',
 };
 
-export const optionNames = ['Name ASC', 'Name DESC', 'Price ASC', 'Price DESC', 'Rating ASC', 'Rating DESC'];
+export const optionNames = ['', 'Name-ASC', 'Name-DESC', 'Price-ASC', 'Price-DESC', 'Rating-ASC', 'Rating-DESC'];
 
 export const itemsCart = ['№', 'Item', 'Description', 'Qty', 'Subtotal'];
 

@@ -1,5 +1,6 @@
 import ProductsDB from 'database/ProductsDB';
 import ProductDetails from 'components/main/productDetails/ProductDetails';
+import ErrorPage from './errorPage/errorPage';
 import Cart from 'components/main/cart/cart';
 
 class ProductDetailsPage {
@@ -28,10 +29,8 @@ class ProductDetailsPage {
       productDetailsContainer.append(productDetails.renderDescription());
       productDetailsContainer.append(productDetails.renderGallery());
     } else {
-      const productNotFound: HTMLElement = document.createElement('div');
-      productNotFound.classList.add('product-details__notFound');
-      productNotFound.innerText = 'Sorry. Product not found.';
-      productDetailsContainer.append(productNotFound);
+      this.container.innerHTML = '';
+      new ErrorPage();
     }
   }
 

@@ -4,16 +4,16 @@ import {
   FiltersValueDataType,
   FiltersRangeType,
   FiltersRangeDataType,
-  FiltersDataType,
+  SearchType,
 } from 'types/types';
 import { IProduct, IQuantity, IValueRange } from 'types/interfaces';
 import Catalog from 'components/main/catalog/Catalog';
 import ProductsDB from 'database/ProductsDB';
 import RangeSliderControl from 'components/main/sortBar/filters/rangeSliderControl/RangeSliderControl';
-import { FiltersName } from 'types/enums';
-import LocalStorage from 'helpers/localStorage/LocalStorage';
+import { FiltersName, Symbol } from 'types/enums';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
 import { ClassMap } from 'constants/htmlConstants';
+import UrlHash from 'helpers/router/UrlHash';
 
 import FilterCatalog from '../FilterCatalog';
 
@@ -21,7 +21,7 @@ class Filters {
   private currentCatalog: IProduct[];
 
   constructor(
-    private readonly filterName: FiltersValueType | FiltersRangeType,
+    private readonly filterName: FiltersValueType | FiltersRangeType | SearchType,
 
     private readonly catalog: Catalog,
 
@@ -94,7 +94,7 @@ class Filters {
     this.checkActiveElement(elementValue, elementInput);
 
     elementInput.addEventListener('click', () => {
-      LocalStorage.controlFilter(this.filterName as FiltersValueType, elementValue);
+      UrlHash.controlFilter(this.filterName as FiltersValueType, elementValue);
       this.filterProducts();
       this.reRenderFilters();
       this.appendTotalFoundQuantity();
@@ -104,22 +104,22 @@ class Filters {
   }
 
   private initialFilter(): void {
-    if (!localStorage.getItem('filters')) {
-      LocalStorage.setItems();
+    if (!window.location.hash.includes(Symbol.Query)) {
+      UrlHash.clearHash();
+    } else {
+      UrlHash.getHashData(window.location.hash.slice(1));
     }
-
     this.filterProducts();
     this.appendTotalFoundQuantity();
   }
 
   //* render Catalog
   public filterProducts(): void {
-    const savedFilters: FiltersDataType = JSON.parse(localStorage.getItem('filters') as string);
-    const filterValue: FiltersValueDataType = savedFilters.filtersValue;
-    const filterRange: FiltersRangeDataType = savedFilters.filtersRange;
+    const { filtersValue, filtersRange, search } = UrlHash.hashData;
 
-    let filteredCatalog: IProduct[] = this.filterValueProducts(this.productsDB.getProducts().slice(), filterValue);
-    filteredCatalog = this.filterRangeProducts(filteredCatalog, filterRange);
+    let filteredCatalog: IProduct[] = this.filterValueProducts(this.productsDB.getProducts().slice(), filtersValue);
+    filteredCatalog = this.filterRangeProducts(filteredCatalog, filtersRange);
+    filteredCatalog = this.searchProducts(filteredCatalog, search);
 
     this.currentCatalog = filteredCatalog;
     this.catalog.products = filteredCatalog;
@@ -182,21 +182,21 @@ class Filters {
 
     range.fromSlider.addEventListener('input', () => {
       range.controlFromSlider(range.fromSlider, range.toSlider, range.formValueLeft);
-      LocalStorage.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.filterProducts();
     });
 
     range.toSlider.addEventListener('input', () => {
       range.controlToSlider(range.fromSlider, range.toSlider, range.formValueRight);
-      LocalStorage.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.filterProducts();
     });
 
     range.fromSlider.addEventListener('change', () => {
+      UrlHash.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.reRenderFilters();
     });
 
     range.toSlider.addEventListener('change', () => {
+      UrlHash.controlSlider(this.filterName as FiltersRangeType, [range.minCurrentValue, range.maxCurrentValue]);
       this.reRenderFilters();
     });
 
@@ -224,10 +224,10 @@ class Filters {
     return items.filter((item) => item[filterName] >= filterRange[0] && item[filterName] <= filterRange[1]);
   }
 
-  // check for activity on saved from Local Storage
-  checkActiveElement(elementValue: string, element: HTMLInputElement): void {
-    if (LocalStorage.savedFilters) {
-      const filteredCatalog = LocalStorage.savedFilters.filtersValue[this.filterName as FiltersValueType];
+  // check for activity on saved
+  private checkActiveElement(elementValue: string, element: HTMLInputElement): void {
+    if (window.location.hash.includes(Symbol.Query)) {
+      const filteredCatalog = UrlHash.hashData.filtersValue[this.filterName as FiltersValueType];
       element.checked = filteredCatalog.includes(elementValue);
     }
   }
@@ -255,37 +255,64 @@ class Filters {
     }
   }
 
-  reRenderFilters() {
+  private reRenderFilters() {
     const newSortCatalog = new FilterCatalog(this.catalog, this.sortCatalog, this.productsDB);
     newSortCatalog.clear();
     newSortCatalog.render();
   }
 
-  // TODO rewrite this code
-  resetFiltersSettings(): void {
-    const parentElement = document.querySelector('#reset-button') as HTMLElement;
-    const resetButton: HTMLButtonElement = document.createElement('button');
-    resetButton.classList.add('reset-button');
-    resetButton.innerText = 'Clear Filter';
+  //* Search filter
+  public appendSearchField(parentElement: HTMLElement): void {
+    const search: HTMLDivElement = document.createElement('div');
+    search.classList.add('search');
+    parentElement.append(search);
 
-    parentElement.innerHTML = '';
-    parentElement.append(resetButton);
+    const searchIcon: HTMLDivElement = document.createElement('div');
+    searchIcon.classList.add('search__icon');
+    search.append(searchIcon);
 
-    resetButton.addEventListener('click', () => {
-      LocalStorage.resetFilters();
-      this.reRenderFilters();
-      this.resetCheckActiveElement();
+    const searchInput: HTMLInputElement = document.createElement('input');
+    searchInput.classList.add('search__input');
+    searchInput.type = 'search';
+    searchInput.name = 'q';
+    searchInput.autocomplete = 'off';
+    searchInput.placeholder = 'Search product';
+    search.append(searchInput);
+
+    searchInput.value = UrlHash.getUrlHashParam(FiltersName.Search);
+
+    searchInput.addEventListener('input', () => {
+      UrlHash.hashData.search = searchInput.value;
+      this.filterProducts();
+      this.appendTotalFoundQuantity();
+    });
+
+    searchInput.addEventListener('change', () => {
+      this.filterProducts();
+      UrlHash.setUrlHashParam(FiltersName.Search, searchInput.value);
     });
   }
 
-  resetCheckActiveElement(): void {
-    const elements: NodeList = document.querySelectorAll('.value-filters__element-input');
-
-    for (const element of elements) {
-      if (element instanceof HTMLInputElement) {
-        element.checked = false;
-      }
+  private searchProducts(filteredProducts: IProduct[], currentInput: string): IProduct[] {
+    if (currentInput === '') {
+      return filteredProducts;
     }
+
+    return filteredProducts.filter((item) => {
+      const titleDatail = item.titleDatail.toLocaleLowerCase();
+      const category = item.category.toLocaleLowerCase();
+      const stock = String(item.stock);
+      const price = String(item.price);
+      const description = item.description.join().toLocaleLowerCase();
+
+      return (
+        titleDatail.includes(currentInput.toLowerCase()) ||
+        category.includes(currentInput.toLowerCase()) ||
+        stock.includes(currentInput) ||
+        price.includes(currentInput) ||
+        description.includes(currentInput.toLowerCase())
+      );
+    });
   }
 }
 

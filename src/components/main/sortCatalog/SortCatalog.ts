@@ -3,7 +3,8 @@ import './sortCatalog.scss';
 import { IProduct } from 'types/interfaces';
 import { SortOption } from 'types/types';
 import { SortOptionMap, optionNames, ClassMap, valueOptionAsc, ClassListName } from 'constants/htmlConstants';
-import LocalStorage from 'helpers/localStorage/LocalStorage';
+import UrlHash from 'helpers/router/UrlHash';
+import { FiltersName } from 'types/enums';
 
 class SortCatalog {
   constructor(private readonly catalog: Catalog) {}
@@ -25,7 +26,7 @@ class SortCatalog {
     selectSortButton.textContent = 'Sort by:';
     catalogHeader.append(selectSortButton);
 
-    const currSelectedOrder = LocalStorage.getSort();
+    const currSelectedOrder = UrlHash.getUrlHashParam(FiltersName.Sort);
 
     optionNames.forEach((item) => {
       const isSelected = currSelectedOrder === item;
@@ -45,7 +46,7 @@ class SortCatalog {
     currentOption.selected = true;
     const currentOptionValue: string = currentOption.value;
 
-    const [firstValue, secondValue] = currentOptionValue.split(' ');
+    const [firstValue, secondValue] = currentOptionValue.split('-');
     const currentField = SortOptionMap[firstValue as keyof SortOption];
     const currentOrder = secondValue;
 
@@ -58,7 +59,7 @@ class SortCatalog {
     }
     oldCatalog.childNodes.forEach((child) => oldCatalog.removeChild(child));
 
-    LocalStorage.saveSort(currentOptionValue);
+    UrlHash.setUrlHashParam(FiltersName.Sort, currentOptionValue);
     this.catalog.render();
   }
 
@@ -78,6 +79,11 @@ class SortCatalog {
     optionSort.textContent = optionName;
     optionSort.value = optionName;
     optionSort.selected = isSelected;
+
+    if (optionName === optionNames[0]) {
+      optionSort.hidden = true;
+    }
+
     parentElem.append(optionSort);
   }
 }

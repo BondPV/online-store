@@ -14,12 +14,18 @@ class Catalog {
 
     if (parentElement instanceof HTMLElement) {
       if (products.length === 0) {
-        parentElement.innerHTML = 'No products found';
+        parentElement.innerHTML = this.notFound();
       } else {
         parentElement.innerHTML = '';
         products.forEach((product) => parentElement.append(product));
       }
     }
+  }
+
+  notFound(): string {
+    return `
+      <div class="catalog__not-found">Products not found!</div>
+      `;
   }
 }
 

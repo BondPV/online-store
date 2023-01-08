@@ -18,7 +18,10 @@
     justify-content: space-between;
   }
 
-  &__search,
+  &__search {
+    width: 250px;
+  }
+
   &__basket,
   &__user {
     display: flex;

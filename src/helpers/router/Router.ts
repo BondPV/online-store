@@ -2,7 +2,9 @@ import { Container } from 'constants/htmlConstants';
 import MainPage from 'components/pages/mainPage';
 import ProductDetailsPage from 'components/pages/productDetailsPage';
 import CartPage from 'components/pages/cartPage';
-import { Pages } from 'types/enums';
+import ErrorPage from 'components/pages/errorPage/errorPage';
+import { Pages, Symbol } from 'types/enums';
+import UrlHash from './UrlHash';
 
 class Router {
   private location: Location;
@@ -28,20 +30,17 @@ class Router {
   private setPage(hash: string) {
     if (window.location.hash.length === 0) {
       window.location.hash = `#${Pages.Main}`;
-    }
-
-    if (hash.includes(Pages.ProductDetails)) {
+    } else if (hash === Pages.Main) {
+      UrlHash.clearHash();
+      this.currentPage = new MainPage(Container);
+    } else if (hash === Pages.Cart) {
+      this.currentPage = new CartPage(Container);
+    } else if (hash.includes(Pages.ProductDetails)) {
       this.currentPage = new ProductDetailsPage(Container, hash);
-    }
-
-    switch (hash) {
-      case Pages.Main:
-        this.currentPage = new MainPage(Container);
-        break;
-
-      case Pages.Cart:
-        this.currentPage = new CartPage(Container);
-        break;
+    } else if (hash.includes(Symbol.Query)) {
+      this.currentPage = new MainPage(Container);
+    } else {
+      new ErrorPage();
     }
   }
 }
