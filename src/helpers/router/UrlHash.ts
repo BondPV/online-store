@@ -1,5 +1,5 @@
 import { HashDataType, FiltersValueType, FiltersRangeType } from 'types/types';
-import { FiltersName, Symbol } from 'types/enums';
+import { Pages, FiltersName, Symbol } from 'types/enums';
 
 class UrlHash {
   static hashData: HashDataType = {
@@ -17,13 +17,13 @@ class UrlHash {
   };
 
   static setUrlHash(hashData: HashDataType) {
-    const category = `category=${hashData.filtersValue.category.join(Symbol.Plus)}`;
-    const brand = `brand=${hashData.filtersValue.brand.join(Symbol.Plus)}`;
-    const price = `price=${hashData.filtersRange.price.join(Symbol.Plus)}`;
-    const stock = `stock=${hashData.filtersRange.stock.join(Symbol.Plus)}`;
-    const search = `search=${hashData.search}`;
-    const sort = `sort=${hashData.sort}`;
-    const view = `view=${hashData.view}`;
+    const category = `${FiltersName.Category}=${hashData.filtersValue.category.join(Symbol.Plus)}`;
+    const brand = `${FiltersName.Brand}=${hashData.filtersValue.brand.join(Symbol.Plus)}`;
+    const price = `${FiltersName.Price}=${hashData.filtersRange.price.join(Symbol.Plus)}`;
+    const stock = `${FiltersName.Stock}=${hashData.filtersRange.stock.join(Symbol.Plus)}`;
+    const search = `${FiltersName.Search}=${hashData.search}`;
+    const sort = `${FiltersName.Sort}=${hashData.sort}`;
+    const view = `${FiltersName.View}=${hashData.view}`;
 
     window.location.hash = `?${category}&${brand}&${price}&${stock}&${search}&${sort}&${view}`;
   }
@@ -87,7 +87,7 @@ class UrlHash {
   }
 
   static clearHash() {
-    window.location.hash = '#main';
+    window.location.hash = `#${Pages.Main}`;
     this.hashData = {
       filtersValue: {
         category: [],

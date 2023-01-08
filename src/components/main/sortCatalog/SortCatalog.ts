@@ -16,15 +16,19 @@ class SortCatalog {
       return;
     }
 
+    const selectSortContainer: HTMLDivElement = document.createElement('div');
+    selectSortContainer.classList.add('catalog__selectSort-wrap');
+    catalogHeader.append(selectSortContainer);
+
     const labelTextSelect: HTMLLabelElement = document.createElement('label');
     labelTextSelect.classList.add(ClassListName.catalogLabelText);
     labelTextSelect.textContent = 'Sort by:';
-    catalogHeader.append(labelTextSelect);
+    selectSortContainer.append(labelTextSelect);
 
     const selectSortButton: HTMLSelectElement = document.createElement('select');
     selectSortButton.classList.add(ClassListName.selectSort);
     selectSortButton.textContent = 'Sort by:';
-    catalogHeader.append(selectSortButton);
+    selectSortContainer.append(selectSortButton);
 
     const currSelectedOrder = UrlHash.getUrlHashParam(FiltersName.Sort);
 
