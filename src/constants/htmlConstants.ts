@@ -103,3 +103,7 @@ export const itemsCart = ['№', 'Item', 'Description', 'Qty', 'Subtotal'];
 export const promoCodes = ['RS', 'EPAM', 'METRO'];
 
 export const valueOptionAsc = 'ASC';
+
+export const fullStarIcon = '<i class="fa-solid fa-star rating-star"></i>';
+
+export const halfStarIcon = '<i class="fa-regular fa-star-half-stroke rating-star"></i>';

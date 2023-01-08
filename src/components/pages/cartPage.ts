@@ -6,6 +6,7 @@ import { ICartProduct } from 'types/interfaces';
 import Product from 'components/main/product/Product';
 import localStorage from 'helpers/localStorage/LocalStorage';
 import { CartText } from 'types/enums';
+import Payment from 'components/main/payment/Payment';
 
 class CartPage {
   container: HTMLElement;
@@ -205,6 +206,10 @@ class CartPage {
     buyButton.classList.add(ClassListName.cartTotalPromoButton);
     buyButton.textContent = CartText.ButtonBuy;
     parentElem.append(buyButton);
+
+    buyButton.addEventListener('click', () => {
+      Payment.render();
+    });
   }
 
   public static createPromoItem(value: string, parentElem: Element): void {
