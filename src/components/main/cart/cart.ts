@@ -1,6 +1,7 @@
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import CartPage from 'components/pages/cartPage';
 import { ClassListName, ClassMap } from 'constants/htmlConstants';
+import { Symbol } from 'types/enums';
 
 class Cart {
   public static fillHeaderCounter(): void {
@@ -19,20 +20,20 @@ class Cart {
     const discount = Math.round(totalPrice * ((100 - LocalStorage.getPromo().length * 10) / 100));
 
     if (headerTotalPrice && headerQty) {
-      headerTotalPrice.textContent = `Cart total: $ ${totalPrice}`;
+      headerTotalPrice.textContent = `Cart total: ${Symbol.Currence} ${totalPrice}`;
       headerQty.textContent = `${totalQty}`;
     }
 
     if (cartTotalPrice && cartTotalQty) {
       cartTotalQty.textContent = `Total products: ${totalQty}`;
-      cartTotalPrice.textContent = `Total: $ ${totalPrice}`;
+      cartTotalPrice.textContent = `Total: ${Symbol.Currence} ${totalPrice}`;
     }
 
     if (cartDiscountPrice && cartPriceWrap && cartTotalPrice) {
       this.createDiscountItems();
 
       if (LocalStorage.getPromo().length > 0) {
-        cartDiscountPrice.textContent = `Total: $ ${discount}`;
+        cartDiscountPrice.textContent = `Total: ${Symbol.Currence} ${discount}`;
         cartDiscountPrice.classList.add(ClassListName.cartDiscountPriceActive);
         cartTotalPrice.classList.add(ClassListName.cartPrevPrice);
       } else {

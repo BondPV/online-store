@@ -1,4 +1,5 @@
 import './product.scss';
+import { Symbol } from 'types/enums';
 import { ICartProduct, IProduct } from 'types/interfaces';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import Cart from 'components/main/cart/cart';
@@ -84,8 +85,8 @@ class Product {
           <div class="product__description">${this.product.titleDetail}</div>
           <div class="product__footer-wrap">
             <div class="product__price-wrap">
-              <div class="product__price">$ ${initialPrice}$</div>
-              <div class="product__price_discount">$ ${this.product.price}</div>
+              <div class="product__price">${Symbol.Currence} ${initialPrice}</div>
+              <div class="product__price_discount">${Symbol.Currence} ${this.product.price}</div>
             </div>
           </div>
         </div> 

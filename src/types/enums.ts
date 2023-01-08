@@ -43,3 +43,8 @@ export enum CartText {
   ProductButtonMinus = '-',
   ProductButtonPlus = '+',
 }
+
+export enum CartParam {
+  Limit = 'limit',
+  Page = 'page',
+}
