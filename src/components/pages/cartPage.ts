@@ -296,12 +296,19 @@ class CartPage {
     productStock.classList.add(ClassListName.productStock);
     productItemWrap.append(productStock);
 
+    const productImgWrap = document.createElement('div');
+    productItemWrap.append(productImgWrap);
+
+    const productImgLink = document.createElement('a');
+    productImgLink.href = `#product-details/${item.id}`;
+    productImgWrap.append(productImgLink);
+
     const productImg = document.createElement('div');
     productImg.classList.add(ClassListName.productImg);
     productImg.style.backgroundImage = `url(${item.thumbnail})`;
     productImg.style.backgroundPosition = 'center';
     productImg.style.backgroundSize = 'cover';
-    productItemWrap.append(productImg);
+    productImgLink.append(productImg);
 
     const productCategory = document.createElement('div');
     productCategory.classList.add(ClassListName.productDesc);

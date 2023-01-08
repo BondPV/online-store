@@ -299,14 +299,14 @@ class Filters {
     }
 
     return filteredProducts.filter((item) => {
-      const titleDatail = item.titleDatail.toLocaleLowerCase();
+      const titleDetail = item.titleDetail.toLocaleLowerCase();
       const category = item.category.toLocaleLowerCase();
       const stock = String(item.stock);
       const price = String(item.price);
       const description = item.description.join().toLocaleLowerCase();
 
       return (
-        titleDatail.includes(currentInput.toLowerCase()) ||
+        titleDetail.includes(currentInput.toLowerCase()) ||
         category.includes(currentInput.toLowerCase()) ||
         stock.includes(currentInput) ||
         price.includes(currentInput) ||
