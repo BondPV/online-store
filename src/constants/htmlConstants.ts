@@ -21,6 +21,16 @@ export const ClassMap = {
   catalogViewTable: '.catalog__view_table',
   catalogViewList: '.catalog__view_list',
   catalogQuantity: '.filter-quantity',
+  headerCartCounter: '.header__cart-counter',
+  headerTotalPrice: '.header__total-price',
+  cartContainer: '.cart-container',
+  cartTotalQty: '.total-quantity',
+  cartPriceWrap: '.total-price-container',
+  cartTotalPrice: '.total-price',
+  cartDiscountPrice: '.new-price',
+  cartDiscountList: '.promo__list',
+  paginationPageNum: '.page-value',
+  cartPaginationInput: '.pagination__input',
 };
 
 export const ClassListName = {
@@ -31,6 +41,53 @@ export const ClassListName = {
   catalogViewTable: 'catalog__view_table',
   catalogViewList: 'catalog__view_list',
   catalogLabelText: 'label-text',
+  cartDiscountPriceActive: 'new-price_active',
+  cartPrevPrice: 'old-price',
+  cartContainerWrap: 'container-wrap',
+  cartTitle: 'cart__title',
+  cartSectionsWrap: 'cart__sections-wrap',
+  cartProductWrap: 'cart__product-wrap',
+  cartPaginationWrap: 'pagination-wrap',
+  cartPaginationLimitPage: 'pagination__limit-page',
+  cartPaginationLabel: 'pagination__label',
+  cartContainer: 'cart-container',
+  cartPaginationInput: 'pagination__input',
+  paginationPageNumberWrap: 'pagination__page-number',
+  paginationButton: 'pagination__button',
+  paginationPageNum: 'page-value',
+  priceContainerWrap: 'price__container-wrap',
+  cartHeaderList: 'cart__list',
+  cartHeaderItem: 'cart__item',
+  cartTotalPriceTitle: 'price__title',
+  cartTotalQty: 'total-quantity',
+  cartTotalPriceContainer: 'total-price-container',
+  cartTotalPrice: 'total-price',
+  cartDiscountPrice: 'new-price',
+  cartAppliedCodesWrap: 'promo__wrap',
+  cartTotalPromoSubtitle: 'price__subtitle',
+  cartTotalPromoList: 'promo__list',
+  cartTotalPromoItem: 'promo__item',
+  cartTotalPromoInput: 'promo__search',
+  cartTotalPromoButton: 'promo__button',
+  cartTotalPromoText: 'promo-text',
+  emptyCart: 'empty-cart',
+  productCard: 'product-card',
+  productIndex: 'product__index',
+  productItemWrap: 'product-card_wrap',
+  productStock: 'product__stock',
+  productImg: 'product__img',
+  productDesc: 'product__description',
+  productDescWrap: 'product-card_wrap',
+  productCardTitle: 'product-card__title',
+  productCardRating: 'product-details__rating',
+  productCardRatingText: 'product__rating-text',
+  productPriceDiscount: 'product__price_discount',
+  productCardQty: 'quantity',
+  productQtyButton: 'quantity-button',
+  productQtyButtonMinus: 'minus',
+  productQtyButtonPlus: 'plus',
+  productQtyValue: 'quantity-number',
+  productCartPrice: 'product-card__price',
 };
 
 export const SortOptionMap: SortOption = {
@@ -40,5 +97,9 @@ export const SortOptionMap: SortOption = {
 };
 
 export const optionNames = ['', 'Name-ASC', 'Name-DESC', 'Price-ASC', 'Price-DESC', 'Rating-ASC', 'Rating-DESC'];
+
+export const itemsCart = ['№', 'Item', 'Description', 'Qty', 'Subtotal'];
+
+export const promoCodes = ['RS', 'EPAM', 'METRO'];
 
 export const valueOptionAsc = 'ASC';

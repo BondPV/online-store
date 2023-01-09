@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   width: 234px;
-  height: 360px;
-  padding: 7px 25px;
+  height: 400px;
+  padding: 10px 0;
   box-sizing: border-box;
   font-weight: 300;
   font-size: 14px;
@@ -11,10 +11,23 @@
 
   &:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.14);
+    cursor: pointer;
   }
 
   &__body {
     flex: 1;
+  }
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 20px;
+    box-sizing: border-box;
+
+    &:nth-child(2) {
+      flex: 1;
+    }
   }
 
   &__stock {
@@ -43,7 +56,6 @@
   }
 
   &__title {
-    flex: 1;
     font-weight: 400;
     font-size: 16px;
     padding-bottom: 5px;
@@ -56,12 +68,14 @@
 
   &__description {
     width: 100%;
-    height: 40px;
+    height: 39px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     text-overflow: ellipsis;
+    font-weight: 100;
+    padding-top: 5px;
 
     a {
       color: inherit;
@@ -107,6 +121,7 @@
     display: flex;
     justify-content: space-between;
     align-items: end;
+    margin-bottom: 5px;
   }
 
   &__add-to-cart {
@@ -121,10 +136,23 @@
       cursor: pointer;
     }
   }
+
+  &__remove-from-cart {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    background: url("../../../assets/icons/remove-icon.webp") no-repeat center / cover;
+    transition: 0.3s;
+
+    &:hover {
+      transform: scale(1.1);
+      cursor: pointer;
+    }
+  }
 }
 
 .catalog_list .product {
   flex-direction: row;
-  height: 250px;
+  height: 220px;
   width: 100%;
 }

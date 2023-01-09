@@ -3,6 +3,7 @@ import Catalog from 'components/main/catalog/Catalog';
 import SortCatalog from 'components/main/sortCatalog/SortCatalog';
 import Grid from 'components/main/grid/Grid';
 import FilterCatalog from 'components/main/sortBar/FilterCatalog';
+import Cart from 'components/main/cart/cart';
 
 class MainPage {
   container: HTMLElement;
@@ -21,6 +22,7 @@ class MainPage {
     this.grid.render();
     this.filterCatalog.render();
     this.filterCatalog.renderSearch();
+    Cart.fillHeaderCounter();
   }
 
   public renderPage(): void {

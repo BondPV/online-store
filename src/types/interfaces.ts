@@ -1,6 +1,6 @@
 export interface IProduct {
   id: number;
-  titleDatail: string;
+  titleDetail: string;
   title: string;
   description: string[];
   price: number;
@@ -11,6 +11,10 @@ export interface IProduct {
   category: string;
   thumbnail: string;
   images: string[];
+}
+
+export interface ICartProduct extends IProduct {
+  count: number;
 }
 
 //  JSON database structure

@@ -1,6 +1,7 @@
 import './productDetails.scss';
 import Product from '../product/Product';
 import Gallery from './gallary/Gallery';
+import LocalStorage from 'helpers/localStorage/LocalStorage';
 
 class ProductDetails extends Product {
   private price(): HTMLElement[] {
@@ -10,7 +11,7 @@ class ProductDetails extends Product {
 
     const productPriceDiscount: HTMLElement = document.createElement('div');
     productPriceDiscount.classList.add('product-details__price', 'product__price_discount');
-    productPriceDiscount.innerText = `${this.product.price} $`;
+    productPriceDiscount.innerText = `${Math.round(this.product.price)} $`;
 
     return [productPrice, productPriceDiscount];
   }
@@ -40,7 +41,7 @@ class ProductDetails extends Product {
 
     const buttonAddToCart: HTMLElement = document.createElement('button');
     buttonAddToCart.classList.add('product-details__button');
-    buttonAddToCart.innerText = 'ADD TO CARD';
+    buttonAddToCart.textContent = 'ADD TO CART';
     buttons.append(buttonAddToCart);
 
     const buttonBuyNow: HTMLElement = document.createElement('button');
@@ -48,8 +49,21 @@ class ProductDetails extends Product {
     buttonBuyNow.innerText = 'BUY NOW';
     buttons.append(buttonBuyNow);
 
+    if (LocalStorage.isProductExists(this.product.id)) {
+      buttonAddToCart.classList.add('product-details__button_remove');
+      buttonAddToCart.textContent = 'REMOVE FROM CART';
+    } else {
+      buttonAddToCart.classList.remove('product-details__button_remove');
+      buttonAddToCart.textContent = 'ADD TO CART';
+    }
+
     buttonAddToCart.addEventListener('click', () => {
-      alert('click Add to cart');
+      if (buttonAddToCart.classList.length === 1) {
+        buttonAddToCart.textContent = 'REMOVE FROM CART';
+      } else {
+        buttonAddToCart.textContent = 'ADD TO CART';
+      }
+      Product.addProductToCart(buttonAddToCart, this.product, 'product-details__button_remove');
     });
 
     buttonBuyNow.addEventListener('click', () => {
@@ -65,12 +79,12 @@ class ProductDetails extends Product {
 
     const productTitle: HTMLElement = document.createElement('div');
     productTitle.classList.add('product-details__title');
-    productTitle.innerText = `${this.product.titleDatail}`;
+    productTitle.innerText = `${this.product.titleDetail}`;
     productDetails.append(productTitle);
 
     const productReting: HTMLElement = document.createElement('div');
     productReting.classList.add('product-details__rating');
-    const ratingStars: string = this.fillRating();
+    const ratingStars: string = Product.fillRating(this.product.rating);
     productReting.innerHTML = `
       <div class="product__rating">${ratingStars}</div>
       <span class="product__rating-text">${this.product.rating}</span>

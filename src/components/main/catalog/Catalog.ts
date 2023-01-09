@@ -8,13 +8,17 @@ class Catalog {
 
   render() {
     const parentElement = document.querySelector(IdMap.catalog);
-    const products: string = this.products
+    const products: HTMLElement[] = this.products
       .map((product) => new Product(product))
-      .map((product) => product.render())
-      .join('');
+      .map((product) => product.render());
 
     if (parentElement instanceof HTMLElement) {
-      parentElement.innerHTML = products.length ? products : this.notFound();
+      if (products.length === 0) {
+        parentElement.innerHTML = this.notFound();
+      } else {
+        parentElement.innerHTML = '';
+        products.forEach((product) => parentElement.append(product));
+      }
     }
   }
 
