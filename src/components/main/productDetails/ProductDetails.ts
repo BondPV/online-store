@@ -5,16 +5,17 @@ import LocalStorage from 'helpers/localStorage/LocalStorage';
 import Payment from 'components/main/payment/Payment';
 import { ICartProduct } from 'types/interfaces';
 import Cart from 'components/main/cart/cart';
+import { Symbol } from 'types/enums';
 
 class ProductDetails extends Product {
   private price(): HTMLElement[] {
     const productPrice: HTMLElement = document.createElement('div');
     productPrice.classList.add('product-details__price_min', 'product__price');
-    productPrice.innerText = `${this.initialPrice()} $`;
+    productPrice.innerText = `${Symbol.Currence} ${this.initialPrice()}`;
 
     const productPriceDiscount: HTMLElement = document.createElement('div');
     productPriceDiscount.classList.add('product-details__price', 'product__price_discount');
-    productPriceDiscount.innerText = `${Math.round(this.product.price)} $`;
+    productPriceDiscount.innerText = `${Symbol.Currence} ${Math.round(this.product.price)}`;
 
     return [productPrice, productPriceDiscount];
   }

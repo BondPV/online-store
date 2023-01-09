@@ -38,10 +38,10 @@ class MainPage {
     catalogQuantity.classList.add('filter-quantity');
     filtersBar.prepend(catalogQuantity);
 
-    const resetBtn: HTMLElement = document.createElement('div');
-    resetBtn.classList.add('reset-btn');
-    resetBtn.id = 'reset-button';
-    filtersBar.append(resetBtn);
+    const searchField: HTMLDivElement = document.createElement('div');
+    searchField.classList.add('search-field');
+    searchField.id = 'search-field';
+    filtersBar.append(searchField);
 
     const valueFilters: HTMLDivElement = document.createElement('div');
     valueFilters.classList.add('value-filters');
@@ -52,6 +52,11 @@ class MainPage {
     rangeFilters.classList.add('range-filters');
     rangeFilters.id = 'range-filters';
     filtersBar.append(rangeFilters);
+
+    const resetBtn: HTMLElement = document.createElement('div');
+    resetBtn.classList.add('reset-btn');
+    resetBtn.id = 'reset-button';
+    filtersBar.append(resetBtn);
 
     const copyBtn: HTMLElement = document.createElement('div');
     copyBtn.classList.add('copy-btn');

@@ -33,8 +33,8 @@ class Router {
     } else if (hash === Pages.Main) {
       UrlHash.clearHash();
       this.currentPage = new MainPage(Container);
-    } else if (hash === Pages.Cart) {
-      this.currentPage = new CartPage(Container);
+    } else if (hash.includes(Pages.Cart)) {
+      this.currentPage = new CartPage(Container, hash);
     } else if (hash.includes(Pages.ProductDetails)) {
       this.currentPage = new ProductDetailsPage(Container, hash);
     } else if (hash.includes(Symbol.Query)) {

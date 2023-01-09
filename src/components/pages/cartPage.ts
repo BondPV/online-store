@@ -5,14 +5,18 @@ import LocalStorage from 'helpers/localStorage/LocalStorage';
 import { ICartProduct } from 'types/interfaces';
 import Product from 'components/main/product/Product';
 import localStorage from 'helpers/localStorage/LocalStorage';
-import { CartText } from 'types/enums';
 import Payment from 'components/main/payment/Payment';
+import { CartText, CartParam, Symbol } from 'types/enums';
+import UrlHashCart from 'helpers/router/UrlHashCart';
 
 class CartPage {
   container: HTMLElement;
 
-  constructor(container: HTMLElement) {
+  hash: string;
+
+  constructor(container: HTMLElement, hash: string) {
     this.container = container;
+    this.hash = hash;
     this.renderPage();
     Cart.fillHeaderCounter();
   }
@@ -60,12 +64,14 @@ class CartPage {
     paginationInput.type = 'number';
     paginationInput.min = CartText.InputMinValue;
     paginationInput.max = CartText.InputMaxValue;
-    paginationInput.value = CartText.InputOptionalValue;
+    paginationInput.value = this.initialValuePagination();
     paginationInput.classList.add(ClassListName.cartPaginationInput);
     paginationLimitPage.append(paginationInput);
 
-    paginationInput.addEventListener('keyup', () => {
+    paginationInput.addEventListener('change', () => {
       this.renderProducts(cartContainer);
+      UrlHashCart.setUrlHashCartParam(CartParam.Page, this.initialPageNumValue());
+      UrlHashCart.setUrlHashCartParam(CartParam.Limit, paginationInput.value);
     });
 
     const paginationPageNumberWrap = document.createElement('div');
@@ -79,7 +85,7 @@ class CartPage {
 
     const pageNumValue = document.createElement('div');
     pageNumValue.classList.add(ClassListName.paginationPageNum);
-    pageNumValue.textContent = CartText.PageStartValue;
+    pageNumValue.textContent = this.initialPageNumValue();
     paginationPageNumberWrap.append(pageNumValue);
 
     const pageButtonRight = document.createElement('button');
@@ -91,6 +97,8 @@ class CartPage {
       if (Number(pageNumValue.textContent) > 1) {
         pageNumValue.textContent = `${Number(pageNumValue.textContent) - 1}`;
         this.renderProducts(cartContainer);
+        UrlHashCart.setUrlHashCartParam(CartParam.Page, pageNumValue.textContent);
+        UrlHashCart.setUrlHashCartParam(CartParam.Limit, paginationInput.value);
       }
     });
 
@@ -106,6 +114,8 @@ class CartPage {
       if (Number(pageNumValue.textContent) < pageCount) {
         pageNumValue.textContent = `${Number(pageNumValue.textContent) + 1}`;
         this.renderProducts(cartContainer);
+        UrlHashCart.setUrlHashCartParam(CartParam.Page, pageNumValue.textContent);
+        UrlHashCart.setUrlHashCartParam(CartParam.Limit, paginationInput.value);
       }
     });
 
@@ -125,6 +135,36 @@ class CartPage {
 
     this.renderProducts(cartContainer);
     this.renderTotalContainer(priceContainerWrap);
+  }
+
+  private initialValuePagination(): string {
+    let inputValue: string = CartText.InputOptionalValue;
+
+    if (UrlHashCart.hashCartData.limit !== '') {
+      inputValue = UrlHashCart.hashCartData.limit;
+    }
+
+    if (this.hash.includes(CartParam.Limit)) {
+      UrlHashCart.getHashCartData(this.hash);
+      inputValue = UrlHashCart.hashCartData.limit;
+    }
+
+    return inputValue;
+  }
+
+  private initialPageNumValue(): string {
+    let pageNumValue: string = CartText.PageStartValue;
+
+    if (UrlHashCart.hashCartData.page !== '') {
+      pageNumValue = UrlHashCart.hashCartData.page;
+    }
+
+    if (this.hash.includes(CartParam.Page)) {
+      UrlHashCart.getHashCartData(this.hash);
+      pageNumValue = UrlHashCart.hashCartData.page;
+    }
+
+    return pageNumValue;
   }
 
   private renderTotalContainer(parentElem: HTMLElement) {
@@ -162,17 +202,21 @@ class CartPage {
     appliedPromoList.classList.add(ClassListName.cartTotalPromoList);
     appliedCodesWrap.append(appliedPromoList);
 
+    const inputPromoWrap = document.createElement('div');
+    inputPromoWrap.classList.add(ClassListName.cartInputPromoWrap);
+    appliedCodesWrap.append(inputPromoWrap);
+
     const inputPromo = document.createElement('input');
     inputPromo.type = 'search';
     inputPromo.placeholder = CartText.PromoInputPlaceholder;
     inputPromo.classList.add(ClassListName.cartTotalPromoInput);
-    appliedCodesWrap.append(inputPromo);
+    inputPromoWrap.append(inputPromo);
 
     const discountList = document.createElement('ul');
     discountList.classList.add(ClassListName.cartTotalPromoList);
-    inputPromo.after(discountList);
+    inputPromoWrap.after(discountList);
 
-    inputPromo.addEventListener('keyup', () => {
+    inputPromo.addEventListener('input', () => {
       const value = inputPromo.value.toUpperCase();
       if (this.isPromoExist(value) && !this.isPromoAdded(value)) {
         const discountItem = document.createElement('li');
@@ -346,7 +390,7 @@ class CartPage {
 
     const productPrice = document.createElement('div');
     productPrice.classList.add(ClassListName.productPriceDiscount);
-    productPrice.textContent = `$ ${item.price}`;
+    productPrice.textContent = `${Symbol.Currence} ${item.price}`;
     productDescWrap.append(productPrice);
 
     const productQty = document.createElement('div');
@@ -371,7 +415,7 @@ class CartPage {
     productQty.append(inputButtonPlus);
 
     const totalPriceWrap = document.createElement('div');
-    totalPriceWrap.textContent = `$ ${item.price}`;
+    totalPriceWrap.textContent = `${Symbol.Currence} ${item.price}`;
     totalPriceWrap.classList.add(ClassListName.productPriceDiscount, ClassListName.productCartPrice);
     productCart.append(totalPriceWrap);
 

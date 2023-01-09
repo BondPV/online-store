@@ -63,7 +63,6 @@ class LocalStorage {
 
   public static isPromoExist(promo: string): boolean {
     const promoStorage = this.getPromo();
-    console.log(promoStorage);
     return promoStorage.indexOf(promo) !== -1;
   }
 }
