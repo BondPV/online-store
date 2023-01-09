@@ -1,7 +1,8 @@
 import './payment.scss';
-import { Validation } from 'types/enums';
+import { Pages, Validation } from 'types/enums';
 import { IdMap } from 'constants/htmlConstants';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
+
 class PaymentValidation {
   public static validateForm(): void {
     const form = document.querySelector('.form');
@@ -183,7 +184,7 @@ class PaymentValidation {
             bodyContainer.classList.remove('body_active');
             clearInterval(showText);
             LocalStorage.removeProductsFromCart();
-            window.location.href = '/?#main';
+            window.location.hash = `#${Pages.Main}`;
           }, 5000);
         }
       }
@@ -209,9 +210,11 @@ class PaymentValidation {
 
   private static keepOnlyDigits(number: string): string {
     const regExpMatchArray = number.match(/\d+/g);
+
     if (regExpMatchArray) {
       return regExpMatchArray.join('');
     }
+
     return '';
   }
 

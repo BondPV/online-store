@@ -5,7 +5,7 @@ import LocalStorage from 'helpers/localStorage/LocalStorage';
 import Payment from 'components/main/payment/Payment';
 import { ICartProduct } from 'types/interfaces';
 import Cart from 'components/main/cart/cart';
-import { Symbol } from 'types/enums';
+import { Pages, Symbol } from 'types/enums';
 
 class ProductDetails extends Product {
   private price(): HTMLElement[] {
@@ -72,8 +72,8 @@ class ProductDetails extends Product {
         LocalStorage.addProductToCart(this.product as ICartProduct);
         Cart.fillHeaderCounter();
       }
-      window.location.href = '/?#cart';
-      Payment.render();
+      window.location.hash = `#${Pages.Cart}`;
+      setTimeout(() => Payment.render(), 500);
     });
 
     return header;
