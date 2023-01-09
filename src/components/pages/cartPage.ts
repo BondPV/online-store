@@ -67,7 +67,7 @@ class CartPage {
     paginationInput.classList.add(ClassListName.cartPaginationInput);
     paginationLimitPage.append(paginationInput);
 
-    paginationInput.addEventListener('keyup', () => {
+    paginationInput.addEventListener('change', () => {
       this.renderProducts(cartContainer);
       UrlHashCart.setUrlHashCartParam(CartParam.Page, this.initialPageNumValue());
       UrlHashCart.setUrlHashCartParam(CartParam.Limit, paginationInput.value);
@@ -203,17 +203,26 @@ class CartPage {
     appliedPromoList.classList.add(ClassListName.cartTotalPromoList);
     appliedCodesWrap.append(appliedPromoList);
 
+    const inputPromoWrap = document.createElement('div');
+    inputPromoWrap.classList.add(ClassListName.cartInputPromoWrap);
+    appliedCodesWrap.append(inputPromoWrap);
+
     const inputPromo = document.createElement('input');
     inputPromo.type = 'search';
     inputPromo.placeholder = CartText.PromoInputPlaceholder;
     inputPromo.classList.add(ClassListName.cartTotalPromoInput);
-    appliedCodesWrap.append(inputPromo);
+    inputPromoWrap.append(inputPromo);
+
+    const inputPromoAdd = document.createElement('div');
+    inputPromoAdd.classList.add(ClassListName.cartInputPromoAdd);
+    inputPromoAdd.innerHTML = '+';
+    inputPromoWrap.append(inputPromoAdd);
 
     const discountList = document.createElement('ul');
     discountList.classList.add(ClassListName.cartTotalPromoList);
-    inputPromo.after(discountList);
+    inputPromoWrap.after(discountList);
 
-    inputPromo.addEventListener('keyup', () => {
+    inputPromo.addEventListener('change', () => {
       const value = inputPromo.value.toUpperCase();
       if (this.isPromoExist(value) && !this.isPromoAdded(value)) {
         const discountItem = document.createElement('li');

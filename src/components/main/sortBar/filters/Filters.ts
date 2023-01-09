@@ -267,10 +267,6 @@ class Filters {
     search.classList.add('search');
     parentElement.append(search);
 
-    const searchIcon: HTMLDivElement = document.createElement('div');
-    searchIcon.classList.add('search__icon');
-    search.append(searchIcon);
-
     const searchInput: HTMLInputElement = document.createElement('input');
     searchInput.classList.add('search__input');
     searchInput.type = 'search';
@@ -279,16 +275,15 @@ class Filters {
     searchInput.placeholder = 'Search product';
     search.append(searchInput);
 
-    searchInput.value = UrlHash.getUrlHashParam(FiltersName.Search);
+    const searchIcon: HTMLDivElement = document.createElement('div');
+    searchIcon.classList.add('search__icon');
+    search.append(searchIcon);
 
-    searchInput.addEventListener('input', () => {
-      UrlHash.hashData.search = searchInput.value;
-      this.filterProducts();
-      this.appendTotalFoundQuantity();
-    });
+    searchInput.value = UrlHash.getUrlHashParam(FiltersName.Search);
 
     searchInput.addEventListener('change', () => {
       this.filterProducts();
+      this.appendTotalFoundQuantity();
       UrlHash.setUrlHashParam(FiltersName.Search, searchInput.value);
     });
   }

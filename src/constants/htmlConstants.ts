@@ -70,6 +70,8 @@ export const ClassListName = {
   cartTotalPromoInput: 'promo__search',
   cartTotalPromoButton: 'promo__button',
   cartTotalPromoText: 'promo-text',
+  cartInputPromoWrap: 'promo__search-wrap',
+  cartInputPromoAdd: 'promo__search-add',
   emptyCart: 'empty-cart',
   productCard: 'product-card',
   productIndex: 'product__index',
