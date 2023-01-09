@@ -30,7 +30,7 @@ export enum CartText {
 
   TitlePromo = 'Apply Discount Code',
   InputMinValue = '1',
-  InputMaxValue = '40',
+  InputMaxValue = '9',
   InputOptionalValue = '5',
   PromoInputPlaceholder = 'Enter your promo code',
   ButtonAdd = 'ADD',
@@ -42,4 +42,9 @@ export enum CartText {
   PageStartValue = '1',
   ProductButtonMinus = '-',
   ProductButtonPlus = '+',
+}
+
+export enum CartParam {
+  Limit = 'limit',
+  Page = 'page',
 }

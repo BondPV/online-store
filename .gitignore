@@ -104,5 +104,5 @@ dist
 .tern-port
 
 # users settings files
-.husky
-.idea
+.husky/
+.idea/

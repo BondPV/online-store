@@ -23,4 +23,9 @@ export type HashDataType = {
   view: string;
 };
 
+export type HashCartDataType = {
+  limit: string;
+  page: string;
+};
+
 export type SearchType = 'search';
