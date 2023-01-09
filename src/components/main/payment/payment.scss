@@ -37,6 +37,7 @@
     display: flex;
     flex-direction: column;
     padding: 10px 0;
+    position: relative;
   }
 
   .item__wrap {
@@ -44,8 +45,6 @@
     justify-content: space-around;
 
     .form__item {
-      flex-direction: row;
-      justify-content: space-around;
       align-items: center;
     }
 
@@ -82,6 +81,27 @@
       -webkit-appearance: none;
       margin: 0;
     }
+
+    &:invalid {
+      border-color: #C94D3F;
+    }
+
+    &:focus:invalid {
+      outline: none;
+    }
+
+    &_error {
+      width  : 100%;
+      padding: 0;
+      border-radius: 0 0 5px 5px;
+    }
+
+    &_error_active {
+      padding: 0.3em;
+      font-size: 14px;
+      color: #C94D3F;
+      font-weight: 100;
+    }
   }
 
   &__button {
@@ -102,6 +122,30 @@
       box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
     }
   }
+
+  .payment-icon {
+    display: block;
+    width: 40px;
+    height: 25px;
+    position: absolute;
+    top: 39px;
+    right: 10px;
+    background: url("../../../assets/icons/paypal.svg") no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    &_visa {
+      background: url("../../../assets/icons/visa.svg") no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+
+    &_maestro {
+      background: url("../../../assets/icons/maestro.svg") no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+  }
 }
 
 
@@ -118,3 +162,24 @@
   background-color: rgba(0,0,0,0.5);
   cursor: pointer;
 }
+
+.popup_close {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: 150px;
+  border-radius: 20px;
+  border: 2px solid #0156FF;
+  -webkit-box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+  -moz-box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+  box-shadow: 1px 1px 10px 3px rgba(1, 86, 255, 0.2);
+  padding: 50px 20px;
+  box-sizing: border-box;
+  background: #F5F7FF;
+  position: fixed;
+  top: 20%;
+  left: 30%;
+  z-index: 3;
+}
+

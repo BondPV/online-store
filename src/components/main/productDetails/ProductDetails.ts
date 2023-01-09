@@ -3,6 +3,8 @@ import Product from '../product/Product';
 import Gallery from './gallary/Gallery';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import Payment from 'components/main/payment/Payment';
+import { ICartProduct } from 'types/interfaces';
+import Cart from 'components/main/cart/cart';
 
 class ProductDetails extends Product {
   private price(): HTMLElement[] {
@@ -63,7 +65,12 @@ class ProductDetails extends Product {
     });
 
     buttonBuyNow.addEventListener('click', () => {
-      this.addToCart(buttonAddToCart);
+      if (buttonAddToCart.classList.length === 1) {
+        buttonAddToCart.classList.add('product-details__button_remove');
+        buttonAddToCart.textContent = 'REMOVE FROM CART';
+        LocalStorage.addProductToCart(this.product as ICartProduct);
+        Cart.fillHeaderCounter();
+      }
       Payment.render();
     });
 

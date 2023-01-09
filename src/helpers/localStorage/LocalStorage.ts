@@ -37,6 +37,10 @@ class LocalStorage {
     return !!cartArr.find((product) => product.id === id);
   }
 
+  public static removeProductsFromCart() {
+    localStorage.setItem('cart', '[]');
+  }
+
   public static getPromo(): string[] {
     const promoStorage = localStorage.getItem('promo');
     if (promoStorage) {

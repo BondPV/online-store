@@ -1,17 +1,11 @@
 import './payment.scss';
+import PaymentValidation from 'components/main/payment/PaymentValidation';
 
 class Payment {
   public static render(): void {
     const bodyContainer = document.querySelector('.body');
 
     if (bodyContainer) {
-      // const popup = document.createElement('.popup');
-      // const overlay = document.createElement('.popup__overlay');
-      // if (popup && overlay) {
-      //   popup.remove();
-      //   overlay.remove();
-      // }
-
       const paymentPopup = `
         <div class="popup">
           <form class="form">
@@ -21,21 +15,25 @@ class Payment {
                 <label for="name" class="form__label">Name</label>
                 <input id="name" type="text" placeholder="Ivan Ivanov" 
                   minlength = "3" maxlength="100" size="2" class="form__input" required>
+                <span class="form__input_error" aria-live="polite"></span>
               </div>
               <div class="form__item">
                 <label for="phone" class="form__label">Phone Number</label>
-                <input id="phone" type="tel" placeholder="+ 375 (00) 000 00 01" 
-                minlength = "9" maxlength="15" class="form__input" required>
+                <input id="phone" type="tel" placeholder="+375290000103" 
+                minlength = "10" maxlength="20" class="form__input" required>
+                <span class="form__input_error" aria-live="polite"></span>
               </div>
               <div class="form__item">
                 <label for="address" class="form__label">Delivery address</label>
-                <input id="address" type="text" placeholder="" 
+                <input id="address" type="text" placeholder="Country City Street" 
                 minlength = "5" maxlength="50" size="3" class="form__input" required>
+                <span class="form__input_error" aria-live="polite"></span>
               </div>
               <div class="form__item">
-                <label for="e-mail" class="form__label">E-mail</label>
-                <input id="e-mail" type="email" placeholder="ivanIvanov@gmail.com" 
+                <label for="email" class="form__label">E-mail</label>
+                <input id="email" type="email" placeholder="ivanIvanov@gmail.com" 
                 minlength = "5" maxlength="50" class="form__input" required>
+                <span class="form__input_error" aria-live="polite"></span>
               </div>
             </section>
             <section>
@@ -43,16 +41,24 @@ class Payment {
               <div class="form__card">
                 <div class="form__item">
                   <label for="card-number" class="form__label">Card Number</label>
-                  <input id="card-number" type="number" placeholder="1234 5678 9012 3456" class="form__input" required>
+                  <span class="payment-icon"></span>
+                  <input id="card-number" type="number" placeholder="1234 5678 9012 3456" class="form__input" 
+                  pattern="[0-9]{4}"
+                  onkeypress="if(this.value.length === 16) return false;" required>
+                  <span class="form__input_error" aria-live="polite"></span>
                 </div>
                 <div class="item__wrap">
                   <div class="form__item">
                     <label for="card-valid" class="form__label">VALID</label>
-                    <input id="card-valid" type="number" placeholder="12/27" class="form__input" required>
+                    <input id="card-valid" type="text" placeholder="12/25" class="form__input" 
+                    onkeypress="if(this.value.length === 5) return false;" required>
+                    <span class="form__input_error" aria-live="polite"></span>
                   </div>
                   <div class="form__item"> 
                     <label for="card-cvv" class="form__label">CVV</label>
-                    <input id="card-cvv" type="number" placeholder="123" class="form__input" required>
+                    <input id="card-cvv" type="number" placeholder="123" class="form__input" 
+                    onkeypress="if(this.value.length === 3) return false;" required>
+                    <span class="form__input_error" aria-live="polite"></span>
                   </div>
                 </div>
               </div>
@@ -65,7 +71,6 @@ class Payment {
       bodyContainer.classList.add('body_active');
 
       const popupElement = Payment.convertFromStringToHTML(paymentPopup);
-      // popupElement.querySelector()
 
       const overlayPopup = document.createElement('div');
       overlayPopup.classList.add('popup__overlay');
@@ -79,6 +84,7 @@ class Payment {
 
       bodyContainer.append(popupElement);
     }
+    PaymentValidation.validateForm();
   }
 
   private static convertFromStringToHTML(htmlString: string): HTMLElement {

@@ -9,6 +9,13 @@ export const IdMap = {
   valueFilters: '#value-filters',
   rangeFilters: '#range-filters',
   search: '#search-field',
+  popupName: '#name',
+  popupPhone: '#phone',
+  popupAddress: '#address',
+  popupEmail: '#email',
+  popupCardNumber: '#card-number',
+  popupCardValid: '#card-valid',
+  popupCardCVV: '#card-cvv',
 };
 
 export const ClassMap = {
