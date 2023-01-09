@@ -213,16 +213,11 @@ class CartPage {
     inputPromo.classList.add(ClassListName.cartTotalPromoInput);
     inputPromoWrap.append(inputPromo);
 
-    const inputPromoAdd = document.createElement('div');
-    inputPromoAdd.classList.add(ClassListName.cartInputPromoAdd);
-    inputPromoAdd.innerHTML = '+';
-    inputPromoWrap.append(inputPromoAdd);
-
     const discountList = document.createElement('ul');
     discountList.classList.add(ClassListName.cartTotalPromoList);
     inputPromoWrap.after(discountList);
 
-    inputPromo.addEventListener('change', () => {
+    inputPromo.addEventListener('input', () => {
       const value = inputPromo.value.toUpperCase();
       if (this.isPromoExist(value) && !this.isPromoAdded(value)) {
         const discountItem = document.createElement('li');
