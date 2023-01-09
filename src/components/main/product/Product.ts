@@ -3,6 +3,7 @@ import { Symbol } from 'types/enums';
 import { ICartProduct, IProduct } from 'types/interfaces';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
 import Cart from 'components/main/cart/cart';
+import { fullStarIcon, halfStarIcon } from 'constants/htmlConstants';
 
 class Product {
   constructor(protected product: IProduct) {}
@@ -10,26 +11,27 @@ class Product {
   public static fillRating(rating: number): string {
     const totalStarsCount = 5;
     const fullStarsCount: number = Math.trunc(rating);
+
     let result = '';
 
     for (let i = 0; i < fullStarsCount; i += 1) {
-      result += '<i class="fa-solid fa-star rating-star"></i>';
+      result += fullStarIcon;
     }
 
     const halfStar: number = rating - fullStarsCount;
 
     if (halfStar > 0 && halfStar < 0.25) {
-      result += '<i class="fa-regular fa-star rating-star"></i>';
+      result += fullStarIcon;
     } else if (halfStar >= 0.25 && halfStar < 0.75) {
-      result += '<i class="fa-regular fa-star-half-stroke rating-star"></i>';
+      result += halfStarIcon;
     } else if (halfStar >= 0.75) {
-      result += '<i class="fa-solid fa-star rating-star"></i>';
+      result += fullStarIcon;
     }
 
     const emptyStarsCount: number = totalStarsCount - Math.ceil(rating);
 
     for (let i = 0; i < emptyStarsCount; i += 1) {
-      result += '<i class="fa-regular fa-star rating-star"></i>';
+      result += fullStarIcon;
     }
 
     return result;

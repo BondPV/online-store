@@ -2,6 +2,9 @@ import './productDetails.scss';
 import Product from '../product/Product';
 import Gallery from './gallary/Gallery';
 import LocalStorage from 'helpers/localStorage/LocalStorage';
+import Payment from 'components/main/payment/Payment';
+import { ICartProduct } from 'types/interfaces';
+import Cart from 'components/main/cart/cart';
 import { Symbol } from 'types/enums';
 
 class ProductDetails extends Product {
@@ -59,19 +62,29 @@ class ProductDetails extends Product {
     }
 
     buttonAddToCart.addEventListener('click', () => {
-      if (buttonAddToCart.classList.length === 1) {
-        buttonAddToCart.textContent = 'REMOVE FROM CART';
-      } else {
-        buttonAddToCart.textContent = 'ADD TO CART';
-      }
-      Product.addProductToCart(buttonAddToCart, this.product, 'product-details__button_remove');
+      this.addToCart(buttonAddToCart);
     });
 
     buttonBuyNow.addEventListener('click', () => {
-      alert('click Buy Now');
+      if (buttonAddToCart.classList.length === 1) {
+        buttonAddToCart.classList.add('product-details__button_remove');
+        buttonAddToCart.textContent = 'REMOVE FROM CART';
+        LocalStorage.addProductToCart(this.product as ICartProduct);
+        Cart.fillHeaderCounter();
+      }
+      Payment.render();
     });
 
     return header;
+  }
+
+  private addToCart(buttonAddToCart: HTMLElement): void {
+    if (buttonAddToCart.classList.length === 1) {
+      buttonAddToCart.textContent = 'REMOVE FROM CART';
+    } else {
+      buttonAddToCart.textContent = 'ADD TO CART';
+    }
+    Product.addProductToCart(buttonAddToCart, this.product, 'product-details__button_remove');
   }
 
   public renderDescription(): HTMLElement {

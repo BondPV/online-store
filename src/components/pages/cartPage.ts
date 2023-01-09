@@ -5,6 +5,7 @@ import LocalStorage from 'helpers/localStorage/LocalStorage';
 import { ICartProduct } from 'types/interfaces';
 import Product from 'components/main/product/Product';
 import localStorage from 'helpers/localStorage/LocalStorage';
+import Payment from 'components/main/payment/Payment';
 import { CartText, CartParam, Symbol } from 'types/enums';
 import UrlHashCart from 'helpers/router/UrlHashCart';
 
@@ -117,8 +118,6 @@ class CartPage {
         UrlHashCart.setUrlHashCartParam(CartParam.Limit, paginationInput.value);
       }
     });
-
-    //!
 
     const cartHeaderList = document.createElement('ul');
     cartHeaderList.classList.add(ClassListName.cartHeaderList);
@@ -251,6 +250,10 @@ class CartPage {
     buyButton.classList.add(ClassListName.cartTotalPromoButton);
     buyButton.textContent = CartText.ButtonBuy;
     parentElem.append(buyButton);
+
+    buyButton.addEventListener('click', () => {
+      Payment.render();
+    });
   }
 
   public static createPromoItem(value: string, parentElem: Element): void {
