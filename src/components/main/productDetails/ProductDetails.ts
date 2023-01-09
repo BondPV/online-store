@@ -72,6 +72,7 @@ class ProductDetails extends Product {
         LocalStorage.addProductToCart(this.product as ICartProduct);
         Cart.fillHeaderCounter();
       }
+      window.location.href = '/?#cart';
       Payment.render();
     });
 
